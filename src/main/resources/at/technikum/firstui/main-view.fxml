@@ -1,35 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.firstui.MainView">
-   <children>
-      <HBox layoutY="1.0" prefHeight="33.0" prefWidth="601.0">
-         <children>
-            <Button mnemonicParsing="false" text="File" />
-            <Button mnemonicParsing="false" text="Edit" />
-            <Button mnemonicParsing="false" text="Options" />
-         </children>
-      </HBox>
-      <HBox layoutY="34.0" prefHeight="25.0" prefWidth="601.0">
-         <children>
-            <TextField />
-            <Button mnemonicParsing="false" text="Search" />
-         </children>
-      </HBox>
-      <AnchorPane layoutX="14.0" layoutY="84.0" prefHeight="300.0" prefWidth="200.0">
-         <children>
-            <VBox layoutX="6.0" layoutY="42.0" prefHeight="244.0" prefWidth="123.0" />
-            <HBox layoutY="1.0" prefHeight="25.0" prefWidth="200.0">
-               <children>
-                  <Label text="Tours" />
-                  <Button mnemonicParsing="false" text="+" />
-                  <Button mnemonicParsing="false" text="-" />
-                  <Button mnemonicParsing="false" text="..." />
-               </children>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.firstui.MainView">
+    <!-- Top area with buttons and search -->
+    <top>
+        <VBox>
+            <HBox>
+                <Button text="File" />
+                <Button text="Edit" />
+                <Button text="Options" />
             </HBox>
-         </children>
-      </AnchorPane>
-   </children>
-</AnchorPane>
+            <HBox>
+                <TextField HBox.hgrow="ALWAYS" />
+                <Button text="Search" />
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Center area with list and image view -->
+    <center>
+        <HBox spacing="10">
+            <!-- Toolbar and list on the left -->
+            <VBox HBox.hgrow="NEVER">
+                <ToolBar>
+                    <items>
+                        <Button text="Add" />
+                        <Button text="Delete" />
+                        <Button text="More" />
+                    </items>
+                </ToolBar>
+                <ListView fx:id="listView" VBox.vgrow="ALWAYS">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Item 1" />
+                            <String fx:value="Item 2" />
+                            <String fx:value="Item 3" />
+                            <!-- Add more items here -->
+                        </FXCollections>
+                    </items>
+                </ListView>
+            </VBox>
+            <!-- Image view on the right -->
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" />
+        </HBox>
+    </center>
+
+    <!-- Bottom area with TableView -->
+    <bottom>
+        <TableView VBox.vgrow="ALWAYS" fx:id="tableView">
+            <columns>
+                <TableColumn text="C1" fx:id="col1"/>
+                <TableColumn text="C2" fx:id="col2" />
+                <TableColumn text="C3" fx:id="col3"/>
+                <TableColumn text="C4" fx:id="col4"/>
+                <TableColumn text="C5" fx:id="col5"/>
+            </columns>
+        </TableView>
+    </bottom>
+</BorderPane>
