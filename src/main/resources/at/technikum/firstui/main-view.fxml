@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.technikum.firstui.MainView"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.firstui.MainView">
+   <children>
+      <HBox layoutY="1.0" prefHeight="33.0" prefWidth="601.0">
+         <children>
+            <Button mnemonicParsing="false" text="File" />
+            <Button mnemonicParsing="false" text="Edit" />
+            <Button mnemonicParsing="false" text="Options" />
+         </children>
+      </HBox>
+      <HBox layoutY="34.0" prefHeight="25.0" prefWidth="601.0">
+         <children>
+            <TextField />
+            <Button mnemonicParsing="false" text="Search" />
+         </children>
+      </HBox>
+      <AnchorPane layoutX="14.0" layoutY="84.0" prefHeight="300.0" prefWidth="200.0">
+         <children>
+            <VBox layoutX="6.0" layoutY="42.0" prefHeight="244.0" prefWidth="123.0" />
+            <HBox layoutY="1.0" prefHeight="25.0" prefWidth="200.0">
+               <children>
+                  <Label text="Tours" />
+                  <Button mnemonicParsing="false" text="+" />
+                  <Button mnemonicParsing="false" text="-" />
+                  <Button mnemonicParsing="false" text="..." />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>
