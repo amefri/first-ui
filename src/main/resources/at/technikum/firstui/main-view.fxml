@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.technikum.firstui.MainView"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.geometry.*?>
+
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.firstui.MainView">
+
+      <MenuBar BorderPane.alignment="CENTER">
+         <menus>
+            <Menu text="File">
+               <!-- Menu items -->
+            </Menu>
+            <Menu text="Edit">
+               <!-- Menu items -->
+            </Menu>
+            <Menu text="Options">
+               <!-- Menu items -->
+            </Menu>
+            <Menu text="Help">
+               <!-- Menu items -->
+            </Menu>
+         </menus>
+      </MenuBar>
+
+
+   <!-- SplitPane for the main content area -->
+
+      <SplitPane dividerPositions="0.25" BorderPane.alignment="CENTER">
+         <!-- Left side: Search panel -->
+         <items>
+            <VBox fx:id="searchPanel" spacing="10" padding="10">
+               <children>
+                  <Label text="Search"/>
+                  <TextField fx:id="searchField"/>
+                  <ListView fx:id="tourList"/>
+                  <!-- Add more controls as needed -->
+               </children>
+            </VBox>
+
+            <!-- Right side: Map display -->
+            <AnchorPane fx:id="mapDisplay">
+               <!-- This will be replaced with your map component -->
+            </AnchorPane>
+         </items>
+      </SplitPane>
+
+
+   <!-- Bottom: Tour logs -->
+
+   <GridPane fx:id="logDisplay" hgap="10" vgap="10" padding="10">
+      <columnConstraints>
+         <ColumnConstraints percentWidth="33"/>
+         <ColumnConstraints percentWidth="34"/>
+         <ColumnConstraints percentWidth="33"/>
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints/>
+         <RowConstraints/>
+         <RowConstraints/>
+         <!-- Add more rows as needed -->
+      </rowConstraints>
+      <Label text="Date" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+      <Label text="Duration" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+      <Label text="Distance" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+      <!-- Add more labels and fields for the log values -->
+   </GridPane>
+
 
 </AnchorPane>
