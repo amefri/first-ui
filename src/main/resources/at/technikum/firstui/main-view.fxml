@@ -5,8 +5,10 @@
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.firstui.MainView">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.firstui.view.MainView">
    <!-- Top area with buttons and search -->
+
+   <!--TODO add a menubar instead of buttons-->
    <top>
       <VBox>
          <HBox>
@@ -15,7 +17,7 @@
             <Button text="Options" />
          </HBox>
          <HBox>
-            <TextField HBox.hgrow="ALWAYS" />
+            <TextField HBox.hgrow="ALWAYS"/>
             <Button text="Search" />
          </HBox>
       </VBox>
@@ -45,7 +47,15 @@
             </ListView>
          </VBox>
          <!-- Image view on the right -->
+         <!---<ToolBar>
+         <items>
+            <Button text="Example1" />
+            <Button text="Example2" />
+            <Button text="Example3" />
+         </items> -->
+
          <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" />
+         <!--</ToolBar>-->
       </HBox>
    </center>
 

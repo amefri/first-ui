@@ -5,4 +5,6 @@ module at.technikum.firstui {
 
     opens at.technikum.firstui to javafx.fxml;
     exports at.technikum.firstui;
+    exports at.technikum.firstui.view;
+    opens at.technikum.firstui.view to javafx.fxml;
 }

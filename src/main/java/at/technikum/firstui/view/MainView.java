@@ -1,10 +1,10 @@
-package at.technikum.firstui;
+package at.technikum.firstui.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class MainViewController {
+public class MainView {
 
     @FXML
     private TableView<?> tableView;
