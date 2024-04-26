@@ -7,16 +7,16 @@ import javafx.scene.control.Button;
 public class ToolBarView {
 
     @FXML
-    private Button btnAdd;
-    @FXML private Button btnDelete;
-    @FXML private Button btnMore;
+    private Button buttonAdd;
+    @FXML private Button buttonDelete;
+    @FXML private Button buttonMore;
 
     private final ToolBarViewModel viewModel = new ToolBarViewModel();
 
     @FXML
     public void initialize() {
-        btnAdd.setOnAction(e -> viewModel.onAdd());
-        btnDelete.setOnAction(e -> viewModel.onDelete());
-        btnMore.setOnAction(e -> viewModel.onMore());
+        buttonAdd.setOnAction(e -> viewModel.onAdd());
+        buttonDelete.setOnAction(e -> viewModel.onDelete());
+        buttonMore.setOnAction(e -> viewModel.onMore());
     }
 }

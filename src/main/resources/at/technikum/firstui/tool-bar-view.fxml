@@ -15,9 +15,9 @@
     <VBox HBox.hgrow="NEVER">
         <ToolBar>
             <items>
-                <Button fx:id="btnAdd" text="Add" />
-                <Button fx:id="btnDelete" text="Delete" />
-                <Button fx:id="btnMore" text="More" />
+                <Button fx:id="buttonAdd" text="Add" />
+                <Button fx:id="buttonDelete" text="Delete" />
+                <Button fx:id="buttonMore" text="More" />
             </items>
         </ToolBar>
         <!--<ListView fx:id="listView" VBox.vgrow="ALWAYS">
