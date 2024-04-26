@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class MainView {
+public class MainViewController {
 
     @FXML
     private TableView<?> tableView;
@@ -22,3 +22,5 @@ public class MainView {
         col5.prefWidthProperty().bind(tableView.widthProperty().divide(numColumns));
     }
 }
+
+// TODO: maybe in fxml file
