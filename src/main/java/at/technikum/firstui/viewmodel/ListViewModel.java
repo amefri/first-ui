@@ -7,14 +7,15 @@ import javafx.collections.ObservableList;
 
 public class ListViewModel {
 
-    private final ObservableList<String> items;
-
-    public ListViewModel() {
-        items = FXCollections.observableArrayList();
-        items.addAll("Item 1", "Item 2", "Item 3");
-    }
+    
+    private final ObservableList<String> listItems = FXCollections.observableArrayList("Item 1", "Item 2", "Item 3"); //TODO: load items from postgres db
 
     public ObservableList<String> getItems() {
-        return items;
+        return listItems;
     }
+
+    public void onItemClicked(String item) {
+        System.out.println("Clicked on: " + item);
+    }
+
 }

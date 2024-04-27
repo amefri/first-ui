@@ -18,5 +18,13 @@ public class ListView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         listView.setItems(viewModel.getItems());
-    }
+        listView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                viewModel.onItemClicked(newSelection);
+            }
+        });
 }
+
+
+    }
+

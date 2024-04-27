@@ -14,12 +14,9 @@
       fx:controller="at.technikum.firstui.view.MapView"
       prefHeight="400.0" prefWidth="600.0">
 
-
-
     <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="Map.jpg"/>
+            <Image url="@Map.jpg"/>  <!-- Ensure the path is accessible -->
         </image>
     </ImageView>
-
 </VBox>

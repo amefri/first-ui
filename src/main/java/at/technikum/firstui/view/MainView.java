@@ -15,11 +15,7 @@ public class MainView {
     @FXML
     public void initialize() {
         double numColumns = 5.0;  // Total number of columns
-        col1.prefWidthProperty().bind(tableView.widthProperty().divide(numColumns));
-        col2.prefWidthProperty().bind(tableView.widthProperty().divide(numColumns));
-        col3.prefWidthProperty().bind(tableView.widthProperty().divide(numColumns));
-        col4.prefWidthProperty().bind(tableView.widthProperty().divide(numColumns));
-        col5.prefWidthProperty().bind(tableView.widthProperty().divide(numColumns));
+        at.technikum.firstui.view.TableView.keepColumnsBoundTogether(numColumns, col1, tableView, col2, col3, col4, col5);
     }
 }
 
