@@ -16,7 +16,7 @@
 
     <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@Map.jpg"/>  <!-- Ensure the path is accessible -->
+            <Image url="@Map.jpg"/>
         </image>
     </ImageView>
 </VBox>
