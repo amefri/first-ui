@@ -20,7 +20,7 @@ public class ListView implements Initializable {
         listView.setItems(viewModel.getItems());
         listView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                viewModel.onItemClicked(newSelection);
+                viewModel.onItemClicked(newSelection); //TODO: Property in the view model that keeps track in the view model focus model/property as an object property simpleobject ptoperty
             }
         });
 }
