@@ -16,15 +16,17 @@ public class ListView implements Initializable {
 
 
     @Override
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         listView.setItems(viewModel.getItems());
-        listView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                viewModel.onItemClicked(newSelection); //TODO: Property in the view model that keeps track in the view model focus model/property as an object property simpleobject ptoperty
-            }
+
+        // Listen for selection changes and update the ViewModel
+        listView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> { //TODO der Listener muss hier raus
+            viewModel.setSelectedItem(newVal);
         });
+    }
 }
 
 
-    }
+
 
