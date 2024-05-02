@@ -1,38 +1,53 @@
 package at.technikum.firstui.viewmodel;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import at.technikum.firstui.event.Event;
+import at.technikum.firstui.event.Publisher;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.FocusModel;
 
 public class ListViewModel {
-    private ObservableList<String> items = FXCollections.observableArrayList("Item 1", "Item 2", "Item 3");
-    private ObjectProperty<String> selectedItem = new SimpleObjectProperty<>();
 
-    public ListViewModel() {
-        // Listen for changes to the selected item and handle them within the ViewModel
-        selectedItem.addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) { // Logic moved from the view to here
-                onItemClicked(newVal);
-            }
-        });
+    //private final Publisher publisher;
+
+    private final ObservableList<String> items
+            = FXCollections.observableArrayList();
+    private final IntegerProperty selectedIndex
+            = new SimpleIntegerProperty();
+
+    public ListViewModel(){//Publisher publisher) {
+        //this.publisher = publisher;
+        items.addAll("Item 1", "Item 2", "Item 3");
+        // if item is selected, fill in search text
+        this.selectedIndex.addListener(
+
+                observable -> {System.out.println("Listener triggered");
+                    selectItems();}
+
+        );
+
+        // on search event, add term to history
+        //publisher.subscribe(Event.SEARCH_TERM_SEARCHED, this::addToList);
     }
 
-    public void setSelectedItem(String item) {
-        selectedItem.set(item); // Directly setting the value from the controller
+    public void selectItems() {
+        int index = selectedIndex.get();
+        System.out.println("Index: " + index);
+        if (index >= 0 && index < items.size()) {
+            System.out.println("Selected item: " + items.get(index));
+        }
     }
-    
-    private final ObservableList<String> listItems = FXCollections.observableArrayList("Item 1", "Item 2", "Item 3"); //TODO: load items from postgres db
+
+    private void addToList(String routItem) {
+        items.add(routItem);
+    }
 
     public ObservableList<String> getItems() {
-        return listItems;
+        return items;
     }
 
-    public void onItemClicked(String item) {
-        System.out.println("Clicked on: " + item);
+    public IntegerProperty selectIndexProperty() {
+        return selectedIndex;
     }
-
 }
