@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class
-HelloController {
+MainController {
     @FXML
     private Label welcomeText;
 
