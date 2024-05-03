@@ -9,16 +9,18 @@ import javafx.collections.ObservableList;
 
 public class ListViewModel {
 
-    //private final Publisher publisher;
+    private final Publisher publisher = new Publisher();
 
     private final ObservableList<String> items
             = FXCollections.observableArrayList();
     private IntegerProperty selectedIndex
             = new SimpleIntegerProperty();
 
-    public ListViewModel(){//Publisher publisher) {
-        //this.publisher = publisher;
-        items.addAll("Item 1", "Item 2", "Item 3");
+
+    public ListViewModel(){
+
+
+        items.addAll("Sonnental", "Bergtal", "Wintertal");
         // if item is selected, fill in search text
         this.selectedIndex.addListener(
 
@@ -27,9 +29,12 @@ public class ListViewModel {
 
         );
 
+
         // on search event, add term to history
         //publisher.subscribe(Event.SEARCH_TERM_SEARCHED, this::addToList);
     }
+
+
 
     public void selectItems() {
     int index = selectedIndex.get();
@@ -41,6 +46,8 @@ public class ListViewModel {
 
     String selectedItem = items.get(index);
         System.out.println("Selected Item: " + selectedItem);
+
+    publisher.publish(Event.CLICKED_TERM_LIST, selectedItem);
 
 
 }

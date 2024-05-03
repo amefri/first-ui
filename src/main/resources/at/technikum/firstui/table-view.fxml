@@ -15,11 +15,10 @@
     <VBox HBox.hgrow="NEVER">
                 <TableView VBox.vgrow="ALWAYS" fx:id="tableView">
                     <columns>
-                        <TableColumn text="C1" fx:id="col1"/>
-                        <TableColumn text="C2" fx:id="col2" />
-                        <TableColumn text="C3" fx:id="col3"/>
-                        <TableColumn text="C4" fx:id="col4"/>
-                        <TableColumn text="C5" fx:id="col5"/>
+                        <TableColumn text="Tour" fx:id="col1"/>
+                        <TableColumn text="Date" fx:id="col2" />
+                        <TableColumn text="Duration" fx:id="col3"/>
+                        <TableColumn text="Distance" fx:id="col4"/>
                     </columns>
                 </TableView>
     </VBox>

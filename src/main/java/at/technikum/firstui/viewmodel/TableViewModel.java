@@ -10,10 +10,16 @@ public class TableViewModel {
     public TableViewModel() {
         items = FXCollections.observableArrayList();
         // Hier kannst du die Daten für die TableView hinzufügen
-        items.addAll("Data 1", "Data 2", "Data 3");
+        items.addAll("Sonnental", "Bergtal", "Wintertal", "Sonnental");
     }
 
     public ObservableList<String> getItems() {
         return items;
     }
+
+
+
+
+
+
 }
