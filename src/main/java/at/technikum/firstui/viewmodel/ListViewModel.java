@@ -13,7 +13,7 @@ public class ListViewModel {
 
     private final ObservableList<String> items
             = FXCollections.observableArrayList();
-    private final IntegerProperty selectedIndex
+    private IntegerProperty selectedIndex
             = new SimpleIntegerProperty();
 
     public ListViewModel(){//Publisher publisher) {
@@ -32,12 +32,18 @@ public class ListViewModel {
     }
 
     public void selectItems() {
-        int index = selectedIndex.get();
-        System.out.println("Index: " + index);
-        if (index >= 0 && index < items.size()) {
-            System.out.println("Selected item: " + items.get(index));
-        }
+    int index = selectedIndex.get();
+    System.out.println("Index: " + index);
+    if (index == -1) {
+        // No item is selected in the ListView, so return without doing anything
+        return;
     }
+
+    String selectedItem = items.get(index);
+        System.out.println("Selected Item: " + selectedItem);
+
+
+}
 
     private void addToList(String routItem) {
         items.add(routItem);
