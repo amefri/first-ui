@@ -11,7 +11,11 @@ public class ToolBarView {
     @FXML private Button buttonDelete;
     @FXML private Button buttonMore;
 
-    private final ToolBarViewModel viewModel = new ToolBarViewModel();
+    private ToolBarViewModel viewModel = new ToolBarViewModel();
+
+    public ToolBarView(ToolBarViewModel toolBarViewModel) {
+        this.viewModel = toolBarViewModel;
+    }
 
     @FXML
     public void initialize() {

@@ -3,8 +3,10 @@ package at.technikum.firstui;
 import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.view.SearchHistoryView;
 import at.technikum.firstui.view.SearchView;
+import at.technikum.firstui.view.ToolBarView;
 import at.technikum.firstui.viewmodel.SearchHistoryViewModel;
 import at.technikum.firstui.viewmodel.SearchViewModel;
+import at.technikum.firstui.viewmodel.ToolBarViewModel;
 
 public class ViewFactory {
 
@@ -14,6 +16,7 @@ public class ViewFactory {
 
     private final SearchViewModel searchViewModel;
     private final SearchHistoryViewModel searchHistoryViewModel;
+    private final ToolBarViewModel toolBarViewModel = new ToolBarViewModel();
 
     private ViewFactory() {
         publisher = new Publisher();
@@ -37,6 +40,9 @@ public class ViewFactory {
 
         if (SearchHistoryView.class == viewClass) {
             return new SearchHistoryView(searchHistoryViewModel);
+        }
+        if (ToolBarView.class.equals(viewClass)) {
+            return new ToolBarView(toolBarViewModel);
         }
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);

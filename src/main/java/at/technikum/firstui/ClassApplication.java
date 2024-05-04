@@ -12,9 +12,9 @@ import java.util.Locale;
 public class ClassApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Parent mainView = FXMLDependencyInjector.load("example-main-view.fxml", Locale.ENGLISH);
+        Parent mainView = FXMLDependencyInjector.load("tool-bar-view.fxml", Locale.ENGLISH);
         Scene scene = new Scene(mainView);
-        stage.setTitle("Search!");
+        stage.setTitle("Add New Tour");
         stage.setScene(scene);
         stage.show();
     }

@@ -15,7 +15,7 @@
     <VBox HBox.hgrow="NEVER">
         <ToolBar>
             <items>
-                <Button fx:id="buttonAdd" text="Add" />
+                <Button fx:id="buttonAdd" text= "%add-button-text" />
                 <Button fx:id="buttonDelete" text="Delete" />
                 <Button fx:id="buttonMore" text="More" />
             </items>
