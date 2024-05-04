@@ -6,6 +6,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class AddStageViewModel {
 
@@ -20,6 +22,8 @@ public class AddStageViewModel {
     private final StringProperty estimatedTime = new SimpleStringProperty("");
 
     private final BooleanProperty addButtonDisabled = new SimpleBooleanProperty(true);
+
+    private final ObservableList<String> addedRoutes = FXCollections.observableArrayList();
 
     public AddStageViewModel(Publisher publisher) {
         this.publisher = publisher;
@@ -45,9 +49,10 @@ public class AddStageViewModel {
     public void addTour() {
         // Check if addButton is enabled
         if (!addButtonDisabled.get()) {
-            String message = String.format("Name: %s, Description: %s, From: %s, To: %s, Transport Type: %s, Distance: %s, Estimated Time: %s",
+            String route = String.format("Name: %s, Description: %s, From: %s, To: %s, Transport Type: %s, Distance: %s, Estimated Time: %s",
                     name.get(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get());
-            publisher.publish(Event.TOUR_ADDED, message);
+            addedRoutes.add(route);
+            publisher.publish(Event.TOUR_ADDED, route);
 
             // Clear fields after publishing
             name.set("");
@@ -60,6 +65,9 @@ public class AddStageViewModel {
         }
     }
 
+    public ObservableList<String> getAddedRoutes() {
+        return addedRoutes;
+    }
 
     // Getters for properties
     public StringProperty nameProperty() {

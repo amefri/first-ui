@@ -10,11 +10,11 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="at.technikum.firstui.view.ListView"
-      prefHeight="400.0" prefWidth="600.0">
+      fx:controller="at.technikum.firstui.view.TourListView">
+
 
     <VBox HBox.hgrow="NEVER">
-        <ListView fx:id="listView" VBox.vgrow="ALWAYS"/>
+        <ListView fx:id="NameListView" VBox.vgrow="ALWAYS"/>
     </VBox>
 
 </VBox>

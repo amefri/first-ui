@@ -1,19 +1,13 @@
 package at.technikum.firstui.viewmodel;
 
+import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.services.NewStageService;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.Objects;
 
 public class ToolBarViewModel {
 
     private final NewStageService newStageService;
 
-    public ToolBarViewModel() {
+    public ToolBarViewModel(Publisher publisher) {
         this.newStageService = new NewStageService();
     }
 

@@ -4,9 +4,11 @@ import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.view.SearchHistoryView;
 import at.technikum.firstui.view.SearchView;
 import at.technikum.firstui.view.ToolBarView;
+import at.technikum.firstui.view.TourListView;
 import at.technikum.firstui.viewmodel.SearchHistoryViewModel;
 import at.technikum.firstui.viewmodel.SearchViewModel;
 import at.technikum.firstui.viewmodel.ToolBarViewModel;
+import at.technikum.firstui.viewmodel.TourListViewModel;
 
 public class ViewFactory {
 
@@ -16,13 +18,16 @@ public class ViewFactory {
 
     private final SearchViewModel searchViewModel;
     private final SearchHistoryViewModel searchHistoryViewModel;
-    private final ToolBarViewModel toolBarViewModel = new ToolBarViewModel();
+    private final ToolBarViewModel toolBarViewModel;
+    private final TourListViewModel tourListViewModel;
 
     private ViewFactory() {
         publisher = new Publisher();
 
         searchViewModel = new SearchViewModel(publisher);
         searchHistoryViewModel = new SearchHistoryViewModel(publisher);
+        toolBarViewModel = new ToolBarViewModel(publisher);
+        tourListViewModel = new TourListViewModel(publisher);
     }
 
     public static ViewFactory getInstance() {
@@ -43,6 +48,10 @@ public class ViewFactory {
         }
         if (ToolBarView.class.equals(viewClass)) {
             return new ToolBarView(toolBarViewModel);
+        }
+
+        if (TourListView.class.equals(viewClass)) {
+            return new TourListView(tourListViewModel);
         }
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);

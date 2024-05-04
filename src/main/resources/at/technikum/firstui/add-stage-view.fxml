@@ -13,4 +13,5 @@
     <TextField fx:id="estimatedTimeField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Estimated Time" />
     <Button fx:id="addButton" onAction="#addTour" text="Add" />
 
+
 </VBox>
