@@ -38,9 +38,7 @@ public class AddStageView implements Initializable {
     @FXML
     private Button addTourButton;
 
-    public AddStageView() {
-        this.viewModel = new AddStageViewModel(new Publisher());
-    }
+   
 
     public AddStageView(AddStageViewModel viewModel) {
         this.viewModel = viewModel;

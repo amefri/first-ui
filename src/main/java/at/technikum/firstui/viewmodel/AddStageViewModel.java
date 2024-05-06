@@ -66,7 +66,7 @@ public class AddStageViewModel {
             transportType.set("");
             distance.set("");
             estimatedTime.set("");
-            stage.close();
+
         }
     }
 

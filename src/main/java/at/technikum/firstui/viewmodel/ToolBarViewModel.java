@@ -12,7 +12,7 @@ public class ToolBarViewModel {
     }
 
     public void onAdd() {
-        newStageService.loadFXML("/at/technikum/firstui/add-stage-view.fxml");
+        newStageService.loadFXML("add-stage-view.fxml");
     }
 
     public void onDelete() {

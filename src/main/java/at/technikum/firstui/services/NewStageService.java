@@ -14,7 +14,7 @@ public class NewStageService {
     public void loadFXML(String fxmlPath) {
         try {
             // Load the FXML file for the new stage
-            Parent newStageView = FXMLLoader.load(Objects.requireNonNull(NewStageService.class.getResource(fxmlPath)));
+            Parent newStageView = FXMLDependencyInjector.load(fxmlPath, Locale.ENGLISH);
 
             // Create a new stage
             Stage newStage = new Stage();
