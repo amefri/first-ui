@@ -9,23 +9,21 @@ import javafx.collections.ObservableList;
 
 public class TourListViewModel {
 
-    private final Publisher publisher;
-
     private final ObservableList<String> tourList = FXCollections.observableArrayList();
-    private final IntegerProperty selectedSearchIndex = new SimpleIntegerProperty();
+    private final IntegerProperty selectedAddTourIndex = new SimpleIntegerProperty();
 
     public TourListViewModel(Publisher publisher) {
-        this.publisher = publisher;
 
         // if item is selected, fill in search text
-        this.selectedSearchIndex.addListener(observable -> selectTourNames());
+        this.selectedAddTourIndex.addListener(observable -> selectTourNames());
 
         // on tour added event, add tour details to the list
         publisher.subscribe(Event.TOUR_ADDED, this::addToTourList);
+        System.out.println("TourListViewModel subscribed to TOUR_ADDED event");
     }
 
     public void selectTourNames() {
-        if (selectedSearchIndex.get() == -1) {
+        if (selectedAddTourIndex.get() == -1) {
             return;
         }
 
@@ -40,7 +38,7 @@ public class TourListViewModel {
         return tourList;
     }
 
-    public IntegerProperty selectedSearchIndexProperty() {
-        return selectedSearchIndex;
+    public IntegerProperty selectedAddTourProperty() {
+        return selectedAddTourIndex;
     }
 }

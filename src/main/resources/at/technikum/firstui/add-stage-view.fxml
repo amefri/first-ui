@@ -11,7 +11,7 @@
     <TextField fx:id="transportTypeField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Transport Type" />
     <TextField fx:id="distanceField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Distance" />
     <TextField fx:id="estimatedTimeField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Estimated Time" />
-    <Button fx:id="addButton" onAction="#addTour" text="Add" />
+    <Button fx:id="addTourButton" onAction="#addTour" text="Add" />
 
 
 </VBox>

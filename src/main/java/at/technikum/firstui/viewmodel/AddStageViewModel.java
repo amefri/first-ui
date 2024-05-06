@@ -8,8 +8,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.stage.Stage;
 
 public class AddStageViewModel {
+
+    private Stage stage;
 
     private final Publisher publisher;
 
@@ -21,7 +24,7 @@ public class AddStageViewModel {
     private final StringProperty distance = new SimpleStringProperty("");
     private final StringProperty estimatedTime = new SimpleStringProperty("");
 
-    private final BooleanProperty addButtonDisabled = new SimpleBooleanProperty(true);
+    private final BooleanProperty addTourButtonDisabled = new SimpleBooleanProperty(true);
 
     private final ObservableList<String> addedRoutes = FXCollections.observableArrayList();
 
@@ -29,18 +32,18 @@ public class AddStageViewModel {
         this.publisher = publisher;
 
         // Listen to changes in fields and update addButtonDisabled property
-        name.addListener((observable, oldValue, newValue) -> updateAddButtonDisabled());
-        description.addListener((observable, oldValue, newValue) -> updateAddButtonDisabled());
-        from.addListener((observable, oldValue, newValue) -> updateAddButtonDisabled());
-        to.addListener((observable, oldValue, newValue) -> updateAddButtonDisabled());
-        transportType.addListener((observable, oldValue, newValue) -> updateAddButtonDisabled());
-        distance.addListener((observable, oldValue, newValue) -> updateAddButtonDisabled());
-        estimatedTime.addListener((observable, oldValue, newValue) -> updateAddButtonDisabled());
+        name.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+        description.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+        from.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+        to.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+        transportType.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+        distance.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+        estimatedTime.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
     }
 
-    private void updateAddButtonDisabled() {
+    private void updateAddTourButtonDisabled() {
         // Check if any of the fields are empty
-        addButtonDisabled.set(name.get().isEmpty() || description.get().isEmpty() ||
+        addTourButtonDisabled.set(name.get().isEmpty() || description.get().isEmpty() ||
                 from.get().isEmpty() || to.get().isEmpty() ||
                 transportType.get().isEmpty() || distance.get().isEmpty() ||
                 estimatedTime.get().isEmpty());
@@ -48,7 +51,8 @@ public class AddStageViewModel {
 
     public void addTour() {
         // Check if addButton is enabled
-        if (!addButtonDisabled.get()) {
+        System.out.println("Add Button Works");
+        if (!addTourButtonDisabled.get()) {
             String route = String.format("Name: %s, Description: %s, From: %s, To: %s, Transport Type: %s, Distance: %s, Estimated Time: %s",
                     name.get(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get());
             addedRoutes.add(route);
@@ -62,12 +66,11 @@ public class AddStageViewModel {
             transportType.set("");
             distance.set("");
             estimatedTime.set("");
+            stage.close();
         }
     }
 
-    public ObservableList<String> getAddedRoutes() {
-        return addedRoutes;
-    }
+
 
     // Getters for properties
     public StringProperty nameProperty() {
@@ -98,7 +101,7 @@ public class AddStageViewModel {
         return estimatedTime;
     }
 
-    public BooleanProperty addButtonDisabledProperty() {
-        return addButtonDisabled;
+    public BooleanProperty addTourButtonDisabledProperty() {
+        return addTourButtonDisabled;
     }
 }

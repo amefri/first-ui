@@ -36,7 +36,7 @@ public class AddStageView implements Initializable {
     private TextField estimatedTimeField;
 
     @FXML
-    private Button addButton;
+    private Button addTourButton;
 
     public AddStageView() {
         this.viewModel = new AddStageViewModel(new Publisher());
@@ -58,11 +58,12 @@ public class AddStageView implements Initializable {
         estimatedTimeField.textProperty().bindBidirectional(viewModel.estimatedTimeProperty());
 
         // Bind button disable property
-        addButton.disableProperty().bind(viewModel.addButtonDisabledProperty());
+        addTourButton.disableProperty().bind(viewModel.addTourButtonDisabledProperty());
     }
 
     @FXML
     public void addTour() {
         viewModel.addTour();
+
     }
 }

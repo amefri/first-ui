@@ -9,15 +9,15 @@ import javafx.collections.ObservableList;
 
 public class ListViewModel {
 
-    //private final Publisher publisher;
+    private final Publisher publisher;
 
     private final ObservableList<String> items
             = FXCollections.observableArrayList();
     private IntegerProperty selectedIndex
             = new SimpleIntegerProperty();
-
-    public ListViewModel(){//Publisher publisher) {
-        //this.publisher = publisher;
+    //public ListViewModel(Publisher publisher){this.publisher = publisher;}
+    public ListViewModel(Publisher publisher) {
+        this.publisher = publisher;
         items.addAll("Item 1", "Item 2", "Item 3");
         // if item is selected, fill in search text
         this.selectedIndex.addListener(

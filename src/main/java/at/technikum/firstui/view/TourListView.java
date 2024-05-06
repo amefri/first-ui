@@ -21,9 +21,10 @@ public class TourListView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("TourListView initialized");
         this.NameListView
                 .setItems(viewModel.getTourNames());
-        this.viewModel.selectedSearchIndexProperty()
+        this.viewModel.selectedAddTourProperty()
                 .bind(NameListView.getSelectionModel().selectedIndexProperty());
     }
 }

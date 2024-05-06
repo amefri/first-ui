@@ -24,6 +24,7 @@ public class Publisher {
         subscribers.add(subscriber);
 
         subscriberMap.put(event, subscribers);
+        System.out.println("Subscriber added for event: " + event);
     }
 
     // publish(event, message)

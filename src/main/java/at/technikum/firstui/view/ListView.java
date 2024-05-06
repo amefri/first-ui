@@ -14,7 +14,10 @@ public class ListView implements Initializable {
 
     private javafx.scene.control.ListView<String> listView;
 
-    private final ListViewModel listViewModel = new ListViewModel();
+    private final ListViewModel listViewModel;
+
+    public ListView(ListViewModel listViewModel) { this.listViewModel = listViewModel;}
+
 
 
 
