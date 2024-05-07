@@ -9,12 +9,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Locale;
 
-public class ClassApplication extends Application {
+public class
+ClassApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Parent mainView = FXMLDependencyInjector.load("example-main-view.fxml", Locale.ENGLISH);
         Scene scene = new Scene(mainView);
         stage.setTitle("Add New Tour");
+
         stage.setScene(scene);
         stage.show();
     }
