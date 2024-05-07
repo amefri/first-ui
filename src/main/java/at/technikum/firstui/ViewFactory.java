@@ -1,6 +1,7 @@
 package at.technikum.firstui;
 
 import at.technikum.firstui.event.Publisher;
+import at.technikum.firstui.services.TourListService;
 import at.technikum.firstui.view.*;
 import at.technikum.firstui.viewmodel.*;
 
@@ -9,6 +10,7 @@ public class ViewFactory {
     private static ViewFactory instance;
 
     private final Publisher publisher;
+    private final TourListService tourlistServce;
 
     private final SearchViewModel searchViewModel;
     private final SearchHistoryViewModel searchHistoryViewModel;
@@ -19,13 +21,14 @@ public class ViewFactory {
 
     private ViewFactory() {
         publisher = new Publisher();
+        tourlistServce = new TourListService();
 
         searchViewModel = new SearchViewModel(publisher);
         searchHistoryViewModel = new SearchHistoryViewModel(publisher);
         toolBarViewModel = new ToolBarViewModel(publisher);
         tourListViewModel = new TourListViewModel(publisher);
         listViewModel = new ListViewModel(publisher);
-        addStageViewModel = new AddStageViewModel(publisher);
+        addStageViewModel = new AddStageViewModel(publisher, tourlistServce);
     }
 
     public static ViewFactory getInstance() {
