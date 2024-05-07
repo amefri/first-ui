@@ -1,5 +1,6 @@
 package at.technikum.firstui.viewmodel;
 
+import at.technikum.firstui.entities.Tours;
 import at.technikum.firstui.event.Event;
 import at.technikum.firstui.event.Publisher;
 import javafx.beans.property.BooleanProperty;
@@ -8,11 +9,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import at.technikum.firstui.services.TourListService;
 import javafx.stage.Stage;
 
 public class AddStageViewModel {
 
-    private Stage stage;
+    private final TourListService tourListService;
 
     private final Publisher publisher;
 
@@ -28,8 +30,9 @@ public class AddStageViewModel {
 
     private final ObservableList<String> addedRoutes = FXCollections.observableArrayList();
 
-    public AddStageViewModel(Publisher publisher) {
+    public AddStageViewModel(Publisher publisher, TourListService tourListService){
         this.publisher = publisher;
+        this.tourListService =tourListService;
 
         // Listen to changes in fields and update addButtonDisabled property
         name.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
@@ -50,13 +53,11 @@ public class AddStageViewModel {
     }
 
     public void addTour() {
-        // Check if addButton is enabled
-        System.out.println("Add Button Works");
         if (!addTourButtonDisabled.get()) {
-            String route = String.format("Name: %s, Description: %s, From: %s, To: %s, Transport Type: %s, Distance: %s, Estimated Time: %s",
-                    name.get(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get());
-            addedRoutes.add(route);
-            publisher.publish(Event.TOUR_ADDED, route);
+            System.out.println("Adding tour Button works");
+            Tours tour = new Tours(name.get(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get());
+            tourListService.addTour(tour);
+            publisher.publish(Event.TOUR_ADDED, String.valueOf(tour));
 
             // Clear fields after publishing
             name.set("");
@@ -66,7 +67,6 @@ public class AddStageViewModel {
             transportType.set("");
             distance.set("");
             estimatedTime.set("");
-
         }
     }
 

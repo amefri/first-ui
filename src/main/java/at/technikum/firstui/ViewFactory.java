@@ -16,7 +16,6 @@ public class ViewFactory {
     private final TourListViewModel tourListViewModel;
     private final ListViewModel listViewModel;
     private final AddStageViewModel addStageViewModel;
-    private final AddRouteLogViewModel addRouteLogViewModel;
 
     private ViewFactory() {
         publisher = new Publisher();
@@ -27,7 +26,6 @@ public class ViewFactory {
         tourListViewModel = new TourListViewModel(publisher);
         listViewModel = new ListViewModel(publisher);
         addStageViewModel = new AddStageViewModel(publisher);
-        addRouteLogViewModel = new AddRouteLogViewModel(publisher);
     }
 
     public static ViewFactory getInstance() {
@@ -59,10 +57,6 @@ public class ViewFactory {
         }
         if(AddStageView.class.equals(viewClass)) {
             return new AddStageView(addStageViewModel);
-        }
-
-        if(AddStageView.class.equals(viewClass)) {
-            return new AddRouteLogView(addRouteLogViewModel);
         }
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);
