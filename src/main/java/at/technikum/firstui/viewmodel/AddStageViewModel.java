@@ -1,6 +1,6 @@
 package at.technikum.firstui.viewmodel;
 
-import at.technikum.firstui.entities.Tours;
+import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.event.Event;
 import at.technikum.firstui.event.Publisher;
 import javafx.beans.property.BooleanProperty;
@@ -10,7 +10,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import at.technikum.firstui.services.TourListService;
-import javafx.stage.Stage;
 
 public class AddStageViewModel {
 
@@ -57,7 +56,7 @@ public class AddStageViewModel {
             System.out.println("Adding tour Button works");
             Tours tour = new Tours(name.get(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get());
             tourListService.addTour(tour);
-            publisher.publish(Event.TOUR_ADDED, String.valueOf(tour));
+            publisher.publish(Event.TOUR_ADDED, tour);
 
             // Clear fields after publishing
             name.set("");

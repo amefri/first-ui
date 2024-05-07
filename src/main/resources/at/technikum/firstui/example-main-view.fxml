@@ -14,7 +14,7 @@
 
     <fx:include source="search-history-view.fxml" />
     <fx:include source="tool-bar-view.fxml" />
-    <fx:include source="tool-bar-route-log-view.fxml" />
+    <!--<fx:include source="tool-bar-route-log-view.fxml" />-->
     <fx:include source="list-view.fxml" />
 
 

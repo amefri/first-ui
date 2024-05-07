@@ -26,5 +26,11 @@ public class TourListView implements Initializable {
                 .setItems(viewModel.getTourNames());
         this.viewModel.selectedAddTourProperty()
                 .bind(NameListView.getSelectionModel().selectedIndexProperty());
+
+        NameListView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {  // Check for double-click
+                viewModel.deleteSelectedTour();
+            }
+        });
     }
 }
