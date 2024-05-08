@@ -10,6 +10,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Collection;
+
 public class TourListViewModel implements ObjectSubscriber {
 
     private final ObservableList<String> tourList = FXCollections.observableArrayList();
@@ -27,7 +29,13 @@ public class TourListViewModel implements ObjectSubscriber {
         // Add listener to handle selection index changes
         this.selectedAddTourIndex.addListener((obs, oldVal, newVal) -> selectTourNames(newVal.intValue()));
     }
+public void setTourListService(TourListService tourListService) {
+        this.tourListService = tourListService;
+    }
 
+    public void setSelectedAddTourIndex(int index) {
+        selectedAddTourIndex.set(index);
+    }
     @Override
     public void notify(Object message) {
         if (message instanceof Tours) {
@@ -52,12 +60,15 @@ public class TourListViewModel implements ObjectSubscriber {
         }
     }
 
-    private void addToTourList(String tourName) {
+    public void addToTourList(String tourName) {
         tourList.add(tourName);
         System.out.println("Added tour: " + tourName + " to the list");
     }
 
     public ObservableList<String> getTourNames() {
+        return tourList;
+    }
+    public ObservableList<String> getTourList() {
         return tourList;
     }
 
@@ -78,5 +89,6 @@ public class TourListViewModel implements ObjectSubscriber {
             System.out.println("Invalid index or empty list.");
         }
     }
+
 
 }
