@@ -10,11 +10,10 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="at.technikum.firstui.view.AddRouteLogView">
 
-
-<TextField fx:id="routeNameField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Route Name" />
-<TextField fx:id="dateField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Date" />
-<TextField fx:id="durationField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Duration" />
-<TextField fx:id="distanceField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Distance" />
-<Button fx:id="addTourLogButton" onAction="#addTourLog" text="Add" />
+    <TextField fx:id="nameField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Name" />
+    <TextField fx:id="dateField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Date" />
+    <TextField fx:id="durationField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Duration" />
+    <TextField fx:id="distanceField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Distance" />
+    <Button fx:id="addTourLogButton" onAction="#addTourLog" text="Add" />
 
 </VBox>

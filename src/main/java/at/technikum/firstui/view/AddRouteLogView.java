@@ -16,7 +16,7 @@ public class AddRouteLogView implements Initializable {
 
 
     @FXML
-    private TextField routeNameField;
+    private TextField nameField;
 
     @FXML
     private TextField dateField;
@@ -41,7 +41,7 @@ public class AddRouteLogView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Bind properties to text fields
-        routeNameField.textProperty().bindBidirectional(viewModel.routeNameProperty());
+        nameField.textProperty().bindBidirectional(viewModel.nameProperty());
         dateField.textProperty().bindBidirectional(viewModel.dateProperty());
         durationField.textProperty().bindBidirectional(viewModel.durationProperty());
         distanceField.textProperty().bindBidirectional(viewModel.distanceProperty());

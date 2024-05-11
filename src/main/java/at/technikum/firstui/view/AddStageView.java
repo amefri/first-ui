@@ -62,6 +62,5 @@ public class AddStageView implements Initializable {
     @FXML
     public void addTour() {
         viewModel.addTour();
-
     }
 }

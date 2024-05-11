@@ -1,7 +1,9 @@
 package at.technikum.firstui.viewmodel;
 
+import at.technikum.firstui.entity.TourLog;
 import at.technikum.firstui.event.Event;
 import at.technikum.firstui.event.Publisher;
+import at.technikum.firstui.services.TourLogService;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,12 +13,13 @@ import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
 public class AddRouteLogViewModel {
-    private Stage stage;
 
+
+    private final TourLogService tourLogService;
     private final Publisher publisher;
 
 
-    private final StringProperty routeName = new SimpleStringProperty("");
+    private final StringProperty name = new SimpleStringProperty("");
     private final StringProperty date = new SimpleStringProperty("");
     private final StringProperty duration = new SimpleStringProperty("");
     private final StringProperty distance = new SimpleStringProperty("");
@@ -26,11 +29,12 @@ public class AddRouteLogViewModel {
 
     private final ObservableList<String> addedRouteLogs = FXCollections.observableArrayList();
 
-    public AddRouteLogViewModel(Publisher publisher) {
+    public AddRouteLogViewModel(Publisher publisher, TourLogService tourLogService) {
         this.publisher = publisher;
+        this.tourLogService = tourLogService;
 
         // Listen to changes in fields and update addButtonDisabled property
-        routeName.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
+        name.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
         date.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
         duration.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
         distance.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
@@ -38,21 +42,20 @@ public class AddRouteLogViewModel {
 
     private void updateAddTourLogButtonDisabled() {
         // Check if any of the fields are empty
-        addTourLogButtonDisabled.set(routeName.get().isEmpty() || date.get().isEmpty() ||
+        addTourLogButtonDisabled.set(name.get().isEmpty() || date.get().isEmpty() ||
                 duration.get().isEmpty() || distance.get().isEmpty());
     }
 
     public void addTourLog() {
         // Check if addButton is enabled
-        System.out.println("Add Button Works");
         if (!addTourLogButtonDisabled.get()) {
-            String routeLog = String.format("Tour Name: %s, Date: %s, Duration: %s, Distance: %s",
-                    routeName.get(), date.get(), duration.get(), distance.get());
-            addedRouteLogs.add(routeLog);
-            publisher.publish(Event.TOUR_LOG_ADDED, routeLog);
+            System.out.println("Add Button Works");
+            TourLog tourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
+            tourLogService.addTourLog(tourLog);
+            publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
 
             // Clear fields after publishing
-            routeName.set("");
+            name.set("");
             date.set("");
             duration.set("");
             distance.set("");
@@ -61,8 +64,8 @@ public class AddRouteLogViewModel {
     }
 
 
-    public StringProperty routeNameProperty() {
-        return routeName;
+    public StringProperty nameProperty() {
+        return name;
     }
 
     public StringProperty dateProperty() {

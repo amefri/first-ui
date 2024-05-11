@@ -51,11 +51,11 @@ public void setTourListService(TourListService tourListService) {
             System.out.println("No tour selected.");
         } else {
             System.out.println("Selected Tour: " + tourList.get(index));
+
             //deleteSelectedTour();
             //String removedTour = tourList.remove(index);
             //System.out.println("Removed Tour: " + removedTour);
-            // Perform action based on selected tour, like filling details in a form
-
+            // Perform action based on selected tour, like filling details in a for
 
         }
     }

@@ -9,13 +9,13 @@
 <?import javafx.collections.FXCollections?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="at.technikum.firstui.view.ToolBarRouteLogView"
+      fx:controller="at.technikum.firstui.view.ToolBarTourLogView"
       prefHeight="400.0" prefWidth="600.0">
 
     <VBox HBox.hgrow="NEVER">
         <ToolBar>
             <items>
-                <Button fx:id="buttonAdd" text= "Add" />
+                <Button fx:id="buttonAdd" text= "%add-button-text" />
                 <Button fx:id="buttonDelete" text="Delete" />
                 <Button fx:id="buttonModify" text="More" />
             </items>
