@@ -1,44 +1,67 @@
 package at.technikum.firstui.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.Arrays;
-import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class TourLog {
 
+    private final StringProperty name;
+    private final StringProperty date;
+    private final StringProperty duration;
+    private final StringProperty distance;
 
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("date")
-    private String date;
-    @JsonProperty("duration")
-    private String duration;
-    @JsonProperty("distance")
-    private String distance;
+    public TourLog(String name, String date, String duration, String distance) {
+        this.name = new SimpleStringProperty(name);
+        this.date = new SimpleStringProperty(date);
+        this.duration = new SimpleStringProperty(duration);
+        this.distance = new SimpleStringProperty(distance);
+    }
 
-
-        public TourLog(String name, String date, String duration, String distance){
-            this.name = name;
-            this.date = date;
-            this.duration = duration;
-            this.distance = distance;
-        }
-
-    public String getName() {
+    public StringProperty nameProperty() {
         return name;
     }
-    public String getDate() {
+
+    public StringProperty dateProperty() {
         return date;
     }
-    public String getDuration() {
+
+    public StringProperty durationProperty() {
         return duration;
     }
-    public String getDistance() {
+
+    public StringProperty distanceProperty() {
         return distance;
     }
 
-    public List<Object> getFieldsAsList() {
-        return Arrays.asList(name, date, duration, distance);
+    public String getName() {
+        return name.get();
+    }
+
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
+    public String getDate() {
+        return date.get();
+    }
+
+    public void setDate(String date) {
+        this.date.set(date);
+    }
+
+    public String getDuration() {
+        return duration.get();
+    }
+
+    public void setDuration(String duration) {
+        this.duration.set(duration);
+    }
+
+    public String getDistance() {
+        return distance.get();
+    }
+
+    public void setDistance(String distance) {
+        this.distance.set(distance);
     }
 }

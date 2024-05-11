@@ -12,10 +12,10 @@ import javafx.collections.ObservableList;
 
 public class TableListViewModel implements ObjectSubscriber {
 
-    private final ObservableList<String> tourLogs = FXCollections.observableArrayList();
+    private final ObservableList<TourLog> tourLogs = FXCollections.observableArrayList();
     private final IntegerProperty selectedAddTourIndex = new SimpleIntegerProperty();
-    private TourLogService tourLogService;
-    private Publisher publisher;
+    private final TourLogService tourLogService;
+    private final Publisher publisher;
 
     public TableListViewModel(Publisher publisher, TourLogService tourLogService) {
         this.publisher = publisher;
@@ -25,7 +25,7 @@ public class TableListViewModel implements ObjectSubscriber {
         this.publisher.subscribe(Event.TOUR_LOG_ADDED, this);
 
         // Add listener to handle selection index changes
-        this.selectedAddTourIndex.addListener((obs, oldVal, newVal) -> selectTourNames(newVal.intValue()));
+        this.selectedAddTourIndex.addListener((obs, oldVal, newVal) -> selectTourIndex(newVal.intValue()));
     }
 
     @Override
@@ -37,43 +37,36 @@ public class TableListViewModel implements ObjectSubscriber {
         }
     }
 
-    private void selectTourNames(int index) {
+    private void selectTourIndex(int index) {
         if (index == -1) {
-            // Handle no selection case, possibly clear a selection display
             System.out.println("No tour selected.");
         } else {
-            System.out.println("Selected Tour: " + tourLogs.get(index));
+            System.out.println("Selected Tour: " + tourLogs.get(index).getName());
         }
     }
 
     public void addToTourLogs(TourLog tourLog) {
-        tourLogs.add(tourLog.getName() + " - " + tourLog.getDate() + " - " + tourLog.getDuration() + " - " + tourLog.getDistance());
+        tourLogs.add(tourLog);
         System.out.println("Added tour log: " + tourLog.getName() + " to the list");
-
     }
 
-    public ObservableList<String> getTourLogs() {
+    public ObservableList<TourLog> getTourLogs() {
         return tourLogs;
     }
 
     public IntegerProperty selectedAddTourProperty() {
         return selectedAddTourIndex;
     }
+
     public void deleteSelectedTour() {
         int index = selectedAddTourIndex.get();
-        if (index >= 0 && index < tourLogs.size()) { // Check if index is valid
-            String[] parts = tourLogs.get(index).split(" - ");
-            String tourName = parts[0];
-            if (tourLogService.deleteTourByName(tourName)) {
-                tourLogs.remove(index);
-                System.out.println("Tour deleted: " + tourName);
-            } else {
-                System.out.println("Failed to delete tour: " + tourName);
-            }
+        if (index >= 0 && index < tourLogs.size()) {
+            TourLog tourLog = tourLogs.remove(index);
+            tourLogService.deleteTourByName(tourLog.getName());
+            System.out.println("Tour deleted: " + tourLog.getName());
         } else {
             System.out.println("Invalid index or empty list.");
         }
     }
-
 
 }

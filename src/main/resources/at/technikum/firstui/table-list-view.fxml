@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import at.technikum.firstui.entity.TourLog?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="at.technikum.firstui.view.TableListView">
+
+    <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn text="Name" fx:id="nameColumn"/>
+            <TableColumn text="Date" fx:id="dateColumn"/>
+            <TableColumn text="Distance" fx:id="distanceColumn"/>
+            <TableColumn text="Duration" fx:id="durationColumn"/>
+        </columns>
+    </TableView>
+
+</VBox>
