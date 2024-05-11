@@ -42,6 +42,7 @@ public class ViewFactory {
     private ViewFactory() {
         publisher = new Publisher();
         tourListService = new TourListService();
+        tourLogService = new TourLogService();
 
 
 
@@ -50,11 +51,9 @@ public class ViewFactory {
         listViewModel = new ListViewModel(publisher);
 
         toolBarViewModel = new ToolBarViewModel(publisher);
-        tourListViewModel = new TourListViewModel(publisher,tourListService);
+        tourListViewModel = new TourListViewModel(publisher,tourListService,tourLogService);
         addStageViewModel = new AddStageViewModel(publisher,tourListService);
 
-
-        tourLogService = new TourLogService();
 
 
         toolBarTourLogViewModel = new ToolBarTourLogViewModel(publisher);

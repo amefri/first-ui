@@ -5,6 +5,7 @@ import at.technikum.firstui.event.Event;
 import at.technikum.firstui.event.ObjectSubscriber;
 import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.services.TourListService;
+import at.technikum.firstui.services.TourLogService;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -17,14 +18,19 @@ public class TourListViewModel implements ObjectSubscriber {
     private final ObservableList<String> tourList = FXCollections.observableArrayList();
     private final IntegerProperty selectedAddTourIndex = new SimpleIntegerProperty();
     private TourListService tourListService;
+    private TourLogService tourLogService;
+
     private Publisher publisher;
 
-    public TourListViewModel(Publisher publisher, TourListService tourListService) {
+    public TourListViewModel(Publisher publisher, TourListService tourListService, TourLogService tourLogService) {
         this.publisher = publisher;
         this.tourListService = tourListService;
+        this.tourLogService = tourLogService;
+
 
         // Subscribe this ViewModel to the TOUR_ADDED event
         this.publisher.subscribe(Event.TOUR_ADDED, this);
+
 
         // Add listener to handle selection index changes
         this.selectedAddTourIndex.addListener((obs, oldVal, newVal) -> selectTourNames(newVal.intValue()));
@@ -42,6 +48,9 @@ public void setTourListService(TourListService tourListService) {
             Tours tour = (Tours) message;
             addToTourList(tour.getName());
             tourListService.addTour(tour);  // Assuming you also want to add the tour to a service-managed list
+        } else if (message instanceof String && message.equals(Event.SELECTED_TOUR_CHANGED)) {
+            String selectedTourName = (String) message;
+            selectTourNames(selectedTourName);
         }
     }
 
@@ -51,11 +60,9 @@ public void setTourListService(TourListService tourListService) {
             System.out.println("No tour selected.");
         } else {
             System.out.println("Selected Tour: " + tourList.get(index));
-
-            //deleteSelectedTour();
-            //String removedTour = tourList.remove(index);
-            //System.out.println("Removed Tour: " + removedTour);
-            // Perform action based on selected tour, like filling details in a for
+            String tourName = tourList.get(index);
+            tourLogService.getTourLogsByTourName(tourName);
+            publisher.publish(Event.SELECTED_TOUR_CHANGED, tourName);
 
         }
     }
@@ -90,5 +97,20 @@ public void setTourListService(TourListService tourListService) {
         }
     }
 
+    public void showSelectedTourLog() {
+        int index = selectedAddTourIndex.get();
+        String tourName = tourList.get(index);
+        tourLogService.getTourLogsByTourName(tourName);
+        publisher.publish(Event.SELECTED_TOUR_CHANGED, tourName);
+    }
+
+    private void selectTourNames(String selectedTourName) {
+        int index = tourList.indexOf(selectedTourName);
+        if (index != -1) {
+            selectedAddTourIndex.set(index);
+        } else {
+            System.out.println("Tour not found: " + selectedTourName);
+        }
+    }
 
 }

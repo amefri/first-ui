@@ -29,8 +29,15 @@ public class TourListView implements Initializable {
 
         NameListView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {  // Check for double-click
+                viewModel.showSelectedTourLog();
+            }
+        });
+        NameListView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 3) {  // Check for double-click
                 viewModel.deleteSelectedTour();
             }
         });
+
+
     }
 }

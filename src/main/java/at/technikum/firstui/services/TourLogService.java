@@ -33,4 +33,16 @@ public class TourLogService {
         return false;  // Return false if no tour with the specified name was found
     }
 
+
+    public Set<TourLog> getTourLogsByTourName(String tourName) {
+        Set<TourLog> logsByTour = new HashSet<>();
+        for (TourLog tourLog : tourLogs) {
+            if (tourLog.getName().equals(tourName)) {
+                logsByTour.add(tourLog);
+            }
+        }
+        return logsByTour;
+    }
+
+
 }
