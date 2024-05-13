@@ -46,6 +46,7 @@ public class ViewFactory {
 
 
 
+
         searchViewModel = new SearchViewModel(publisher);
         searchHistoryViewModel = new SearchHistoryViewModel(publisher);
         listViewModel = new ListViewModel(publisher);

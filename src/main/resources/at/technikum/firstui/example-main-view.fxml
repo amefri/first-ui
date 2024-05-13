@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      prefHeight="400.0" prefWidth="600.0">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml">
 
-    <fx:include source="tool-bar-view.fxml" />
-    <fx:include source="list-view.fxml" />
+    <top>
+        <VBox spacing="10">
+            <fx:include source="tool-bar-view.fxml"/>
+            <fx:include source="list-view.fxml"/>
+        </VBox>
+    </top>
 
-    <fx:include source="tool-bar-route-log-view.fxml" />
-    <fx:include source="table-list-view.fxml" />
+    <left>
+        <fx:include source="tool-bar-route-log-view.fxml"/>
+    </left>
 
-
-
-
-
-</VBox>
+    <center>
+        <VBox alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <fx:include source="table-list-view.fxml"/>
+        </VBox>
+    </center>
+</BorderPane>

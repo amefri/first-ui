@@ -15,7 +15,7 @@ ClassApplication extends Application {
     public void start(Stage stage) throws IOException {
         Parent mainView = FXMLDependencyInjector.load("example-main-view.fxml", Locale.ENGLISH);
         Scene scene = new Scene(mainView);
-        stage.setTitle("Add New Tour");
+        stage.setTitle("Very Fancy Tour Planner");
 
         stage.setScene(scene);
         stage.show();

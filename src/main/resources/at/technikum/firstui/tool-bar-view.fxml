@@ -10,9 +10,9 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="at.technikum.firstui.view.ToolBarView"
-      prefHeight="400.0" prefWidth="600.0">
+      >
 
-    <VBox HBox.hgrow="NEVER">
+    <VBox HBox.hgrow="ALWAYS">
         <ToolBar>
             <items>
                 <Button fx:id="buttonAdd" text= "%add-button-text" />
