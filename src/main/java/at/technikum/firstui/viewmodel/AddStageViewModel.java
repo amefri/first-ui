@@ -24,6 +24,7 @@ public class AddStageViewModel {
     private final StringProperty transportType = new SimpleStringProperty("");
     private final StringProperty distance = new SimpleStringProperty("");
     private final StringProperty estimatedTime = new SimpleStringProperty("");
+    private final StringProperty imagePath = new SimpleStringProperty("");
 
     private final BooleanProperty addTourButtonDisabled = new SimpleBooleanProperty(true);
 
@@ -41,6 +42,8 @@ public class AddStageViewModel {
         transportType.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         distance.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         estimatedTime.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+        imagePath.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+
     }
 
     private void updateAddTourButtonDisabled() {
@@ -54,9 +57,11 @@ public class AddStageViewModel {
     public void addTour() {
         if (!addTourButtonDisabled.get()) {
             System.out.println("Adding tour Button works");
-            Tours tour = new Tours(name.get(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get());
+            Tours tour = new Tours(name.get(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get(), imagePath.get());
+
             tourListService.addTour(tour);
             publisher.publish(Event.TOUR_ADDED, tour);
+
 
             // Clear fields after publishing
             name.set("");

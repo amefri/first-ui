@@ -19,7 +19,6 @@ public class TourListViewModel implements ObjectSubscriber {
     private final IntegerProperty selectedAddTourIndex = new SimpleIntegerProperty();
     private TourListService tourListService;
     private TourLogService tourLogService;
-
     private Publisher publisher;
 
     public TourListViewModel(Publisher publisher, TourListService tourListService, TourLogService tourLogService) {
@@ -48,9 +47,6 @@ public void setTourListService(TourListService tourListService) {
             Tours tour = (Tours) message;
             addToTourList(tour.getName());
             tourListService.addTour(tour);  // Assuming you also want to add the tour to a service-managed list
-        } else if (message instanceof String && message.equals(Event.SELECTED_TOUR_CHANGED)) {
-            String selectedTourName = (String) message;
-            selectTourNames(selectedTourName);
         }
     }
 
@@ -63,6 +59,7 @@ public void setTourListService(TourListService tourListService) {
             String tourName = tourList.get(index);
             tourLogService.getTourLogsByTourName(tourName);
             publisher.publish(Event.SELECTED_TOUR_CHANGED, tourName);
+
 
         }
     }
@@ -97,12 +94,7 @@ public void setTourListService(TourListService tourListService) {
         }
     }
 
-    public void showSelectedTourLog() {
-        int index = selectedAddTourIndex.get();
-        String tourName = tourList.get(index);
-        tourLogService.getTourLogsByTourName(tourName);
-        publisher.publish(Event.SELECTED_TOUR_CHANGED, tourName);
-    }
+
 
     private void selectTourNames(String selectedTourName) {
         int index = tourList.indexOf(selectedTourName);

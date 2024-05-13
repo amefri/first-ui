@@ -26,7 +26,7 @@ public class Publisher {
         subscribers.add(subscriber);
 
         subscriberMap.put(event, subscribers);
-        System.out.println("Subscriber added for event: " + event);
+        System.out.println("Subscriber added for event: " + event + subscriber);
     }
     public void subscribe(Event event, ObjectSubscriber objectSubscriber) {
         List<ObjectSubscriber> objectSubscribers = objectSubscriberMap.get(event);
@@ -38,19 +38,19 @@ public class Publisher {
         objectSubscribers.add(objectSubscriber);
 
         objectSubscriberMap.put(event, objectSubscribers);
-        System.out.println("ObjectSubscriber added for event: " + event);
+        System.out.println("ObjectSubscriber added for event: " + event + objectSubscriber);
     }
 
     // publish(event, message)
     public void publish(Event event, String message) {
-        List<Subscriber> subscribers = subscriberMap.get(event);
+        List<ObjectSubscriber> subscribers = objectSubscriberMap.get(event);
 
         if (null == subscribers) {
             // TODO: Log this event
             return;
         }
 
-        for (Subscriber subscriber: subscribers) {
+        for (ObjectSubscriber subscriber: subscribers) {
             subscriber.notify(message);
         }
     }

@@ -27,7 +27,12 @@ public class Tours {
     @JsonProperty("estimated_time")
     private String estimatedTime;
 
-        public Tours(String name, String description, String from, String to, String transportType, String distance, String estimatedTime) {
+    @JsonProperty("imagePath")
+    private String imagePath;
+
+
+
+    public Tours(String name, String description, String from, String to, String transportType, String distance, String estimatedTime, String imagePath) {
             this.name = name;
             this.description = description;
             this.from = from;
@@ -35,6 +40,8 @@ public class Tours {
             this.transportType = transportType;
             this.distance = distance;
             this.estimatedTime = estimatedTime;
+            this.imagePath = imagePath;
+
         }
 
     public String getName() {
@@ -95,6 +102,14 @@ public class Tours {
 
     public List<Object> getFieldsAsList() {
         return Arrays.asList(name, description, from, to, transportType, distance, estimatedTime);
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
     }
 

@@ -36,6 +36,9 @@ public class AddStageView implements Initializable {
     private TextField estimatedTimeField;
 
     @FXML
+    private TextField imageField;
+
+    @FXML
     private Button addTourButton;
 
    
@@ -54,6 +57,8 @@ public class AddStageView implements Initializable {
         transportTypeField.textProperty().bindBidirectional(viewModel.transportTypeProperty());
         distanceField.textProperty().bindBidirectional(viewModel.distanceProperty());
         estimatedTimeField.textProperty().bindBidirectional(viewModel.estimatedTimeProperty());
+        imageField.textProperty().bindBidirectional(viewModel.estimatedTimeProperty());
+
 
         // Bind button disable property
         addTourButton.disableProperty().bind(viewModel.addTourButtonDisabledProperty());
@@ -63,4 +68,6 @@ public class AddStageView implements Initializable {
     public void addTour() {
         viewModel.addTour();
     }
+
+
 }

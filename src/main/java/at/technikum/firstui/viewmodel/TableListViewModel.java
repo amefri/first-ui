@@ -20,13 +20,15 @@ public class TableListViewModel implements ObjectSubscriber {
     private final Publisher publisher;
 
 
+
     public TableListViewModel(Publisher publisher, TourLogService tourLogService) {
         this.publisher = publisher;
         this.tourLogService = tourLogService;
 
         // Subscribe this ViewModel to the TOUR_LOG_ADDED event
-        this.publisher.subscribe(Event.TOUR_LOG_ADDED, this);
         this.publisher.subscribe(Event.SELECTED_TOUR_CHANGED,this);
+        this.publisher.subscribe(Event.TOUR_LOG_ADDED, this);
+
 
         // Add listener to handle selection index changes
         this.selectedAddTourIndex.addListener((obs, oldVal, newVal) -> selectTourIndex(newVal.intValue()));
@@ -39,11 +41,11 @@ public class TableListViewModel implements ObjectSubscriber {
             TourLog tourLog = (TourLog) message;
             addToTourLogs(tourLog);
             tourLogService.addTourLog(tourLog);
-        }
-
-        if (message instanceof String && message.equals(Event.SELECTED_TOUR_CHANGED)) {
+        } else if (message instanceof String) {
             String selectedTourName = (String) message;
+            System.out.println("SelectedTourName for table: " + selectedTourName);
             updateTourLogs(selectedTourName);
+            tourLogService.getTourLogsByTourName(selectedTourName);
         }
 
 
@@ -82,7 +84,7 @@ public class TableListViewModel implements ObjectSubscriber {
 
     }
 
-    private void updateTourLogs(String selectedTourName) {
+    public void updateTourLogs(String selectedTourName) {
         Collection<TourLog> logs = tourLogService.getTourLogsByTourName(selectedTourName);
         tourLogs.clear();
         tourLogs.addAll(logs);

@@ -3,7 +3,8 @@ package at.technikum.firstui.entity;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class TourLog {
+public class
+TourLog {
 
     private final StringProperty name;
     private final StringProperty date;
