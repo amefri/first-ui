@@ -20,7 +20,7 @@ public class ToolBarTourLogView {
     @FXML
     public void initialize() {
         buttonAdd.setOnAction(e -> viewModel.onAdd());
-        buttonDelete.setOnAction(e -> viewModel.onDelete());
+        //buttonDelete.setOnAction(e -> viewModel.onDelete());
         buttonModify.setOnAction(e -> viewModel.onMore());
     }
 }

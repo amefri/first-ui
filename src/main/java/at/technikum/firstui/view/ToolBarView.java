@@ -20,7 +20,7 @@ public class ToolBarView {
     @FXML
     public void initialize() {
         buttonAdd.setOnAction(e -> viewModel.onAdd());
-        buttonDelete.setOnAction(e -> viewModel.onDelete());
+       // buttonDelete.setOnAction(e -> viewModel.onDelete());
         buttonMore.setOnAction(e -> viewModel.onMore());
     }
 }
