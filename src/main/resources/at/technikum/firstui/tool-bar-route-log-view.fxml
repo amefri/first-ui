@@ -12,7 +12,7 @@
       fx:controller="at.technikum.firstui.view.ToolBarTourLogView">
 
 
-    <VBox HBox.hgrow="ALWAYS">
+    <VBox HBox.hgrow="NEVER">
         <ToolBar>
             <items>
                 <Button fx:id="buttonAdd" text= "%add-button-text" />

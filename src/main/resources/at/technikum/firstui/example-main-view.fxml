@@ -8,13 +8,18 @@
 
     <top>
         <VBox spacing="10">
+            <Label text="Tour Toolbar" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
             <fx:include source="tool-bar-view.fxml"/>
+
             <fx:include source="list-view.fxml"/>
         </VBox>
     </top>
 
     <left>
-        <fx:include source="tool-bar-route-log-view.fxml"/>
+        <VBox>
+            <Label text="Tour Log Toolbar" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
+            <fx:include source="tool-bar-route-log-view.fxml"/>
+        </VBox>
     </left>
 
     <center>
@@ -22,6 +27,7 @@
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
+            <Label style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
             <fx:include source="table-list-view.fxml"/>
         </VBox>
     </center>
