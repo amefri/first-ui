@@ -28,7 +28,7 @@ public class SearchView implements Initializable {
         this.searchField.textProperty()
                 .bindBidirectional(viewModel.searchTextProperty());
         this.searchButton.disableProperty()
-                .bind(viewModel.disableSearchProperty());
+                .bind(viewModel.searchDisabledProperty());
     }
 
     @FXML
