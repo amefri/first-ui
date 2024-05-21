@@ -7,9 +7,10 @@
             xmlns:fx="http://javafx.com/fxml">
 
     <top>
+        <VBox><fx:include source="search-view.fxml"/>
+            <fx:include source="search-history-view.fxml"/></VBox>
         <VBox spacing="10">
-            <fx:include source="search-view.fxml"/>
-            <fx:include source="search-history-view.fxml"/>
+
             <Label text="Tour Toolbar" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
             <fx:include source="tool-bar-view.fxml"/>
 
