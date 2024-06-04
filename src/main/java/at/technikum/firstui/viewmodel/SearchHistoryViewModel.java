@@ -1,6 +1,7 @@
 package at.technikum.firstui.viewmodel;
 
 import at.technikum.firstui.event.Event;
+import at.technikum.firstui.event.ObjectSubscriber;
 import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.services.SearchTermHistoryService;
 import javafx.beans.property.IntegerProperty;
@@ -34,10 +35,14 @@ public class SearchHistoryViewModel {
 
         // on search event, update terms in history
         publisher.subscribe(
-                Event.SEARCH_TERM_SEARCHED, this::updateSearchHistory
+                Event.SEARCH_TERM_SEARCHED, (ObjectSubscriber) this::updateSearchHistory
         );
     }
 
+
+    public void addSearchTerm(String term) {
+        searchHistory.add(term);
+    }
     public void selectSearchHistory() {
         if (selectedSearchIndex.get() == -1) {
             return;
@@ -47,7 +52,7 @@ public class SearchHistoryViewModel {
         publisher.publish(Event.SEARCH_TERM_SELECTED, getSearchHistory().get(selectedSearchIndex.get()));
     }
 
-    private void updateSearchHistory(String message) {
+    private void updateSearchHistory(Object message) {
         searchHistory.setAll(searchTermHistoryService.findAll());
     }
 

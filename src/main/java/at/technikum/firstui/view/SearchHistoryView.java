@@ -1,6 +1,8 @@
 package at.technikum.firstui.view;
 
 import at.technikum.firstui.viewmodel.SearchHistoryViewModel;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
@@ -27,8 +29,7 @@ public class SearchHistoryView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.searchHistoryList
-                .setItems(viewModel.getSearchHistory());
+        this.searchHistoryList.setItems(viewModel.getSearchHistory());
         this.viewModel.selectedSearchIndexProperty()
                 .bind(searchHistoryList.getSelectionModel().selectedIndexProperty());
     }

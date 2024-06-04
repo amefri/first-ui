@@ -30,3 +30,5 @@ public class SearchTermHistoryService {
                 .toList();
     }
 }
+
+//TODO: alles auf string umstellen; bei touren und tourlog auf string umstellen zb mit id und sich dann für eins entscheiden; fragen wie die andere das gemacht haben
