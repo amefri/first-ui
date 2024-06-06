@@ -4,6 +4,8 @@ import at.technikum.firstui.event.ObjectSubscriber;
 import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.repository.SearchTermDatabaseRepository;
 import at.technikum.firstui.repository.SearchTermRepository;
+import at.technikum.firstui.repository.TourListDatabaseRepository;
+import at.technikum.firstui.repository.TourListRepository;
 import at.technikum.firstui.services.SearchTermHistoryService;
 import at.technikum.firstui.services.TourListService;
 import at.technikum.firstui.services.TourLogService;
@@ -31,6 +33,8 @@ public class ViewFactory {
     private final TourListViewModel tourListViewModel;
     private final AddStageViewModel addStageViewModel;
     private final SearchTermRepository searchTermRepository;
+    private final TourListRepository tourListRepository;
+
 
     private final SearchTermHistoryService searchTermHistoryService;
 
@@ -47,16 +51,22 @@ public class ViewFactory {
 
     private ViewFactory() {
         publisher = new Publisher();
-        tourListService = new TourListService();
+
+
+
+
+
+
+        //Repository
+        searchTermRepository = new SearchTermDatabaseRepository();
+        tourListRepository = new TourListDatabaseRepository();
+
+        //Service
+        searchTermHistoryService = new SearchTermHistoryService(searchTermRepository);
+        tourListService = new TourListService(tourListRepository);
         tourLogService = new TourLogService();
 
-
-
-
-        searchTermRepository = new SearchTermDatabaseRepository();
-
-        searchTermHistoryService = new SearchTermHistoryService(searchTermRepository);
-
+        //ViewModel
         searchViewModel = new SearchViewModel(publisher, searchTermHistoryService);
         searchHistoryViewModel = new SearchHistoryViewModel(publisher, searchTermHistoryService);
         listViewModel = new ListViewModel(publisher);
@@ -64,7 +74,6 @@ public class ViewFactory {
         toolBarViewModel = new ToolBarViewModel(publisher);
         tourListViewModel = new TourListViewModel(publisher,tourListService,tourLogService);
         addStageViewModel = new AddStageViewModel(publisher,tourListService);
-
 
 
         toolBarTourLogViewModel = new ToolBarTourLogViewModel(publisher);

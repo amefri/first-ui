@@ -1,35 +1,33 @@
 package at.technikum.firstui.services;
 
 import at.technikum.firstui.entity.Tours;
+import at.technikum.firstui.repository.TourListRepository;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 public class TourListService {
-    private Set<Tours> tours = new HashSet<>();
+    private final TourListRepository tourRepository;
+
+    public TourListService(TourListRepository tourRepository) {
+        this.tourRepository = tourRepository;
+    }
 
     public void addTour(Tours tour) {
         System.out.println("Tour added: " + tour.getName());
-        tours.add(tour);
+        tourRepository.save(tour);
     }
 
-    public Set<Tours> getTours() {
-        return tours;
+    public List<Tours> getTours() {
+        return tourRepository.findAll();
     }
 
     public boolean deleteTourByName(String tourName) {
-        Iterator<Tours> iterator = tours.iterator();
-        while (iterator.hasNext()) {
-            Tours tour = iterator.next();
-            if (tour.getName().equals(tourName)) {
-                iterator.remove();  // Remove the tour from the set
-                System.out.println("Tour removed by name: " + tourName);
-                return true;  // Return true if the tour was successfully removed
-            }
+        if (tourRepository.findByName(tourName).isPresent()) {
+            tourRepository.deleteByName(tourName);
+            System.out.println("Tour removed by name: " + tourName);
+            return true;
         }
         System.out.println("Tour not found by name: " + tourName);
-        return false;  // Return false if no tour with the specified name was found
+        return false;
     }
-
 }
