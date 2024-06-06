@@ -1,14 +1,10 @@
 package at.technikum.firstui.entity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "t_tours")
@@ -49,6 +45,15 @@ public class Tours {
     @Column(name = "route_information")
     @JsonProperty("imagePath")
     private String imagePath;
+
+    @OneToMany(
+            targetEntity = TourLog.class,
+            mappedBy = "tour",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+
+    private List<TourLog> tourLogs = new ArrayList<>();
+
 
     // Default constructor
     public Tours() {
@@ -138,6 +143,23 @@ public class Tours {
         this.imagePath = imagePath;
     }
 
+    public List<TourLog> getTourLogs() {
+        return tourLogs;
+    }
+
+    public void setTourLogs(List<TourLog> tourLogs) {
+        this.tourLogs = tourLogs;
+    }
+
+    public void addTourLog(TourLog tourLog) {
+        tourLog.setTour(this);
+        tourLogs.add(tourLog);
+    }
+
+    public void removeTourLog(TourLog tourLog) {
+        tourLogs.remove(tourLog);
+        tourLog.setTour(null);
+    }
     public List<Object> getFieldsAsList() {
         return Arrays.asList(name, description, from, to, transportType, distance, estimatedTime, imagePath);
     }

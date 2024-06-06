@@ -53,7 +53,6 @@ public class AddRouteLogView implements Initializable {
     @FXML
     public void addTourLog() {
         viewModel.addTourLog();
-
     }
 
 }

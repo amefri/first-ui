@@ -2,10 +2,7 @@ package at.technikum.firstui;
 
 import at.technikum.firstui.event.ObjectSubscriber;
 import at.technikum.firstui.event.Publisher;
-import at.technikum.firstui.repository.SearchTermDatabaseRepository;
-import at.technikum.firstui.repository.SearchTermRepository;
-import at.technikum.firstui.repository.TourListDatabaseRepository;
-import at.technikum.firstui.repository.TourListRepository;
+import at.technikum.firstui.repository.*;
 import at.technikum.firstui.services.SearchTermHistoryService;
 import at.technikum.firstui.services.TourListService;
 import at.technikum.firstui.services.TourLogService;
@@ -32,8 +29,12 @@ public class ViewFactory {
     private final ToolBarViewModel toolBarViewModel;
     private final TourListViewModel tourListViewModel;
     private final AddStageViewModel addStageViewModel;
+
+
+    //Repository
     private final SearchTermRepository searchTermRepository;
     private final TourListRepository tourListRepository;
+    private final TourLogRepository tourLogRepository;
 
 
     private final SearchTermHistoryService searchTermHistoryService;
@@ -60,11 +61,12 @@ public class ViewFactory {
         //Repository
         searchTermRepository = new SearchTermDatabaseRepository();
         tourListRepository = new TourListDatabaseRepository();
+        tourLogRepository = new TourLogDatabaseRepository();
 
         //Service
         searchTermHistoryService = new SearchTermHistoryService(searchTermRepository);
         tourListService = new TourListService(tourListRepository);
-        tourLogService = new TourLogService();
+        tourLogService = new TourLogService(tourLogRepository);
 
         //ViewModel
         searchViewModel = new SearchViewModel(publisher, searchTermHistoryService);

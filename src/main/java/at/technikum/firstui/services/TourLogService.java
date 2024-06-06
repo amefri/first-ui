@@ -1,48 +1,37 @@
 package at.technikum.firstui.services;
 
 import at.technikum.firstui.entity.TourLog;
+import at.technikum.firstui.entity.Tours;
+import at.technikum.firstui.repository.TourLogRepository;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 public class TourLogService {
 
-    private Set<TourLog> tourLogs = new HashSet<>();
+    private final TourLogRepository tourLogRepository;
+
+    public TourLogService(TourLogRepository tourLogRepository) {
+        this.tourLogRepository = tourLogRepository;
+    }
 
     public void addTourLog(TourLog tourLog) {
         System.out.println("TourLog added: " + tourLog.getName());
-        tourLogs.add(tourLog);
+        tourLogRepository.save(tourLog);
     }
 
-    public Set<TourLog> getTours() {
-        return tourLogs;
+    public List<TourLog> getTourLogsByTourName(String tourName) {
+        return tourLogRepository.findByTourName(tourName);
     }
 
-    public boolean deleteTourByName(String tourName) {
-        Iterator<TourLog> iterator = tourLogs.iterator();
-        while (iterator.hasNext()) {
-            TourLog tourLog = iterator.next();
-            if (tourLog.getName().equals(tourName)) {
-                iterator.remove();  // Remove the tour from the set
-                System.out.println("TourLog removed by name: " + tourName);
-                return true;  // Return true if the tour was successfully removed
-            }
-        }
-        System.out.println("TourLog not found by name: " + tourName);
-        return false;  // Return false if no tour with the specified name was found
+    public List<TourLog> getAllTourLogs() {
+        return tourLogRepository.findAll();
+    }
+
+    public void deleteTourLog(Long id) {
+        tourLogRepository.deleteById(id);
     }
 
 
-    public Set<TourLog> getTourLogsByTourName(String tourName) {
-        Set<TourLog> logsByTour = new HashSet<>();
-        for (TourLog tourLog : tourLogs) {
-            if (tourLog.getName().equals(tourName)) {
-                logsByTour.add(tourLog);
-            }
-        }
-        return logsByTour;
-    }
 
 
 }

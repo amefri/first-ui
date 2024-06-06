@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.Collection;
+import java.util.List;
 
 public class TableListViewModel implements ObjectSubscriber {
 
@@ -26,30 +27,40 @@ public class TableListViewModel implements ObjectSubscriber {
         this.tourLogService = tourLogService;
 
         // Subscribe this ViewModel to the TOUR_LOG_ADDED event
-        this.publisher.subscribe(Event.SELECTED_TOUR_CHANGED,this);
-        this.publisher.subscribe(Event.TOUR_LOG_ADDED, this);
+        this.publisher.subscribe(Event.SELECTED_TOUR_CHANGED, (ObjectSubscriber) this::updateTourLogs);
+        this.publisher.subscribe(Event.TOUR_LOG_ADDED, (ObjectSubscriber) this::addToTourLogs);
 
+        loadTourLogs();
 
         // Add listener to handle selection index changes
         this.selectedAddTourIndex.addListener((obs, oldVal, newVal) -> selectTourIndex(newVal.intValue()));
     }
 
+    private void loadTourLogs() {
+        List<TourLog> logs = tourLogService.getAllTourLogs();
+        tourLogs.clear();
+        tourLogs.addAll(logs);
+    }
 
-    @Override
-    public void notify(Object message) {
-        if (message instanceof TourLog) {
-            TourLog tourLog = (TourLog) message;
-            addToTourLogs(tourLog);
-            tourLogService.addTourLog(tourLog);
-        } else if (message instanceof String) {
+    private void updateTourLogs(Object message) {
+        if (message instanceof String) {
             String selectedTourName = (String) message;
             System.out.println("SelectedTourName for table: " + selectedTourName);
-            updateTourLogs(selectedTourName);
-            tourLogService.getTourLogsByTourName(selectedTourName);
+            List<TourLog> logs = tourLogService.getTourLogsByTourName(selectedTourName);
+            tourLogs.clear();
+            tourLogs.addAll(logs);
         }
-
-
     }
+
+    private void addToTourLogs(Object message) {
+        if (message instanceof TourLog) {
+            TourLog tourLog = (TourLog) message;
+            tourLogs.add(tourLog);
+        }
+    }
+
+
+
 
     private void selectTourIndex(int index) {
         if (index == -1) {
@@ -59,10 +70,7 @@ public class TableListViewModel implements ObjectSubscriber {
         }
     }
 
-    public void addToTourLogs(TourLog tourLog) {
-        tourLogs.add(tourLog);
-        System.out.println("Added tour log: " + tourLog.getName() + " to the list");
-    }
+
 
     public ObservableList<TourLog> getTourLogs() {
         return tourLogs;
@@ -76,7 +84,7 @@ public class TableListViewModel implements ObjectSubscriber {
         int index = selectedAddTourIndex.get();
         if (index >= 0 && index < tourLogs.size()) {
             TourLog tourLog = tourLogs.remove(index);
-            tourLogService.deleteTourByName(tourLog.getName());
+            //tourLogService.deleteTourByName(tourLog.getName());
             System.out.println("Tour deleted: " + tourLog.getName());
         } else {
             System.out.println("Invalid index or empty list.");
@@ -84,10 +92,18 @@ public class TableListViewModel implements ObjectSubscriber {
 
     }
 
+    @Override
+    public void notify(Object message) {
+
+    }
+
+    /*
     public void updateTourLogs(String selectedTourName) {
         Collection<TourLog> logs = tourLogService.getTourLogsByTourName(selectedTourName);
         tourLogs.clear();
         tourLogs.addAll(logs);
     }
+
+     */
 }
 

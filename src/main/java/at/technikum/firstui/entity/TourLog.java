@@ -1,68 +1,107 @@
 package at.technikum.firstui.entity;
 
+import jakarta.persistence.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class
-TourLog {
+@Entity
+@Table(name = "t_tour_logs")
+public class TourLog {
 
-    private final StringProperty name;
-    private final StringProperty date;
-    private final StringProperty duration;
-    private final StringProperty distance;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "date")
+    private String date;
+
+    @Column(name = "duration")
+    private String duration;
+
+    @Column(name = "distance")
+    private String distance;
+
+    @ManyToOne
+    @JoinColumn(name = "tour_id")
+    private Tours tour;
+
+    public TourLog() {
+    }
 
     public TourLog(String name, String date, String duration, String distance) {
-        this.name = new SimpleStringProperty(name);
-        this.date = new SimpleStringProperty(date);
-        this.duration = new SimpleStringProperty(duration);
-        this.distance = new SimpleStringProperty(distance);
+        this.name = name;
+        this.date = date;
+        this.duration = duration;
+        this.distance = distance;
     }
 
-    public StringProperty nameProperty() {
-        return name;
+    // Getter and Setter methods
+    // (include getters and setters for all properties including tour)
+
+    public Long getId() {
+        return id;
     }
 
-    public StringProperty dateProperty() {
-        return date;
-    }
-
-    public StringProperty durationProperty() {
-        return duration;
-    }
-
-    public StringProperty distanceProperty() {
-        return distance;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
-        return name.get();
+        return name;
     }
 
     public void setName(String name) {
-        this.name.set(name);
+        this.name = name;
     }
 
     public String getDate() {
-        return date.get();
+        return date;
     }
 
     public void setDate(String date) {
-        this.date.set(date);
+        this.date = date;
     }
 
     public String getDuration() {
-        return duration.get();
+        return duration;
     }
 
     public void setDuration(String duration) {
-        this.duration.set(duration);
+        this.duration = duration;
     }
 
     public String getDistance() {
-        return distance.get();
+        return distance;
     }
 
     public void setDistance(String distance) {
-        this.distance.set(distance);
+        this.distance = distance;
+    }
+
+    public Tours getTour() {
+        return tour;
+    }
+
+    public void setTour(Tours tour) {
+        this.tour = tour;
+    }
+
+    public StringProperty nameProperty() {
+        return new SimpleStringProperty(name);
+    }
+
+    public StringProperty dateProperty() {
+        return new SimpleStringProperty(date);
+    }
+
+    public StringProperty durationProperty() {
+        return new SimpleStringProperty(duration);
+    }
+
+    public StringProperty distanceProperty() {
+        return new SimpleStringProperty(distance);
     }
 }

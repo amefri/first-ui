@@ -11,6 +11,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import static at.technikum.firstui.event.Event.SELECTED_TOUR_INDEX;
+
 public class TourListViewModel implements ObjectSubscriber {
 
     private final ObservableList<String> tourList = FXCollections.observableArrayList();
@@ -55,9 +57,12 @@ public class TourListViewModel implements ObjectSubscriber {
             System.out.println("No tour selected.");
         } else {
             System.out.println("Selected Tour: " + tourList.get(index));
+            System.out.println("Selected Index: " + index);
             String tourName = tourList.get(index);
             tourLogService.getTourLogsByTourName(tourName);
+            publisher.publish(SELECTED_TOUR_INDEX, index+1);
             publisher.publish(Event.SELECTED_TOUR_CHANGED, tourName);
+
         }
     }
 
