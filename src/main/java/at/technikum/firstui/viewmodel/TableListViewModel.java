@@ -10,7 +10,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.Collection;
 import java.util.List;
 
 public class TableListViewModel implements ObjectSubscriber {
@@ -19,8 +18,6 @@ public class TableListViewModel implements ObjectSubscriber {
     private final IntegerProperty selectedAddTourIndex = new SimpleIntegerProperty();
     private final TourLogService tourLogService;
     private final Publisher publisher;
-
-
 
     public TableListViewModel(Publisher publisher, TourLogService tourLogService) {
         this.publisher = publisher;
@@ -33,23 +30,16 @@ public class TableListViewModel implements ObjectSubscriber {
         loadTourLogs();
 
         // Add listener to handle selection index changes
-        this.selectedAddTourIndex.addListener((obs, oldVal, newVal) -> selectTourIndex(newVal.intValue()));
+        this.selectedAddTourIndex.addListener((obs, oldVal, newVal) -> {
+            System.out.println("Selected Index Changed in ViewModel: " + newVal);
+            selectTourLogIndex(newVal.intValue());
+        });
     }
 
     private void loadTourLogs() {
         List<TourLog> logs = tourLogService.getAllTourLogs();
         tourLogs.clear();
         tourLogs.addAll(logs);
-    }
-
-    private void updateTourLogs(Object message) {
-        if (message instanceof String) {
-            String selectedTourName = (String) message;
-            System.out.println("SelectedTourName for table: " + selectedTourName);
-            List<TourLog> logs = tourLogService.getTourLogsByTourName(selectedTourName);
-            tourLogs.clear();
-            tourLogs.addAll(logs);
-        }
     }
 
     private void addToTourLogs(Object message) {
@@ -59,18 +49,27 @@ public class TableListViewModel implements ObjectSubscriber {
         }
     }
 
-
-
-
-    private void selectTourIndex(int index) {
+    private void selectTourLogIndex(int index) {
+        System.out.println("selectTourLogIndex called with index: " + index);
         if (index == -1) {
             System.out.println("No tour selected.");
+        } else if (index >= 0 && index < tourLogs.size()) {
+            System.out.println("Selected TourLog: " + tourLogs.get(index).getName());
         } else {
-            System.out.println("Selected Tour: " + tourLogs.get(index).getName());
+            System.out.println("Invalid index.");
         }
     }
 
 
+    private void updateTourLogs(Object message) {
+        if (message instanceof Long) {
+            Long selectedTourId = (Long) message;
+            System.out.println("Selected Index: " + selectedTourId);
+            List<TourLog> logs = tourLogService.getTourLogsByTourId(selectedTourId);
+            tourLogs.clear();
+            tourLogs.addAll(logs);
+        }
+    }
 
     public ObservableList<TourLog> getTourLogs() {
         return tourLogs;
@@ -80,30 +79,23 @@ public class TableListViewModel implements ObjectSubscriber {
         return selectedAddTourIndex;
     }
 
+    public void setSelectedAddTourIndex(int index) {
+        this.selectedAddTourIndex.set(index);
+    }
+
     public void deleteSelectedTour() {
         int index = selectedAddTourIndex.get();
         if (index >= 0 && index < tourLogs.size()) {
             TourLog tourLog = tourLogs.remove(index);
-            //tourLogService.deleteTourByName(tourLog.getName());
+            tourLogService.deleteTourByName(tourLog.getName());
             System.out.println("Tour deleted: " + tourLog.getName());
         } else {
             System.out.println("Invalid index or empty list.");
         }
-
     }
 
     @Override
     public void notify(Object message) {
-
+        // Implementation for the notify method if needed
     }
-
-    /*
-    public void updateTourLogs(String selectedTourName) {
-        Collection<TourLog> logs = tourLogService.getTourLogsByTourName(selectedTourName);
-        tourLogs.clear();
-        tourLogs.addAll(logs);
-    }
-
-     */
 }
-

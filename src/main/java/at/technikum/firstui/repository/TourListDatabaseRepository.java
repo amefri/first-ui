@@ -56,6 +56,11 @@ public class TourListDatabaseRepository implements TourListRepository {
     }
 
     @Override
+    public Integer getTourIndexByName(String name) {
+        return null;
+    }
+
+    @Override
     public void deleteByName(String name) {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             EntityTransaction transaction = entityManager.getTransaction();

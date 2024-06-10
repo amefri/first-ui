@@ -53,29 +53,8 @@ public class TourLogDatabaseRepository implements TourLogRepository {
         }
     }
 
-    @Override
-    public void deleteById(Long id) {
-        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
-            EntityTransaction transaction = entityManager.getTransaction();
-            transaction.begin();
-            TourLog tourLog = entityManager.find(TourLog.class, id);
-            if (tourLog != null) {
-                entityManager.remove(tourLog);
-            }
-            transaction.commit();
-        }
-    }
 
-    @Override
-    public TourLog findByName(String name) {
-        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
-            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<TourLog> criteriaQuery = criteriaBuilder.createQuery(TourLog.class);
-            Root<TourLog> root = criteriaQuery.from(TourLog.class);
-            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("name"), name));
-            return entityManager.createQuery(criteriaQuery).getSingleResult();
-        }
-    }
+
 
     public List<TourLog> findByTourName(String tourName) {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
@@ -85,5 +64,26 @@ public class TourLogDatabaseRepository implements TourLogRepository {
             criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("tour").get("name"), tourName));
             return entityManager.createQuery(criteriaQuery).getResultList();
         }
+    }
+
+    @Override
+    public void deleteTourLog(String tourName) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<TourLog> criteriaQuery = criteriaBuilder.createQuery(TourLog.class);
+            Root<TourLog> root = criteriaQuery.from(TourLog.class);
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("tour").get("name"), tourName));
+
+            List<TourLog> tourLogs = entityManager.createQuery(criteriaQuery).getResultList();
+            for (TourLog tourLog : tourLogs) {
+                entityManager.remove(tourLog);
+            }
+
+            transaction.commit();
+        }
+
     }
 }

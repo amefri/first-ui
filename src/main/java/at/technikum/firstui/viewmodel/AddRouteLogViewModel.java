@@ -11,12 +11,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
-public class AddRouteLogViewModel {
+import java.util.List;
+
+public class AddRouteLogViewModel implements ObjectSubscriber {
 
     private final Publisher publisher;
     private final TourLogService tourLogService;
 
-    String index;
+    long index;
 
     private final StringProperty name = new SimpleStringProperty("");
     private final StringProperty date = new SimpleStringProperty("");
@@ -31,6 +33,9 @@ public class AddRouteLogViewModel {
         this.publisher = publisher;
         this.tourLogService = tourLogService;
 
+        this.publisher.subscribe(Event.SELECTED_TOUR_CHANGED, (ObjectSubscriber) this::updateIndex);
+
+
 
         // Listen to changes in fields and update addButtonDisabled property
         name.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
@@ -39,6 +44,13 @@ public class AddRouteLogViewModel {
         distance.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
     }
 
+    private void updateIndex(Object message) {
+        if (message instanceof Long) {
+            Long selectedTourId = (Long) message;
+            System.out.println("Selected Index addroutelogvm: " + selectedTourId);
+        }
+
+    }
 
 
     private void updateAddTourLogButtonDisabled() {
@@ -87,4 +99,8 @@ public class AddRouteLogViewModel {
         return addTourLogButtonDisabled;
     }
 
+    @Override
+    public void notify(Object message) {
+
+    }
 }

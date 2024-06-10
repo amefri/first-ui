@@ -34,19 +34,19 @@ public class TableListView implements Initializable {
         System.out.println("TableListView initialized");
 
         // Bind columns to model properties
-
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
         distanceColumn.setCellValueFactory(cellData -> cellData.getValue().distanceProperty());
         durationColumn.setCellValueFactory(cellData -> cellData.getValue().durationProperty());
 
-
-
         // Set table items
         tableView.setItems(viewModel.getTourLogs());
 
-        // Bind selection property
-        viewModel.selectedAddTourProperty().bind(tableView.getSelectionModel().selectedIndexProperty());
+        // Add listener to update ViewModel's selected index property
+        tableView.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> {
+            System.out.println("Selected Index Changed in View: " + newVal);
+            viewModel.setSelectedAddTourIndex(newVal.intValue());
+        });
 
         // Handle double-click event
         tableView.setOnMouseClicked(event -> {

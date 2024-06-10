@@ -25,7 +25,6 @@ public class TourLog {
     private String distance;
 
     @ManyToOne
-    @JoinColumn(name = "tour_id")
     private Tours tour;
 
     public TourLog() {

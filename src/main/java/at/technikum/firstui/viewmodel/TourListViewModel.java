@@ -43,14 +43,21 @@ public class TourListViewModel implements ObjectSubscriber {
         }
     }
 
-    @Override
-    public void notify(Object message) {
-        if (message instanceof Tours) {
-            Tours tour = (Tours) message;
-            addToTourList(tour.getName());
 
+    public Long getPKTour() {
+        int index = selectedAddTourIndex.get();
+        if (index >= 0 && index < tourList.size()) {
+            String tourName = tourList.get(index);
+            Tours tour = tourListService.getTourByName(tourName);
+            if (tour != null) {
+                System.out.println("Primarykey: " + tour.getId());
+                return tour.getId();
+                // Annahme, dass getId() den Primärschlüssel zurückgibt
+            }
         }
+        return null;
     }
+
 
     private void selectTourNames(int index) {
         if (index == -1) {
@@ -59,9 +66,9 @@ public class TourListViewModel implements ObjectSubscriber {
             System.out.println("Selected Tour: " + tourList.get(index));
             System.out.println("Selected Index: " + index);
             String tourName = tourList.get(index);
+            long dbindex = getPKTour();
             tourLogService.getTourLogsByTourName(tourName);
-            publisher.publish(SELECTED_TOUR_INDEX, index+1);
-            publisher.publish(Event.SELECTED_TOUR_CHANGED, tourName);
+            publisher.publish(Event.SELECTED_TOUR_CHANGED, dbindex) ;
 
         }
     }
@@ -94,12 +101,12 @@ public class TourListViewModel implements ObjectSubscriber {
         }
     }
 
-    private void selectTourNames(String selectedTourName) {
-        int index = tourList.indexOf(selectedTourName);
-        if (index != -1) {
-            selectedAddTourIndex.set(index);
-        } else {
-            System.out.println("Tour not found: " + selectedTourName);
+    @Override
+    public void notify(Object message) {
+        if (message instanceof Tours) {
+            Tours tour = (Tours) message;
+            addToTourList(tour.getName());
+
         }
     }
 }

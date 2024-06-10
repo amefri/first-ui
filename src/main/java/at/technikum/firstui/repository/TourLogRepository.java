@@ -8,12 +8,6 @@ public interface TourLogRepository {
     List<TourLog> findAll();
     TourLog save(TourLog entity);
     List<TourLog> findByTourId(Long tourId);
-    void deleteById(Long id);
-
-
-    TourLog findByName(String name);
-
     List<TourLog> findByTourName(String tourName);
-
-
+    void deleteTourLog(String name);
 }

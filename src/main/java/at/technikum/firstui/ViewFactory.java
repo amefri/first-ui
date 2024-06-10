@@ -66,7 +66,7 @@ public class ViewFactory {
         //Service
         searchTermHistoryService = new SearchTermHistoryService(searchTermRepository);
         tourListService = new TourListService(tourListRepository);
-        tourLogService = new TourLogService(tourLogRepository);
+        tourLogService = new TourLogService(tourLogRepository, tourListRepository);
 
         //ViewModel
         searchViewModel = new SearchViewModel(publisher, searchTermHistoryService);
