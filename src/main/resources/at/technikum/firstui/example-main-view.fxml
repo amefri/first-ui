@@ -10,10 +10,10 @@
 
         <VBox spacing="10">
 
-            <!--
+
             <fx:include source="search-view.fxml"/>
             <fx:include source="search-history-view.fxml"/>
--->
+
             <Label text="Tour Toolbar Tourlist" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
             <fx:include source="tool-bar-view.fxml"/>
             <fx:include source="list-view.fxml"/>
