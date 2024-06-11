@@ -52,6 +52,8 @@ public class Tours {
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
 
+    private List<TourLog> selectedTourLogs;
+
     private List<TourLog> tourLogs = new ArrayList<>();
 
 
@@ -68,6 +70,11 @@ public class Tours {
         this.distance = distance;
         this.estimatedTime = estimatedTime;
         this.imagePath = imagePath;
+    }
+
+    public void addSelectedTourLog(TourLog tourLog){
+        tourLog.setTourLog(this);
+        selectedTourLogs.add(tourLog);
     }
 
     // Getter and Setter methods
@@ -163,4 +170,6 @@ public class Tours {
     public List<Object> getFieldsAsList() {
         return Arrays.asList(name, description, from, to, transportType, distance, estimatedTime, imagePath);
     }
+
+
 }

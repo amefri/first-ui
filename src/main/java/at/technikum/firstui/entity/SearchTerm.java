@@ -5,6 +5,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.util.UUID;
 
+import jakarta.persistence.*;
+
+import java.util.List;
+
 @Entity
 public class SearchTerm {
 
@@ -13,6 +17,15 @@ public class SearchTerm {
     private UUID id;
 
     private String term;
+
+    @OneToMany(
+            targetEntity = SelectedTime.class,
+            mappedBy = "searchTerm",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
+    )
+
+    private List<SelectedTime> selectedTimes;
 
     public SearchTerm() {}
 
@@ -35,4 +48,10 @@ public class SearchTerm {
     public void setTerm(String term) {
         this.term = term;
     }
+
+    public void addSelectedTime(SelectedTime selectedTime) {
+        selectedTime.setSearchTerm(this);
+        selectedTimes.add(selectedTime);
+    }
+
 }

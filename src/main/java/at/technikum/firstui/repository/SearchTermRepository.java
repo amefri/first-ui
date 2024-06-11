@@ -11,5 +11,7 @@ public interface SearchTermRepository {
 
     SearchTerm save(SearchTerm entity);
 
+    SearchTerm update(SearchTerm entity);
+
     Optional<SearchTerm> findByTerm(String term);
 }

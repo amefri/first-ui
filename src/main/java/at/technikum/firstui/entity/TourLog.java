@@ -37,6 +37,10 @@ public class TourLog {
         this.distance = distance;
     }
 
+    public void setTourLog(Tours tour){
+        this.tour = tour;
+    }
+
     // Getter and Setter methods
     // (include getters and setters for all properties including tour)
 

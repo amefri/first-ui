@@ -1,6 +1,7 @@
 package at.technikum.firstui.services;
 
 import at.technikum.firstui.entity.SearchTerm;
+import at.technikum.firstui.entity.SelectedTime;
 import at.technikum.firstui.repository.SearchTermRepository;
 
 import java.util.List;
@@ -22,6 +23,21 @@ public class SearchTermHistoryService {
         }
 
         searchTermRepository.save(new SearchTerm(term));
+    }
+
+    public void addSelectedTimeToTerm(String term) {
+        Optional<SearchTerm> searchTermOptional = searchTermRepository.findByTerm(term);
+
+        if (searchTermOptional.isEmpty()) {
+            return;
+        }
+
+        SearchTerm searchTerm = searchTermOptional.get();
+
+        SelectedTime selectedTime = new SelectedTime();
+        searchTerm.addSelectedTime(selectedTime);
+
+        searchTermRepository.update(searchTerm);
     }
 
     public List<String> findAll() {

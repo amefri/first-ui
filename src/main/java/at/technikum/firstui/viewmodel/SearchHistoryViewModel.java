@@ -39,17 +39,21 @@ public class SearchHistoryViewModel {
         );
     }
 
-
-    public void addSearchTerm(String term) {
-        searchHistory.add(term);
-    }
     public void selectSearchHistory() {
         if (selectedSearchIndex.get() == -1) {
             return;
         }
 
         // TODO send history select event
-        publisher.publish(Event.SEARCH_TERM_SELECTED, getSearchHistory().get(selectedSearchIndex.get()));
+        String term = getSearchHistory().get(selectedSearchIndex.get());
+        publisher.publish(Event.SEARCH_TERM_SELECTED, term);
+
+        searchTermHistoryService.addSelectedTimeToTerm(term);
+    }
+
+
+    public void addSearchTerm(String term) {
+        searchHistory.add(term);
     }
 
     private void updateSearchHistory(Object message) {
