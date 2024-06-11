@@ -52,7 +52,6 @@ public class Tours {
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
 
-    private List<TourLog> selectedTourLogs;
 
     private List<TourLog> tourLogs = new ArrayList<>();
 
@@ -72,10 +71,7 @@ public class Tours {
         this.imagePath = imagePath;
     }
 
-    public void addSelectedTourLog(TourLog tourLog){
-        tourLog.setTourLog(this);
-        selectedTourLogs.add(tourLog);
-    }
+
 
     // Getter and Setter methods
     public Long getId() {
