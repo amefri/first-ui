@@ -79,11 +79,13 @@ public class TourLogDatabaseRepository implements TourLogRepository {
 
             List<TourLog> tourLogs = entityManager.createQuery(criteriaQuery).getResultList();
             for (TourLog tourLog : tourLogs) {
+                if (!entityManager.contains(tourLog)) {
+                    tourLog = entityManager.merge(tourLog);
+                }
                 entityManager.remove(tourLog);
             }
 
             transaction.commit();
         }
-
     }
 }

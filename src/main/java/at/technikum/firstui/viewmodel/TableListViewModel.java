@@ -49,6 +49,17 @@ public class TableListViewModel implements ObjectSubscriber {
         }
     }
 
+    public void deleteSelectedTour() {
+        int index = selectedAddTourIndex.get();
+        if (index >= 0 && index < tourLogs.size()) {
+            TourLog tourLog = tourLogs.remove(index);
+            tourLogService.deleteTourByName(tourLog.getName());
+            System.out.println("Tour deleted: " + tourLog.getName());
+        } else {
+            System.out.println("Invalid index or empty list.");
+        }
+    }
+
     private void selectTourLogIndex(int index) {
         System.out.println("selectTourLogIndex called with index: " + index);
         if (index == -1) {
@@ -79,20 +90,9 @@ public class TableListViewModel implements ObjectSubscriber {
         return selectedAddTourIndex;
     }
 
-    public void setSelectedAddTourIndex(int index) {
-        this.selectedAddTourIndex.set(index);
-    }
 
-    public void deleteSelectedTour() {
-        int index = selectedAddTourIndex.get();
-        if (index >= 0 && index < tourLogs.size()) {
-            TourLog tourLog = tourLogs.remove(index);
-            tourLogService.deleteTourByName(tourLog.getName());
-            System.out.println("Tour deleted: " + tourLog.getName());
-        } else {
-            System.out.println("Invalid index or empty list.");
-        }
-    }
+
+
 
     @Override
     public void notify(Object message) {

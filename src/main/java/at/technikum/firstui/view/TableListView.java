@@ -43,10 +43,7 @@ public class TableListView implements Initializable {
         tableView.setItems(viewModel.getTourLogs());
 
         // Add listener to update ViewModel's selected index property
-        tableView.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> {
-            System.out.println("Selected Index Changed in View: " + newVal);
-            viewModel.setSelectedAddTourIndex(newVal.intValue());
-        });
+        viewModel.selectedAddTourProperty().bind(tableView.getSelectionModel().selectedIndexProperty());
 
         // Handle double-click event
         tableView.setOnMouseClicked(event -> {

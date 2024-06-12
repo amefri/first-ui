@@ -68,18 +68,22 @@ private final LongProperty tour_id = new SimpleLongProperty();
         // Check if addButton is enabled
         if (!addTourLogButtonDisabled.get()) {
             System.out.println("Add Button Works");
-            TourLog tourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
-            tourLog.setTour(tourListService.getCurrentlySelected());
-            tourLogService.addTourLog(tourLog);
 
-            publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
+            if(tourListService.getTourListState()){
+                TourLog tourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
+                tourLog.setTour(tourListService.getCurrentlySelected());
+                tourLogService.addTourLog(tourLog);
+                publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
 
-            // Clear fields after publishing
-            name.set("");
-            date.set("");
-            duration.set("");
-            distance.set("");
+                // Clear fields after publishing
+                name.set("");
+                date.set("");
+                duration.set("");
+                distance.set("");
 
+            } else {
+                System.out.println("TourList is empty. Add a Tour first");
+            }
         }
     }
 
@@ -109,4 +113,5 @@ private final LongProperty tour_id = new SimpleLongProperty();
     public void notify(Object message) {
 
     }
+
 }
