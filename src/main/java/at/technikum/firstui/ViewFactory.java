@@ -80,7 +80,7 @@ public class ViewFactory {
 
         toolBarTourLogViewModel = new ToolBarTourLogViewModel(publisher);
         tableListViewModel = new TableListViewModel(publisher, tourLogService);
-        addRouteLogViewModel = new AddRouteLogViewModel(publisher, tourLogService);
+        addRouteLogViewModel = new AddRouteLogViewModel(publisher, tourLogService, tourListService);
 
 
     }

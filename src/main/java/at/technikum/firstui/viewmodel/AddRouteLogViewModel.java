@@ -5,6 +5,7 @@ import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.event.Event;
 import at.technikum.firstui.event.ObjectSubscriber;
 import at.technikum.firstui.event.Publisher;
+import at.technikum.firstui.services.TourListService;
 import at.technikum.firstui.services.TourLogService;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -18,6 +19,8 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
     private final Publisher publisher;
     private final TourLogService tourLogService;
 
+    private final TourListService tourListService;
+
     long index;
 
     private final StringProperty name = new SimpleStringProperty("");
@@ -29,9 +32,10 @@ private final LongProperty tour_id = new SimpleLongProperty();
 
 
 
-    public AddRouteLogViewModel(Publisher publisher, TourLogService tourLogService) {
+    public AddRouteLogViewModel(Publisher publisher, TourLogService tourLogService, TourListService tourListService) {
         this.publisher = publisher;
         this.tourLogService = tourLogService;
+        this.tourListService = tourListService;
 
         this.publisher.subscribe(Event.SELECTED_TOUR_CHANGED, (ObjectSubscriber) this::updateIndex);
 
@@ -65,7 +69,9 @@ private final LongProperty tour_id = new SimpleLongProperty();
         if (!addTourLogButtonDisabled.get()) {
             System.out.println("Add Button Works");
             TourLog tourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
+            tourLog.setTour(tourListService.getCurrentlySelected());
             tourLogService.addTourLog(tourLog);
+
             publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
 
             // Clear fields after publishing

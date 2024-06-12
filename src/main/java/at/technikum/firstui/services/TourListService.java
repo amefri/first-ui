@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public class TourListService {
     private final TourListRepository tourRepository;
+
+    private Tours currentlySelected;
     private String name;
 
     public TourListService(TourListRepository tourRepository) {
@@ -35,6 +37,13 @@ public class TourListService {
         return false;
     }
 
+    public void setCurrentlySelected(Tours currentlySelected) {
+        this.currentlySelected = currentlySelected;
+    }
+
+    public Tours getCurrentlySelected() {
+        return currentlySelected;
+    }
 
     public Tours getTourByName(String name) {
         return tourRepository.findByName(name).orElse(null);

@@ -7,46 +7,32 @@
             xmlns:fx="http://javafx.com/fxml">
 
     <top>
-
         <VBox spacing="10">
-
-
             <fx:include source="search-view.fxml"/>
             <fx:include source="search-history-view.fxml"/>
 
-            <Label text="Tour Toolbar Tourlist" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
+            <Label text="TOURLIST Toolbar" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
             <fx:include source="tool-bar-view.fxml"/>
-            <fx:include source="list-view.fxml"/>
-
-            <Label text="Tour Toolbar TourLog" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
+            <Label text="TOURLOG Toolbar" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
             <fx:include source="tool-bar-route-log-view.fxml"/>
-            <fx:include source="table-list-view.fxml"/>
-
         </VBox>
     </top>
 
-    <left>
-        <VBox>
-            <Label text="Tour Log Toolbar" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
-            <fx:include source="add-route-log-view.fxml"/>
-        </VBox>
-    </left>
 
-
-    <left>
-        <VBox>
-            <Label text="Tour List Toolbar" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
-            <fx:include source="add-stage-view.fxml"/>
-        </VBox>
-    </left>
 
     <center>
-        <VBox alignment="CENTER_LEFT">
+        <HBox spacing="10" alignment="CENTER_LEFT">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <Label style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
-            <fx:include source="table-list-view.fxml"/>
-        </VBox>
+            <VBox>
+                <Label text="Tour List" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
+                <fx:include source="list-view.fxml"/>
+            </VBox>
+            <VBox>
+                <Label text="Tour Log" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
+                <fx:include source="table-list-view.fxml"/>
+            </VBox>
+        </HBox>
     </center>
 </BorderPane>

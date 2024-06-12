@@ -20,6 +20,7 @@ public class TourListViewModel implements ObjectSubscriber {
     private final Publisher publisher;
 
     public TourListViewModel(Publisher publisher, TourListService tourListService, TourLogService tourLogService) {
+
         this.publisher = publisher;
         this.tourListService = tourListService;
         this.tourLogService = tourLogService;
@@ -49,7 +50,6 @@ public class TourListViewModel implements ObjectSubscriber {
             if (tour != null) {
                 System.out.println("Primary key: " + tour.getId());
                 return tour.getId();
-                // Assuming getId() returns the primary key
             }
         }
         return null;
@@ -62,6 +62,10 @@ public class TourListViewModel implements ObjectSubscriber {
             System.out.println("Selected Tour: " + tourList.get(index));
             System.out.println("Selected Index: " + index);
             String tourName = tourList.get(index);
+
+            Tours tour = tourListService.getTourByName(tourName);
+            tourListService.setCurrentlySelected(tour);
+
             Long dbindex = getPKTour(); // Ensure this is not null
             if (dbindex != null) {
                 System.out.println("DB Index (ID): " + dbindex);
