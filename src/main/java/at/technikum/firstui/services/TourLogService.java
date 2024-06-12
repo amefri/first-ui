@@ -13,6 +13,8 @@ public class TourLogService {
     private final TourLogRepository tourLogRepository;
     private final TourListRepository tourListRepository;
 
+    private List<Tours> tours;
+
     public TourLogService(TourLogRepository tourLogRepository, TourListRepository tourListRepository) {
         this.tourLogRepository = tourLogRepository;
         this.tourListRepository = tourListRepository;
@@ -21,6 +23,7 @@ public class TourLogService {
     public void addTourLog(TourLog tourLog) {
         System.out.println("TourLog added: " + tourLog.getName());
         tourLogRepository.save(tourLog);
+
     }
 
     public List<TourLog> getTourLogsByTourName(String tourName) {
@@ -35,21 +38,29 @@ public class TourLogService {
         return tourLogRepository.findByTourId(tourId);
     }
 
-    public void deleteTourByName(String name){
+    public void deleteTourByName(String name) {
         tourLogRepository.deleteTourLog(name);
     }
 
-    public void addTourLogToTour(String tourname, long index) {
-        Optional<Tours> toursOptional = tourListRepository.findByName(tourname);
+    public void addTourLogToTour(Long tourId, String logName, String date, String duration, String distance) {
+        if (tourId == null) {
+            System.out.println("Tour ID is null.");
+            return;
+        }
+
+        Optional<Tours> toursOptional = tourListRepository.findById(tourId);
 
         if (toursOptional.isEmpty()) {
+            System.out.println("Tour not found for ID: " + tourId);
             return;
         }
 
         Tours tour = toursOptional.get();
 
-        TourLog tourLog = new TourLog();
+        TourLog tourLog = new TourLog(logName, date, duration, distance);
+        tourLog.setTour(tour); // Set the Tour object in the TourLog
+        tour.addTourLog(tourLog); // Maintain the bidirectional relationship
+
+        addTourLog(tourLog); // Save the TourLog
     }
-
-
 }

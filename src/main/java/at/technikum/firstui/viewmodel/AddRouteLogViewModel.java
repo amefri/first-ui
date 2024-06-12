@@ -24,7 +24,7 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
     private final StringProperty date = new SimpleStringProperty("");
     private final StringProperty duration = new SimpleStringProperty("");
     private final StringProperty distance = new SimpleStringProperty("");
-
+private final LongProperty tour_id = new SimpleLongProperty();
     private final BooleanProperty addTourLogButtonDisabled = new SimpleBooleanProperty(true);
 
 
@@ -48,6 +48,7 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
         if (message instanceof Long) {
             Long selectedTourId = (Long) message;
             System.out.println("Selected Index addroutelogvm: " + selectedTourId);
+
         }
 
     }
@@ -64,7 +65,6 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
         if (!addTourLogButtonDisabled.get()) {
             System.out.println("Add Button Works");
             TourLog tourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
-
             tourLogService.addTourLog(tourLog);
             publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
 

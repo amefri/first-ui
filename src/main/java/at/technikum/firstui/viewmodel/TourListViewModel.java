@@ -11,8 +11,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import static at.technikum.firstui.event.Event.SELECTED_TOUR_INDEX;
-
 public class TourListViewModel implements ObjectSubscriber {
 
     private final ObservableList<String> tourList = FXCollections.observableArrayList();
@@ -26,13 +24,13 @@ public class TourListViewModel implements ObjectSubscriber {
         this.tourListService = tourListService;
         this.tourLogService = tourLogService;
 
-        // Initialisiere die Tourenliste aus der Datenbank
+        // Initialize the tour list from the database
         loadToursFromDatabase();
 
-        // Abonniere das TOUR_ADDED Ereignis
+        // Subscribe to the TOUR_ADDED event
         this.publisher.subscribe(Event.TOUR_ADDED, this);
 
-        // Füge Listener hinzu, um Auswahlindexänderungen zu handhaben
+        // Add listener to handle selection index changes
         this.selectedAddTourIndex.addListener((obs, oldVal, newVal) -> selectTourNames(newVal.intValue()));
     }
 
@@ -43,21 +41,19 @@ public class TourListViewModel implements ObjectSubscriber {
         }
     }
 
-
     public Long getPKTour() {
         int index = selectedAddTourIndex.get();
         if (index >= 0 && index < tourList.size()) {
             String tourName = tourList.get(index);
             Tours tour = tourListService.getTourByName(tourName);
             if (tour != null) {
-                System.out.println("Primarykey: " + tour.getId());
+                System.out.println("Primary key: " + tour.getId());
                 return tour.getId();
-                // Annahme, dass getId() den Primärschlüssel zurückgibt
+                // Assuming getId() returns the primary key
             }
         }
         return null;
     }
-
 
     private void selectTourNames(int index) {
         if (index == -1) {
@@ -66,10 +62,14 @@ public class TourListViewModel implements ObjectSubscriber {
             System.out.println("Selected Tour: " + tourList.get(index));
             System.out.println("Selected Index: " + index);
             String tourName = tourList.get(index);
-            long dbindex = getPKTour();
-            tourLogService.getTourLogsByTourName(tourName);
-            publisher.publish(Event.SELECTED_TOUR_CHANGED, dbindex) ;
-
+            Long dbindex = getPKTour(); // Ensure this is not null
+            if (dbindex != null) {
+                System.out.println("DB Index (ID): " + dbindex);
+                tourLogService.getTourLogsByTourName(tourName);
+                publisher.publish(Event.SELECTED_TOUR_CHANGED, dbindex);
+            } else {
+                System.out.println("DB Index is null for tour: " + tourName);
+            }
         }
     }
 
@@ -101,12 +101,18 @@ public class TourListViewModel implements ObjectSubscriber {
         }
     }
 
+    public void selectTour(int index) {
+        if (selectedAddTourProperty().isBound()) {
+            selectedAddTourProperty().unbind();
+        }
+        selectedAddTourProperty().set(index);
+    }
+
     @Override
     public void notify(Object message) {
         if (message instanceof Tours) {
             Tours tour = (Tours) message;
             addToTourList(tour.getName());
-
         }
     }
 }

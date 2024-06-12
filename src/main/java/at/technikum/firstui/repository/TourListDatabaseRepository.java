@@ -61,6 +61,18 @@ public class TourListDatabaseRepository implements TourListRepository {
     }
 
     @Override
+    public Optional<Tours> findById(Long id) {
+        if (id == null) {
+            System.out.println("Tour ID is null.");
+            return Optional.empty();
+        }
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            Tours tour = entityManager.find(Tours.class, id);
+            return Optional.ofNullable(tour);
+        }
+    }
+
+    @Override
     public void deleteByName(String name) {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             EntityTransaction transaction = entityManager.getTransaction();
