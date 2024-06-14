@@ -1,6 +1,7 @@
 package at.technikum.firstui.repository;
 
 import at.technikum.firstui.entity.TourLog;
+import at.technikum.firstui.entity.Tours;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -56,6 +57,7 @@ public class TourLogDatabaseRepository implements TourLogRepository {
 
 
 
+    @Override
     public List<TourLog> findByTourName(String tourName) {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -67,25 +69,40 @@ public class TourLogDatabaseRepository implements TourLogRepository {
     }
 
     @Override
-    public void deleteTourLog(String tourName) {
+    public TourLog findById(Long id) {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
-            EntityTransaction transaction = entityManager.getTransaction();
+            return entityManager.find(TourLog.class, id);
+        }
+    }
+
+    @Override
+    public void deleteTourLog(TourLog tourLog) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
             transaction.begin();
 
-            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<TourLog> criteriaQuery = criteriaBuilder.createQuery(TourLog.class);
-            Root<TourLog> root = criteriaQuery.from(TourLog.class);
-            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("tour").get("name"), tourName));
-
-            List<TourLog> tourLogs = entityManager.createQuery(criteriaQuery).getResultList();
-            for (TourLog tourLog : tourLogs) {
-                if (!entityManager.contains(tourLog)) {
-                    tourLog = entityManager.merge(tourLog);
+            // Finden und löschen des TourLog
+            TourLog attachedTourLog = entityManager.find(TourLog.class, tourLog.getId());
+            if (attachedTourLog != null) {
+                // Entfernen des TourLog aus der Tour-Entität
+                Tours tour = attachedTourLog.getTour();
+                if (tour != null) {
+                    tour.getTourLogs().remove(attachedTourLog);
+                    entityManager.merge(tour);  // Speichern der Änderungen an der Tour
                 }
-                entityManager.remove(tourLog);
+                entityManager.remove(attachedTourLog);
             }
 
             transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw e;
+        } finally {
+            entityManager.close();
         }
     }
+
 }

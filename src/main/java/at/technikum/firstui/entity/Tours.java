@@ -163,4 +163,8 @@ public class Tours {
     public List<Object> getFieldsAsList() {
         return Arrays.asList(name, description, from, to, transportType, distance, estimatedTime, imagePath);
     }
+
+
+
+
 }

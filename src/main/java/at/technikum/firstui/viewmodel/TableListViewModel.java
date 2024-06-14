@@ -52,13 +52,18 @@ public class TableListViewModel implements ObjectSubscriber {
     public void deleteSelectedTour() {
         int index = selectedAddTourIndex.get();
         if (index >= 0 && index < tourLogs.size()) {
-            TourLog tourLog = tourLogs.remove(index);
-            tourLogService.deleteTourByName(tourLog.getName());
-            System.out.println("Tour deleted: " + tourLog.getName());
+            TourLog tourLog = tourLogs.get(index);
+            if (tourLogService.deleteTourById(tourLog.getId())) {
+                tourLogs.remove(index);
+                System.out.println("TourLog deleted: " + tourLog.getName());
+            } else {
+                System.out.println("Failed to delete TourLog: " + tourLog.getName());
+            }
         } else {
             System.out.println("Invalid index or empty list.");
         }
     }
+
 
     private void selectTourLogIndex(int index) {
         System.out.println("selectTourLogIndex called with index: " + index);
@@ -89,10 +94,6 @@ public class TableListViewModel implements ObjectSubscriber {
     public IntegerProperty selectedAddTourProperty() {
         return selectedAddTourIndex;
     }
-
-
-
-
 
     @Override
     public void notify(Object message) {

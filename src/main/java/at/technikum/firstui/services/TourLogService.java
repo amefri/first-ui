@@ -26,9 +26,17 @@ public class TourLogService {
         tourLogRepository.save(tourLog);
     }
 
-    public void deleteTourByName(String name) {
-        tourLogRepository.deleteTourLog(name);
+    public boolean deleteTourById(Long tourLogId) {
+        TourLog tourLog = tourLogRepository.findById(tourLogId);
+        if (tourLog != null) {
+            tourLogRepository.deleteTourLog(tourLog);
+            System.out.println("TourLog deleted: " + tourLog.getName());
+            return true;
+        }
+        System.out.println("TourLog not found with ID: " + tourLogId);
+        return false;
     }
+
 
     public List<TourLog> getTourLogsByTourName(String tourName) {
         return tourLogRepository.findByTourName(tourName);
