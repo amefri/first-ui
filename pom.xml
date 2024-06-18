@@ -48,8 +48,14 @@
       <version>5.8.0</version>
       <scope>test</scope>
     </dependency>
+      <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-web</artifactId>
+          <version>21-ea+24</version>
+      </dependency>
 
-    <dependency>
+
+      <dependency>
       <groupId>jakarta.persistence</groupId>
       <artifactId>jakarta.persistence-api</artifactId>
       <version>3.1.0</version>

@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<?import javafx.collections.FXCollections?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="at.technikum.firstui.view.MapView"
-      prefHeight="400.0" prefWidth="600.0">
-
-    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-        <image>
-            <Image url="@Map.jpg"/>
-        </image>
-    </ImageView>
-</VBox>
+<GridPane xmlns:fx="http://javafx.com/fxml/1"
+          alignment="center"
+          gridLinesVisible="false "
+          hgap="10" vgap="5.0"
+          minHeight="200.0" minWidth="200.0"
+          prefHeight="400.0" prefWidth="400.0"
+          xmlns="http://javafx.com/javafx/11.0.2"
+          fx:controller="at.technikum.firstui.APIController">
+    <children>
+        <Button defaultButton="true" onAction="#showBrowser" GridPane.columnIndex="0" GridPane.rowIndex="0">Show directions map</Button>
+    </children>
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="400.0" minWidth="100.0" prefWidth="400.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="NEVER" valignment="CENTER" />
+    </rowConstraints>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+    </padding>
+</GridPane>
