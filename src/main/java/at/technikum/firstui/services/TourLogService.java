@@ -13,18 +13,30 @@ public class TourLogService {
     private final TourLogRepository tourLogRepository;
     private final TourListRepository tourListRepository;
 
-    private List<Tours> tours;
 
     public TourLogService(TourLogRepository tourLogRepository, TourListRepository tourListRepository) {
         this.tourLogRepository = tourLogRepository;
         this.tourListRepository = tourListRepository;
     }
 
+    //---------FUNCTIONS-------------
+
     public void addTourLog(TourLog tourLog) {
         System.out.println("TourLog added: " + tourLog.getName());
         tourLogRepository.save(tourLog);
-
     }
+
+    public boolean deleteTourById(Long tourLogId) {
+        TourLog tourLog = tourLogRepository.findById(tourLogId);
+        if (tourLog != null) {
+            tourLogRepository.deleteTourLog(tourLog);
+            System.out.println("TourLog deleted: " + tourLog.getName());
+            return true;
+        }
+        System.out.println("TourLog not found with ID: " + tourLogId);
+        return false;
+    }
+
 
     public List<TourLog> getTourLogsByTourName(String tourName) {
         return tourLogRepository.findByTourName(tourName);
@@ -38,29 +50,7 @@ public class TourLogService {
         return tourLogRepository.findByTourId(tourId);
     }
 
-    public void deleteTourByName(String name) {
-        tourLogRepository.deleteTourLog(name);
-    }
 
-    public void addTourLogToTour(Long tourId, String logName, String date, String duration, String distance) {
-        if (tourId == null) {
-            System.out.println("Tour ID is null.");
-            return;
-        }
 
-        Optional<Tours> toursOptional = tourListRepository.findById(tourId);
 
-        if (toursOptional.isEmpty()) {
-            System.out.println("Tour not found for ID: " + tourId);
-            return;
-        }
-
-        Tours tour = toursOptional.get();
-
-        TourLog tourLog = new TourLog(logName, date, duration, distance);
-        tourLog.setTour(tour); // Set the Tour object in the TourLog
-        tour.addTourLog(tourLog); // Maintain the bidirectional relationship
-
-        addTourLog(tourLog); // Save the TourLog
-    }
 }

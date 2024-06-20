@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="at.technikum.firstui.view.ModifyTourLogView">
+
+
+    <TextField fx:id="nameField" onAction="#modifyTourLog" HBox.hgrow="ALWAYS" promptText="Name" />
+    <TextField fx:id="dateField" onAction="#modifyTourLog" HBox.hgrow="ALWAYS" promptText="Date" />
+    <TextField fx:id="durationField" onAction="#modifyTourLog" HBox.hgrow="ALWAYS" promptText="Duration" />
+    <TextField fx:id="distanceField" onAction="#modifyTourLog" HBox.hgrow="ALWAYS" promptText="Distance" />
+    <Button fx:id="modifyTourLogButton" onAction="#modifyTourLog" text="Add" />
+
+
+</VBox>

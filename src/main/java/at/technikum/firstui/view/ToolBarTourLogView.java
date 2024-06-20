@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 public class ToolBarTourLogView {
 
     @FXML private Button buttonAdd;
-    @FXML private Button buttonDelete;
+
     @FXML private Button buttonModify;
 
     private final ToolBarTourLogViewModel viewModel;
@@ -20,7 +20,6 @@ public class ToolBarTourLogView {
     @FXML
     public void initialize() {
         buttonAdd.setOnAction(e -> viewModel.onAdd());
-        //buttonDelete.setOnAction(e -> viewModel.onDelete());
-        buttonModify.setOnAction(e -> viewModel.onMore());
+        buttonModify.setOnAction(e -> viewModel.onModify());
     }
 }

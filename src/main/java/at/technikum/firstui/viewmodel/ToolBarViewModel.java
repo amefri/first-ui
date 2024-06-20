@@ -17,12 +17,7 @@ public class ToolBarViewModel {
     public void onAdd() {
         newStageService.loadFXML("add-stage-view.fxml");
     }
-
-    public void onDelete() {
-        System.out.println("Delete action triggered");
-    }
-
-    public void onMore() {
-        System.out.println("More options");
+    public void onModify() {
+        newStageService.loadFXML("modify-tour-view.fxml");
     }
 }

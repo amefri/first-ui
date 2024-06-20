@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseButton;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -39,18 +40,20 @@ public class TableListView implements Initializable {
         distanceColumn.setCellValueFactory(cellData -> cellData.getValue().distanceProperty());
         durationColumn.setCellValueFactory(cellData -> cellData.getValue().durationProperty());
 
+
+
         // Set table items
-        tableView.setItems(viewModel.getTourLogs());
+        this.tableView
+                .setItems(viewModel.getTourLogs());
 
         // Add listener to update ViewModel's selected index property
-        tableView.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> {
-            System.out.println("Selected Index Changed in View: " + newVal);
-            viewModel.setSelectedAddTourIndex(newVal.intValue());
-        });
+        this.viewModel.selectedAddTourProperty()
+                .bind(tableView.getSelectionModel().selectedIndexProperty());
 
         // Handle double-click event
         tableView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                System.out.println("Double-click detected");
                 viewModel.deleteSelectedTour();
             }
         });

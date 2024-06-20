@@ -49,6 +49,10 @@ public class TourListService {
         return tourRepository.findByName(name).orElse(null);
     }
 
+    public boolean getTourListState(){
+        return !tourRepository.findAll().isEmpty();
+    }
+
 
 
 }
