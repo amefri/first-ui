@@ -30,9 +30,6 @@ public class AddRouteLogView implements Initializable {
     @FXML
     private Button addTourLogButton;
 
-
-
-
     public AddRouteLogView(AddRouteLogViewModel viewModel) {
         this.viewModel = viewModel;
     }

@@ -18,16 +18,13 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
 
     private final Publisher publisher;
     private final TourLogService tourLogService;
-
     private final TourListService tourListService;
 
-    long index;
 
     private final StringProperty name = new SimpleStringProperty("");
     private final StringProperty date = new SimpleStringProperty("");
     private final StringProperty duration = new SimpleStringProperty("");
     private final StringProperty distance = new SimpleStringProperty("");
-private final LongProperty tour_id = new SimpleLongProperty();
     private final BooleanProperty addTourLogButtonDisabled = new SimpleBooleanProperty(true);
 
 
@@ -37,9 +34,6 @@ private final LongProperty tour_id = new SimpleLongProperty();
         this.tourLogService = tourLogService;
         this.tourListService = tourListService;
 
-        this.publisher.subscribe(Event.SELECTED_TOUR_CHANGED, (ObjectSubscriber) this::updateIndex);
-
-
 
         // Listen to changes in fields and update addButtonDisabled property
         name.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
@@ -47,16 +41,6 @@ private final LongProperty tour_id = new SimpleLongProperty();
         duration.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
         distance.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
     }
-
-    private void updateIndex(Object message) {
-        if (message instanceof Long) {
-            Long selectedTourId = (Long) message;
-            System.out.println("Selected Index addroutelogvm: " + selectedTourId);
-
-        }
-
-    }
-
 
     private void updateAddTourLogButtonDisabled() {
         // Check if any of the fields are empty
@@ -68,18 +52,22 @@ private final LongProperty tour_id = new SimpleLongProperty();
         // Check if addButton is enabled
         if (!addTourLogButtonDisabled.get()) {
             System.out.println("Add Button Works");
-            TourLog tourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
-            tourLog.setTour(tourListService.getCurrentlySelected());
-            tourLogService.addTourLog(tourLog);
 
-            publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
+            if(tourListService.getTourListState()){
+                TourLog tourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
+                tourLog.setTour(tourListService.getCurrentlySelected());
+                tourLogService.addTourLog(tourLog);
+                publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
 
-            // Clear fields after publishing
-            name.set("");
-            date.set("");
-            duration.set("");
-            distance.set("");
+                // Clear fields after publishing
+                name.set("");
+                date.set("");
+                duration.set("");
+                distance.set("");
 
+            } else {
+                System.out.println("TourList is empty. Add a Tour first");
+            }
         }
     }
 
@@ -109,4 +97,5 @@ private final LongProperty tour_id = new SimpleLongProperty();
     public void notify(Object message) {
 
     }
+
 }

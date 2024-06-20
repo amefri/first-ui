@@ -9,5 +9,6 @@ public interface TourLogRepository {
     TourLog save(TourLog entity);
     List<TourLog> findByTourId(Long tourId);
     List<TourLog> findByTourName(String tourName);
-    void deleteTourLog(String name);
+    TourLog findById(Long id);
+    void deleteTourLog(TourLog tourLog);
 }
