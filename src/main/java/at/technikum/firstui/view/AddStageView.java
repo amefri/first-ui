@@ -1,10 +1,10 @@
 package at.technikum.firstui.view;
 
-import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.viewmodel.AddStageViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -27,7 +27,7 @@ public class AddStageView implements Initializable {
     private TextField toField;
 
     @FXML
-    private TextField transportTypeField;
+    private ComboBox<String> transportTypeField;
 
     @FXML
     private TextField distanceField;
@@ -41,8 +41,6 @@ public class AddStageView implements Initializable {
     @FXML
     private Button addTourButton;
 
-   
-
     public AddStageView(AddStageViewModel viewModel) {
         this.viewModel = viewModel;
     }
@@ -54,11 +52,10 @@ public class AddStageView implements Initializable {
         descriptionField.textProperty().bindBidirectional(viewModel.descriptionProperty());
         fromField.textProperty().bindBidirectional(viewModel.fromProperty());
         toField.textProperty().bindBidirectional(viewModel.toProperty());
-        transportTypeField.textProperty().bindBidirectional(viewModel.transportTypeProperty());
+        transportTypeField.valueProperty().bindBidirectional(viewModel.transportTypeProperty());
         distanceField.textProperty().bindBidirectional(viewModel.distanceProperty());
         estimatedTimeField.textProperty().bindBidirectional(viewModel.estimatedTimeProperty());
-        imageField.textProperty().bindBidirectional(viewModel.estimatedTimeProperty());
-
+        imageField.textProperty().bindBidirectional(viewModel.imagePathProperty());
 
         // Bind button disable property
         addTourButton.disableProperty().bind(viewModel.addTourButtonDisabledProperty());
@@ -68,6 +65,4 @@ public class AddStageView implements Initializable {
     public void addTour() {
         viewModel.addTour();
     }
-
-
 }

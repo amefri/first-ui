@@ -32,7 +32,7 @@ public class AddStageViewModel {
 
     public AddStageViewModel(Publisher publisher, TourListService tourListService){
         this.publisher = publisher;
-        this.tourListService =tourListService;
+        this.tourListService = tourListService;
 
         // Listen to changes in fields and update addButtonDisabled property
         name.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
@@ -43,7 +43,6 @@ public class AddStageViewModel {
         distance.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         estimatedTime.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         imagePath.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
-
     }
 
     private void updateAddTourButtonDisabled() {
@@ -62,7 +61,6 @@ public class AddStageViewModel {
             tourListService.addTour(tour);
             publisher.publish(Event.TOUR_ADDED, tour);
 
-
             // Clear fields after publishing
             name.set("");
             description.set("");
@@ -71,10 +69,9 @@ public class AddStageViewModel {
             transportType.set("");
             distance.set("");
             estimatedTime.set("");
+            imagePath.set("");
         }
     }
-
-
 
     // Getters for properties
     public StringProperty nameProperty() {
@@ -103,6 +100,10 @@ public class AddStageViewModel {
 
     public StringProperty estimatedTimeProperty() {
         return estimatedTime;
+    }
+
+    public StringProperty imagePathProperty() {
+        return imagePath;
     }
 
     public BooleanProperty addTourButtonDisabledProperty() {
