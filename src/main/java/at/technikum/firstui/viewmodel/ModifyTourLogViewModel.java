@@ -1,20 +1,17 @@
 package at.technikum.firstui.viewmodel;
 
 import at.technikum.firstui.entity.TourLog;
-import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.event.Event;
 import at.technikum.firstui.event.ObjectSubscriber;
 import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.services.TourListService;
 import at.technikum.firstui.services.TourLogService;
-import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.stage.Stage;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-import java.util.List;
-
-public class AddRouteLogViewModel implements ObjectSubscriber {
+public class ModifyTourLogViewModel implements ObjectSubscriber {
 
     private final Publisher publisher;
     private final TourLogService tourLogService;
@@ -25,14 +22,16 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
     private final StringProperty date = new SimpleStringProperty("");
     private final StringProperty duration = new SimpleStringProperty("");
     private final StringProperty distance = new SimpleStringProperty("");
-    private final BooleanProperty addTourLogButtonDisabled = new SimpleBooleanProperty(true);
+    private final BooleanProperty modifyTourLogButtonDisabled = new SimpleBooleanProperty(true);
 
 
-
-    public AddRouteLogViewModel(Publisher publisher, TourLogService tourLogService, TourListService tourListService) {
+    public ModifyTourLogViewModel(Publisher publisher, TourLogService tourLogService, TourListService tourListService) {
         this.publisher = publisher;
         this.tourLogService = tourLogService;
         this.tourListService = tourListService;
+
+        this.publisher.subscribe(Event.MODIFY_TOUR_LOG, (ObjectSubscriber) this::updateTourLog);
+
 
 
         // Listen to changes in fields and update addButtonDisabled property
@@ -42,15 +41,20 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
         distance.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
     }
 
+    private void updateTourLog(Object o) {
+    }
+
+
     private void updateAddTourLogButtonDisabled() {
         // Check if any of the fields are empty
-        addTourLogButtonDisabled.set(name.get().isEmpty() || date.get().isEmpty() ||
+        modifyTourLogButtonDisabled.set(name.get().isEmpty() || date.get().isEmpty() ||
                 duration.get().isEmpty() || distance.get().isEmpty());
     }
 
-    public void addTourLog() {
+
+    public void modifyTourLog() {
         // Check if addButton is enabled
-        if (!addTourLogButtonDisabled.get()) {
+        if (!modifyTourLogButtonDisabled.get()) {
             System.out.println("Add Button Works");
 
             if(tourListService.getTourListState()){
@@ -71,8 +75,6 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
         }
     }
 
-
-
     public StringProperty nameProperty() {
         return name;
     }
@@ -89,13 +91,14 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
         return distance;
     }
 
-    public BooleanProperty addTourLogButtonDisabledProperty() {
-        return addTourLogButtonDisabled;
+    public BooleanProperty modifyTourLogButtonDisabledProperty() {
+        return modifyTourLogButtonDisabled;
     }
+
+
 
     @Override
     public void notify(Object message) {
-
+        
     }
-
 }

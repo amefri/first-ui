@@ -1,7 +1,6 @@
 package at.technikum.firstui.view;
 
-import at.technikum.firstui.viewmodel.AddRouteLogViewModel;
-import at.technikum.firstui.viewmodel.AddStageViewModel;
+import at.technikum.firstui.viewmodel.ModifyTourLogViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -10,10 +9,10 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddRouteLogView implements Initializable {
+public class ModifyTourLogView implements Initializable {
 
-    private final AddRouteLogViewModel viewModel;
 
+    private final ModifyTourLogViewModel viewModel;
 
     @FXML
     private TextField nameField;
@@ -28,28 +27,24 @@ public class AddRouteLogView implements Initializable {
     private TextField distanceField;
 
     @FXML
-    private Button addTourLogButton;
+    private Button modifyTourLogButton;
 
-    public AddRouteLogView(AddRouteLogViewModel viewModel) {
+    public ModifyTourLogView(ModifyTourLogViewModel viewModel) {
         this.viewModel = viewModel;
     }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Bind properties to text fields
+
         nameField.textProperty().bindBidirectional(viewModel.nameProperty());
         dateField.textProperty().bindBidirectional(viewModel.dateProperty());
         durationField.textProperty().bindBidirectional(viewModel.durationProperty());
         distanceField.textProperty().bindBidirectional(viewModel.distanceProperty());
 
-        // Bind button disable property
-        addTourLogButton.disableProperty().bind(viewModel.addTourLogButtonDisabledProperty());
+        modifyTourLogButton.disableProperty().bind(viewModel.modifyTourLogButtonDisabledProperty());
     }
 
     @FXML
-    public void addTourLog() {
-        viewModel.addTourLog();
+    public void modifyTourLog() {
+        viewModel.modifyTourLog();
     }
-
 }

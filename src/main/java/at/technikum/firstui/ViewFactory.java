@@ -12,14 +12,14 @@ import at.technikum.firstui.viewmodel.*;
 public class ViewFactory {
 
     private static ViewFactory instance;
-
     private final Publisher publisher;
 
+    //-------------------SERVICES----------------------
     private final TourListService tourListService;
+    private final TourLogService tourLogService;
+    private final SearchTermHistoryService searchTermHistoryService;
 
-
-
-
+    //-------------------VIEW MODEL----------------------
     private final SearchViewModel searchViewModel;
     private final SearchHistoryViewModel searchHistoryViewModel;
     private final ListViewModel listViewModel;
@@ -30,32 +30,23 @@ public class ViewFactory {
     private final TourListViewModel tourListViewModel;
     private final AddStageViewModel addStageViewModel;
 
+    private final ToolBarTourLogViewModel toolBarTourLogViewModel;
+    private final TableListViewModel tableListViewModel;
+    private final AddRouteLogViewModel addRouteLogViewModel;
+    private final ModifyTourLogViewModel modifyTourLogViewModel;
+    private final ModifyTourViewModel modifyTourViewModel;
 
-    //Repository
+
+
+    //-------------------REPOSITORIES----------------------
     private final SearchTermRepository searchTermRepository;
     private final TourListRepository tourListRepository;
     private final TourLogRepository tourLogRepository;
 
 
-    private final SearchTermHistoryService searchTermHistoryService;
-
-
-    //-------------------
-    private final TourLogService tourLogService;
-    private final ToolBarTourLogViewModel toolBarTourLogViewModel;
-    private final TableListViewModel tableListViewModel;
-    private final AddRouteLogViewModel addRouteLogViewModel;
-
-
-
-
 
     private ViewFactory() {
         publisher = new Publisher();
-
-
-
-
 
 
         //Repository
@@ -81,7 +72,8 @@ public class ViewFactory {
         toolBarTourLogViewModel = new ToolBarTourLogViewModel(publisher);
         tableListViewModel = new TableListViewModel(publisher, tourLogService);
         addRouteLogViewModel = new AddRouteLogViewModel(publisher, tourLogService, tourListService);
-
+        modifyTourLogViewModel = new ModifyTourLogViewModel(publisher,tourLogService, tourListService);
+        modifyTourViewModel = new ModifyTourViewModel(publisher, tourListService);
 
     }
 
@@ -125,7 +117,12 @@ public class ViewFactory {
         if(TableListView.class.equals(viewClass)) {
             return new TableListView(tableListViewModel);
         }
-
+        if(ModifyTourLogView.class.equals(viewClass)) {
+            return new ModifyTourLogView(modifyTourLogViewModel);
+        }
+        if(ModifyTourView.class.equals(viewClass)) {
+            return new ModifyTourView(modifyTourViewModel);
+        }
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);
     }

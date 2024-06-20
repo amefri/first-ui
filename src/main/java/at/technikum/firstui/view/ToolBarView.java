@@ -8,8 +8,8 @@ public class ToolBarView {
 
     @FXML
     private Button buttonAdd;
-    @FXML private Button buttonDelete;
-    @FXML private Button buttonMore;
+
+    @FXML private Button buttonModify;
 
     private final ToolBarViewModel viewModel;
 
@@ -20,7 +20,6 @@ public class ToolBarView {
     @FXML
     public void initialize() {
         buttonAdd.setOnAction(e -> viewModel.onAdd());
-       // buttonDelete.setOnAction(e -> viewModel.onDelete());
-        buttonMore.setOnAction(e -> viewModel.onMore());
+        buttonModify.setOnAction(e -> viewModel.onModify());
     }
 }

@@ -3,15 +3,14 @@ package at.technikum.firstui.viewmodel;
 import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.event.Event;
 import at.technikum.firstui.event.Publisher;
+import at.technikum.firstui.services.TourListService;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import at.technikum.firstui.services.TourListService;
 
-public class AddStageViewModel {
+public class ModifyTourViewModel {
+
 
     private final TourListService tourListService;
 
@@ -26,9 +25,9 @@ public class AddStageViewModel {
     private final StringProperty estimatedTime = new SimpleStringProperty("");
     private final StringProperty imagePath = new SimpleStringProperty("");
 
-    private final BooleanProperty addTourButtonDisabled = new SimpleBooleanProperty(true);
+    private final BooleanProperty modifyTourButtonDisabled = new SimpleBooleanProperty(true);
 
-    public AddStageViewModel(Publisher publisher, TourListService tourListService){
+    public ModifyTourViewModel(Publisher publisher, TourListService tourListService){
         this.publisher = publisher;
         this.tourListService =tourListService;
 
@@ -41,19 +40,18 @@ public class AddStageViewModel {
         distance.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         estimatedTime.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         imagePath.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
-
     }
 
     private void updateAddTourButtonDisabled() {
         // Check if any of the fields are empty
-        addTourButtonDisabled.set(name.get().isEmpty() || description.get().isEmpty() ||
+        modifyTourButtonDisabled.set(name.get().isEmpty() || description.get().isEmpty() ||
                 from.get().isEmpty() || to.get().isEmpty() ||
                 transportType.get().isEmpty() || distance.get().isEmpty() ||
                 estimatedTime.get().isEmpty());
     }
 
-    public void addTour() {
-        if (!addTourButtonDisabled.get()) {
+    public void modifyTour() {
+        if (!modifyTourButtonDisabled.get()) {
             System.out.println("Adding tour Button works");
             Tours tour = new Tours(name.get(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get(), imagePath.get());
 
@@ -72,9 +70,6 @@ public class AddStageViewModel {
         }
     }
 
-
-
-    // Getters for properties
     public StringProperty nameProperty() {
         return name;
     }
@@ -103,7 +98,8 @@ public class AddStageViewModel {
         return estimatedTime;
     }
 
-    public BooleanProperty addTourButtonDisabledProperty() {
-        return addTourButtonDisabled;
+    public BooleanProperty modifyTourButtonDisabledProperty() {
+        return modifyTourButtonDisabled;
     }
+
 }

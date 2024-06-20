@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="at.technikum.firstui.view.ModifyTourView">
+
+
+    <TextField fx:id="nameField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="Name" />
+    <TextField fx:id="descriptionField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="Description" />
+    <TextField fx:id="fromField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="From" />
+    <TextField fx:id="toField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="To" />
+    <TextField fx:id="transportTypeField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="Transport Type" />
+    <TextField fx:id="distanceField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="Distance" />
+    <TextField fx:id="estimatedTimeField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="Estimated Time" />
+    <TextField fx:id="imageField" promptText="Image Path" HBox.hgrow="ALWAYS" />
+    <Button fx:id="modifyTourButton" onAction="#modifyTour" text="Add" />
+
+</VBox>

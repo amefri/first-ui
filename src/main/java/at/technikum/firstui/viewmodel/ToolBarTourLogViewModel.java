@@ -16,12 +16,7 @@ public class ToolBarTourLogViewModel
     public void onAdd() {
         newStageService.loadFXML("add-route-log-view.fxml");
     }
-
-    public void onDelete() {
-        System.out.println("Delete action triggered");
-    }
-
-    public void onMore() {
-        System.out.println("More options");
+    public void onModify() {
+        newStageService.loadFXML("modify-tour-log-view.fxml");
     }
 }
