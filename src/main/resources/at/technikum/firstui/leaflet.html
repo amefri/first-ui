@@ -4,89 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaflet Map with Directions</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-          crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-            crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 </head>
 <body style="margin: 0; padding: 0;">
 <div id="map" style="height: 80vh"></div>
-<div style="padding: 20px;">
-    <form id="coordsForm">
-        <label for="waypoints">Enter places separated by semicolons:</label>
-        <input type="text" id="waypoints" name="waypoints" placeholder="Enter places separated by semicolons"><br><br>
-        <input type="submit" value="Show Directions">
-    </form>
-</div>
 <script>
-    document.getElementById('coordsForm').onsubmit = async function(e) {
-        e.preventDefault();
-
-        let placesInput = document.getElementById('waypoints').value;
-        let placesArray = placesInput.split(';');
-
-        let coordinates = [];
-
-        for (let place of placesArray) {
-            let coords = await geocodePlace(place);
-            if (coords) {
-                coordinates.push(coords);
-            } else {
-                alert(`Could not find coordinates for ${place}`);
-                return;
-            }
-        }
-
-        fetchRoute(coordinates);
-    };
-
-    async function geocodePlace(place) {
-        let apiKey = '5b3ce3597851110001cf6248040d24d7f4794453983f28f9565e16d4';
-        let url = `https://api.openrouteservice.org/geocode/search?api_key=${apiKey}&text=${encodeURIComponent(place)}`;
-
-        let response = await fetch(url);
-        if (response.ok) {
-            let data = await response.json();
-            if (data.features.length > 0) {
-                let coords = data.features[0].geometry.coordinates;
-                return [coords[0], coords[1]]; // return as [longitude, latitude]
-            }
-        } else {
-            console.error('Geocoding error:', response.status, response.statusText);
-        }
-        return null;
-    }
-
-    async function fetchRoute(coordinates) {
-        let apiKey = '5b3ce3597851110001cf6248040d24d7f4794453983f28f9565e16d4';
-        let url = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
-
-        let body = {
-            coordinates: coordinates,
-            format: 'json'
-        };
-
-        let response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': apiKey
-            },
-            body: JSON.stringify(body)
-        });
-
-        if (response.ok) {
-            let data = await response.json();
-            displayRoute(data);
-        } else {
-            console.error('Error fetching route:', response.status, response.statusText);
+    function resetMapContainer() {
+        if (document.getElementById('map')._leaflet_id) {
+            var mapContainer = document.getElementById('map');
+            mapContainer._leaflet_id = null;
+            mapContainer.innerHTML = "";
         }
     }
 
     function displayRoute(directions) {
-        var map = L.map('map').setView([directions.features[0].geometry.coordinates[0][1], directions.features[0].geometry.coordinates[0][0]], 13);
+        resetMapContainer();
+
+        var startLat = directions.features[0].geometry.coordinates[0][1];
+        var startLon = directions.features[0].geometry.coordinates[0][0];
+
+        var map = L.map('map').setView([startLat, startLon], 13);
         var bbox = directions.bbox;
         map.fitBounds([[bbox[1], bbox[0]], [bbox[3], bbox[2]]]);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

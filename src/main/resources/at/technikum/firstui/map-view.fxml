@@ -3,22 +3,27 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.web.WebView?>
 <GridPane xmlns:fx="http://javafx.com/fxml/1"
           alignment="center"
-          gridLinesVisible="false "
+          gridLinesVisible="false"
           hgap="10" vgap="5.0"
           minHeight="200.0" minWidth="200.0"
           prefHeight="400.0" prefWidth="400.0"
           xmlns="http://javafx.com/javafx/11.0.2"
           fx:controller="at.technikum.firstui.APIController">
     <children>
-        <Button defaultButton="true" onAction="#showBrowser" GridPane.columnIndex="0" GridPane.rowIndex="0">Show directions map</Button>
+        <TextField fx:id="placesInput" GridPane.columnIndex="0" GridPane.rowIndex="0" promptText="Enter places separated by semicolons"/>
+        <Button defaultButton="true" onAction="#showBrowser" GridPane.columnIndex="0" GridPane.rowIndex="1">Show directions map</Button>
+        <WebView fx:id="webView" GridPane.columnIndex="0" GridPane.rowIndex="2" prefHeight="600.0" prefWidth="800.0"/>
     </children>
     <columnConstraints>
         <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="400.0" minWidth="100.0" prefWidth="400.0"/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints vgrow="NEVER" valignment="CENTER" />
+        <RowConstraints vgrow="NEVER" valignment="CENTER"/>
+        <RowConstraints vgrow="NEVER" valignment="CENTER"/>
+        <RowConstraints vgrow="ALWAYS" valignment="CENTER"/>
     </rowConstraints>
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>

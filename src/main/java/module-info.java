@@ -6,6 +6,8 @@ module at.technikum.firstui {
 
     requires java.sql;
     requires org.hibernate.orm.core;
+    requires com.fasterxml.jackson.databind;
+    requires javafx.web;
 
     opens at.technikum.firstui.entity to org.hibernate.orm.core;
 
