@@ -11,8 +11,5 @@ public interface TourLogRepository {
     List<TourLog> findByTourName(String tourName);
     TourLog findById(Long id);
     void deleteTourLog(TourLog tourLog);
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> feature/API

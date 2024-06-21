@@ -105,8 +105,6 @@ public class TourLogDatabaseRepository implements TourLogRepository {
         }
     }
 
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> feature/API
+

@@ -7,10 +7,7 @@ public enum Event {
     TOUR_LOG_ADDED,
     SELECTED_TOUR_CHANGED,
     MODIFY_TOUR_LOG
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/API
 
 
 }
