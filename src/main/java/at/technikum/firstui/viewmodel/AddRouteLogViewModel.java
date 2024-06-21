@@ -94,8 +94,4 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
     }
 
     @Override
-    public void notify(Object message) {
-
-    }
-
-}
+    public void notify(Object message) {}}

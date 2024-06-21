@@ -50,7 +50,7 @@ public class TourLogService {
         return tourLogRepository.findByTourId(tourId);
     }
 
-
-
-
 }
+
+
+

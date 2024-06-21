@@ -1,5 +1,6 @@
 package at.technikum.firstui.repository;
 
+import at.technikum.firstui.entity.TourLog;
 import at.technikum.firstui.entity.Tours;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -77,14 +78,26 @@ public class TourListDatabaseRepository implements TourListRepository {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             EntityTransaction transaction = entityManager.getTransaction();
             transaction.begin();
+
+            // Löschen der zugehörigen TourLogs
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<Tours> criteriaQuery = criteriaBuilder.createQuery(Tours.class);
-            Root<Tours> root = criteriaQuery.from(Tours.class);
-            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("name"), name));
-            List<Tours> results = entityManager.createQuery(criteriaQuery).getResultList();
-            if (!results.isEmpty()) {
-                entityManager.remove(results.get(0));
+            CriteriaQuery<TourLog> logQuery = criteriaBuilder.createQuery(TourLog.class);
+            Root<TourLog> logRoot = logQuery.from(TourLog.class);
+            logQuery.select(logRoot).where(criteriaBuilder.equal(logRoot.get("tour").get("name"), name));
+            List<TourLog> tourLogs = entityManager.createQuery(logQuery).getResultList();
+            for (TourLog log : tourLogs) {
+                entityManager.remove(log);
             }
+
+            // Löschen der Tour
+            CriteriaQuery<Tours> tourQuery = criteriaBuilder.createQuery(Tours.class);
+            Root<Tours> tourRoot = tourQuery.from(Tours.class);
+            tourQuery.select(tourRoot).where(criteriaBuilder.equal(tourRoot.get("name"), name));
+            List<Tours> tours = entityManager.createQuery(tourQuery).getResultList();
+            if (!tours.isEmpty()) {
+                entityManager.remove(tours.get(0));
+            }
+
             transaction.commit();
         }
     }

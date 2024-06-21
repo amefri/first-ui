@@ -167,4 +167,8 @@ public class Tours {
 
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> feature/API
