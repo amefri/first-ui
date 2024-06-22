@@ -9,6 +9,9 @@ module at.technikum.firstui {
     requires com.fasterxml.jackson.databind;
     requires javafx.web;
 
+    requires org.apache.logging.log4j;
+
+
     opens at.technikum.firstui.entity to org.hibernate.orm.core;
 
 
