@@ -78,4 +78,6 @@ public class APIService {
 
         return rootNode;
     }
+
+    public void saveURL(URL url){};
 }

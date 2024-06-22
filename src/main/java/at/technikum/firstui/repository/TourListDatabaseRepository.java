@@ -10,6 +10,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,6 +73,13 @@ public class TourListDatabaseRepository implements TourListRepository {
             return Optional.ofNullable(tour);
         }
     }
+
+    @Override
+    public void saveTourURL(Tours entity, URL url) {
+        entity.setImagePath(url.toString());
+
+    }
+
 
     @Override
     public void deleteByName(String name) {

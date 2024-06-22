@@ -4,6 +4,7 @@ import at.technikum.firstui.entity.TourLog;
 import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.repository.TourListRepository;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +44,10 @@ public class TourListService {
 
     public Tours getCurrentlySelected() {
         return currentlySelected;
+    }
+
+    public void setImageURL(Tours currentlySelected, URL url){
+        tourRepository.saveTourURL(currentlySelected, url);
     }
 
     public Tours getTourByName(String name) {

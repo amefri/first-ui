@@ -13,7 +13,7 @@
           xmlns="http://javafx.com/javafx/11.0.2"
           fx:controller="at.technikum.firstui.APIController">
     <children>
-        <TextField fx:id="placesInput" GridPane.columnIndex="0" GridPane.rowIndex="0" promptText="Enter places separated by semicolons"/>
+
         <Button defaultButton="true" onAction="#showBrowser" GridPane.columnIndex="0" GridPane.rowIndex="1">Show directions map</Button>
         <WebView fx:id="webView" GridPane.columnIndex="0" GridPane.rowIndex="2" prefHeight="600.0" prefWidth="800.0"/>
     </children>
