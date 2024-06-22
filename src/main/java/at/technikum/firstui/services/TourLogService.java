@@ -11,6 +11,11 @@ import java.util.Optional;
 public class TourLogService {
 
     private final TourLogRepository tourLogRepository;
+
+    private boolean isSelected = false;
+    private TourLog currentlySelected;
+
+
     private final TourListRepository tourListRepository;
 
 
@@ -38,6 +43,14 @@ public class TourLogService {
     }
 
 
+    public void setIsSelected(Boolean isSelected){this.isSelected = isSelected; }
+
+    public boolean isSelected() {return isSelected;}
+
+
+
+
+
     public List<TourLog> getTourLogsByTourName(String tourName) {
         return tourLogRepository.findByTourName(tourName);
     }
@@ -49,6 +62,21 @@ public class TourLogService {
     public List<TourLog> getTourLogsByTourId(Long tourId) {
         return tourLogRepository.findByTourId(tourId);
     }
+
+
+    public void modifyTourLog(TourLog newTourLog) {
+        System.out.println("Tourlog modified: " + newTourLog.getName());
+        tourLogRepository.modify(newTourLog);
+    }
+
+    public void setCurrentlySelected(TourLog currentlySelected) {
+        this.currentlySelected = currentlySelected;
+    }
+
+    public TourLog getCurrentlySelected() {
+        return currentlySelected;
+    }
+
 
 }
 

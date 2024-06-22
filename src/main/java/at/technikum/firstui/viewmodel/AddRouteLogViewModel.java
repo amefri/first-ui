@@ -50,7 +50,6 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
     public void addTourLog() {
         // Check if addButton is enabled
         if (!addTourLogButtonDisabled.get()) {
-
             if(tourListService.isSelected()){
                 TourLog tourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
                 tourLog.setTour(tourListService.getCurrentlySelected());

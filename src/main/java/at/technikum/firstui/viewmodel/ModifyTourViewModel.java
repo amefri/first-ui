@@ -2,14 +2,21 @@ package at.technikum.firstui.viewmodel;
 
 import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.event.Event;
+import at.technikum.firstui.event.ObjectSubscriber;
 import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.services.TourListService;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Objects;
 
 public class ModifyTourViewModel {
+
+    private static final Logger logger = LogManager.getLogger(AddRouteLogViewModel.class);
 
 
     private final TourListService tourListService;
@@ -31,6 +38,8 @@ public class ModifyTourViewModel {
         this.publisher = publisher;
         this.tourListService =tourListService;
 
+
+
         // Listen to changes in fields and update addButtonDisabled property
         name.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         description.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
@@ -51,35 +60,41 @@ public class ModifyTourViewModel {
     }
 
     public void modifyTour() {
-        if (!modifyTourButtonDisabled.get()) {
-            Tours tour = new Tours(name.get(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get(), imagePath.get());
-/*
-            if(tourNameExists){
-                tourListService.modifyTour(tour);
-            }else{
-                System.out.println("selected Tourname doesnt exists");
+            if (!modifyTourButtonDisabled.get()) {
+                if (tourListService.isSelected()) {
+                    Tours toursSelected = tourListService.getCurrentlySelected();
+                    String tourNameSelected = toursSelected.getName();
+                    String tourName = name.get();
+                    if(!Objects.equals(tourName, tourNameSelected)){
+                        logger.warn("Tourname and selcted tourname are not the same");
+                        return;
+                    }
+                    Tours newTour = new Tours(toursSelected.getName(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get(), imagePath.get());
+                    Long id = toursSelected.getId();
+                    newTour.setId(id);
+                    tourListService.modifyTour(newTour);
+                }else{
+                    logger.warn("No Tour was selcted");
+
+                }
             }
 
 
 
- */
+        name.set("");
+        description.set("");
+        from.set("");
+        to.set("");
+        transportType.set("");
+        distance.set("");
+        estimatedTime.set("");
 
-            publisher.publish(Event.MODIFY_TOUR, tour);
-
-
-
-
-
-            // Clear fields after publishing
-            name.set("");
-            description.set("");
-            from.set("");
-            to.set("");
-            transportType.set("");
-            distance.set("");
-            estimatedTime.set("");
-        }
     }
+
+
+
+
+
 
     public StringProperty nameProperty() {
         return name;

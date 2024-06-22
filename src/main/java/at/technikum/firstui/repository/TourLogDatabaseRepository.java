@@ -146,4 +146,34 @@ public class TourLogDatabaseRepository implements TourLogRepository {
             entityManager.close();
         }
     }
+
+    @Override
+    public void modify(TourLog tourLog) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            EntityTransaction transaction = entityManager.getTransaction();
+            try {
+                transaction.begin();
+                logger.info("Modifying TourLog with ID: {}", tourLog.getId());
+                TourLog existingTourLog = entityManager.find(TourLog.class, tourLog.getId());
+                if (existingTourLog != null) {
+                    existingTourLog.setName(tourLog.getName());
+                    existingTourLog.setDate(tourLog.getDate());
+                    existingTourLog.setDuration(tourLog.getDuration());
+                    existingTourLog.setDistance(tourLog.getDistance());
+                    entityManager.merge(existingTourLog);
+                    logger.info("Modified TourLog: {}", existingTourLog);
+                } else {
+                    logger.warn("TourLog not found with ID: {}", tourLog.getId());
+                }
+                transaction.commit();
+            } catch (Exception e) {
+                if (transaction.isActive()) {
+                    transaction.rollback();
+                }
+                logger.error("Error modifying TourLog with ID: {}", tourLog.getId(), e);
+                throw e;
+            }
+        }
+    }
+
 }

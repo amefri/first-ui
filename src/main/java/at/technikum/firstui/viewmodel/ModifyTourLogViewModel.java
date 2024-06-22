@@ -10,8 +10,11 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ModifyTourLogViewModel implements ObjectSubscriber {
+    private static final Logger logger = LogManager.getLogger(AddRouteLogViewModel.class);
 
     private final Publisher publisher;
     private final TourLogService tourLogService;
@@ -30,10 +33,6 @@ public class ModifyTourLogViewModel implements ObjectSubscriber {
         this.tourLogService = tourLogService;
         this.tourListService = tourListService;
 
-        this.publisher.subscribe(Event.MODIFY_TOUR_LOG, (ObjectSubscriber) this::updateTourLog);
-
-
-
         // Listen to changes in fields and update addButtonDisabled property
         name.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
         date.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
@@ -41,8 +40,7 @@ public class ModifyTourLogViewModel implements ObjectSubscriber {
         distance.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
     }
 
-    private void updateTourLog(Object o) {
-    }
+
 
 
     private void updateAddTourLogButtonDisabled() {
@@ -53,25 +51,18 @@ public class ModifyTourLogViewModel implements ObjectSubscriber {
 
 
     public void modifyTourLog() {
-        // Check if addButton is enabled
-        if (!modifyTourLogButtonDisabled.get()) {
-            System.out.println("Add Button Works");
+        if(!modifyTourLogButtonDisabled.get()){
+            if(tourLogService.isSelected()){
+                TourLog currentlySelected = tourLogService.getCurrentlySelected();
+                Long id = currentlySelected.getId();
+                TourLog newTourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
+                newTourLog.setId(id);
+                tourLogService.modifyTourLog(newTourLog);
+            }else{
+                logger.warn("No TourLog was selected");
 
-            if(tourListService.getTourListState()){
-                TourLog tourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
-                tourLog.setTour(tourListService.getCurrentlySelected());
-                tourLogService.addTourLog(tourLog);
-                publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
-
-                // Clear fields after publishing
-                name.set("");
-                date.set("");
-                duration.set("");
-                distance.set("");
-
-            } else {
-                System.out.println("TourList is empty. Add a Tour first");
             }
+
         }
     }
 

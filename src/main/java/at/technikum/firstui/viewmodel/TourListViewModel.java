@@ -60,9 +60,7 @@ public class TourListViewModel implements ObjectSubscriber {
             System.out.println("No tour selected.");
         } else {
             System.out.println("Selected Tour: " + tourList.get(index));
-            System.out.println("Selected Index: " + index);
             String tourName = tourList.get(index);
-
             Tours tour = tourListService.getTourByName(tourName);
             tourListService.setIsSelected(true);
             tourListService.setCurrentlySelected(tour);

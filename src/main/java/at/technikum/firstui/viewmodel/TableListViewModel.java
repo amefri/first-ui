@@ -31,7 +31,6 @@ public class TableListViewModel implements ObjectSubscriber {
 
         // Add listener to handle selection index changes
         this.selectedAddTourIndex.addListener((obs, oldVal, newVal) -> {
-            System.out.println("Selected Index Changed in ViewModel: " + newVal);
             selectTourLogIndex(newVal.intValue());
         });
     }
@@ -66,11 +65,13 @@ public class TableListViewModel implements ObjectSubscriber {
 
 
     private void selectTourLogIndex(int index) {
-        System.out.println("selectTourLogIndex called with index: " + index);
         if (index == -1) {
             System.out.println("No tour selected.");
         } else if (index >= 0 && index < tourLogs.size()) {
-            System.out.println("Selected TourLog: " + tourLogs.get(index).getName());
+            TourLog tourLog = tourLogs.get(index);
+            tourLogService.setCurrentlySelected(tourLog);
+            tourLogService.setIsSelected(true);
+            System.out.println("Selected tour log: " + tourLog.getName() + " with ID: " + tourLog.getId());
         } else {
             System.out.println("Invalid index.");
         }

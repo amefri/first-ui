@@ -9,7 +9,10 @@ public interface TourListRepository {
     List<Tours> findAll();
     Tours save(Tours entity);
     Optional<Tours> findByName(String name);
+    
     Integer getTourIndexByName(String name);
     void deleteByName(String name);
     Optional<Tours> findById(Long id);
+
+    void modify(Tours tour);
 }

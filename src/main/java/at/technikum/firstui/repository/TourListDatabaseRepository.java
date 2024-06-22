@@ -93,6 +93,39 @@ public class TourListDatabaseRepository implements TourListRepository {
     }
 
     @Override
+    public void modify(Tours tour) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            EntityTransaction transaction = entityManager.getTransaction();
+            try {
+                transaction.begin();
+                logger.info("Modifying tour with ID: {}", tour.getId());
+                Tours existingTour = entityManager.find(Tours.class, tour.getId());
+                if (existingTour != null) {
+                    existingTour.setName(tour.getName());
+                    existingTour.setDescription(tour.getDescription());
+                    existingTour.setFrom(tour.getFrom());
+                    existingTour.setTo(tour.getTo());
+                    existingTour.setTransportType(tour.getTransportType());
+                    existingTour.setDistance(tour.getDistance());
+                    existingTour.setEstimatedTime(tour.getEstimatedTime());
+                    existingTour.setImagePath(tour.getImagePath());
+                    entityManager.merge(existingTour);
+                    logger.info("Modified tour: {}", existingTour.getName());
+                } else {
+                    logger.warn("Tour not found: {}", tour.getId());
+                }
+                transaction.commit();
+            } catch (Exception e) {
+                if (transaction.isActive()) {
+                    transaction.rollback();
+                }
+                logger.error("Error modifying tour: {}", tour.getId(), e);
+                throw e;
+            }
+        }
+    }
+
+    @Override
     public void deleteByName(String name) {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             EntityTransaction transaction = entityManager.getTransaction();
