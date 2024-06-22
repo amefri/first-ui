@@ -50,6 +50,13 @@ public class TourListService {
         tourRepository.saveTourURL(currentlySelected, url);
     }
 
+
+public void setDistance(Tours currentlySelected, double distance){
+        tourRepository.saveTourDistance(currentlySelected, distance);
+    }
+    public void setDuration(Tours currentlySelected, double duration){
+        tourRepository.saveTourDuration(currentlySelected, duration);
+    }
     public Tours getTourByName(String name) {
         return tourRepository.findByName(name).orElse(null);
     }

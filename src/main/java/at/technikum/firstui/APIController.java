@@ -1,6 +1,7 @@
 package at.technikum.firstui;
 
 import at.technikum.firstui.entity.Tours;
+import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.services.APIService;
 import at.technikum.firstui.services.TourListService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,11 +24,15 @@ public class APIController {
     @FXML
     private WebView webView;
 
-    private APIService apiService = new APIService();
-    private TourListService tourListService;
 
-    public APIController(TourListService tourListService) {
+    private TourListService tourListService;
+    private Publisher publisher;
+    private APIService apiService;
+
+    public APIController(TourListService tourListService,Publisher publisher, APIService apiService) {
         this.tourListService = tourListService;
+        this.apiService = new APIService(tourListService, publisher);
+        this.publisher = publisher;
     }
 
     @FXML

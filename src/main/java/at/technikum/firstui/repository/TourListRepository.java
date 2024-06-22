@@ -20,4 +20,7 @@ public interface TourListRepository {
 
 
     void saveTourURL(Tours entity, URL url);
+
+void saveTourDistance(Tours entity, double distance);
+void saveTourDuration(Tours entity, double duration);
 }

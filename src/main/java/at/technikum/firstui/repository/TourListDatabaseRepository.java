@@ -76,8 +76,33 @@ public class TourListDatabaseRepository implements TourListRepository {
 
     @Override
     public void saveTourURL(Tours entity, URL url) {
-        entity.setImagePath(url.toString());
-
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entity.setImagePath(url.toString());
+            entityManager.merge(entity);
+            transaction.commit();
+        }
+    }
+    @Override
+    public void saveTourDistance(Tours entity, double distance) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entity.setDistance(String.valueOf(distance));
+            entityManager.merge(entity);
+            transaction.commit();
+        }
+    }
+    @Override
+    public void saveTourDuration(Tours entity, double duration) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entity.setEstimatedTime(String.valueOf(duration));
+            entityManager.merge(entity);
+            transaction.commit();
+        }
     }
 
 

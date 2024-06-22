@@ -1,6 +1,5 @@
 package at.technikum.firstui;
 
-import at.technikum.firstui.event.ObjectSubscriber;
 import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.repository.*;
 import at.technikum.firstui.services.SearchTermHistoryService;
@@ -61,7 +60,7 @@ public class ViewFactory {
         searchTermHistoryService = new SearchTermHistoryService(searchTermRepository);
         tourListService = new TourListService(tourListRepository);
         tourLogService = new TourLogService(tourLogRepository, tourListRepository);
-        apiService = new APIService();
+        apiService = new APIService(tourListService, publisher);
 
         //ViewModel
         searchViewModel = new SearchViewModel(publisher, searchTermHistoryService);
@@ -71,7 +70,7 @@ public class ViewFactory {
         toolBarViewModel = new ToolBarViewModel(publisher);
         tourListViewModel = new TourListViewModel(publisher,tourListService,tourLogService);
         addStageViewModel = new AddStageViewModel(publisher,tourListService);
-        apiController = new APIController(tourListService);
+        apiController = new APIController(tourListService,publisher,apiService);
 
 
         toolBarTourLogViewModel = new ToolBarTourLogViewModel(publisher);
@@ -129,10 +128,10 @@ public class ViewFactory {
             return new ModifyTourView(modifyTourViewModel);
         }
         if(APIController.class.equals(viewClass)) {
-            return new APIController(tourListService);
+            return new APIController(tourListService,publisher,apiService);
         }
         if(APIService.class.equals(viewClass)) {
-            return new APIService();
+            return new APIService(tourListService, publisher);
         }
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);
