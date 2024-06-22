@@ -8,14 +8,13 @@ import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.services.TourListService;
 import at.technikum.firstui.services.TourLogService;
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 
 public class AddRouteLogViewModel implements ObjectSubscriber {
 
+    private static final Logger logger = LogManager.getLogger(AddRouteLogViewModel.class);
     private final Publisher publisher;
     private final TourLogService tourLogService;
     private final TourListService tourListService;
@@ -51,13 +50,14 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
     public void addTourLog() {
         // Check if addButton is enabled
         if (!addTourLogButtonDisabled.get()) {
-            System.out.println("Add Button Works");
 
-            if(tourListService.getTourListState()){
+            if(tourListService.isSelected()){
                 TourLog tourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
                 tourLog.setTour(tourListService.getCurrentlySelected());
                 tourLogService.addTourLog(tourLog);
                 publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
+
+                logger.info("Added new tour log: {}", tourLog);
 
                 // Clear fields after publishing
                 name.set("");
@@ -66,11 +66,10 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
                 distance.set("");
 
             } else {
-                System.out.println("TourList is empty. Add a Tour first");
+                logger.warn("TourList is empty or you did not select a tour. Add a Tour first or Select a Tour first");
             }
         }
     }
-
 
 
     public StringProperty nameProperty() {

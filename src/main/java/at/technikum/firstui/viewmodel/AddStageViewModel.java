@@ -53,7 +53,6 @@ public class AddStageViewModel {
 
     public void addTour() {
         if (!addTourButtonDisabled.get()) {
-            System.out.println("Adding tour Button works");
             Tours tour = new Tours(name.get(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get(), imagePath.get());
 
             tourListService.addTour(tour);

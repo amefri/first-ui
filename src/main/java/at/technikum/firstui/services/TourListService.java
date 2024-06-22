@@ -11,6 +11,8 @@ public class TourListService {
     private final TourListRepository tourRepository;
 
     private Tours currentlySelected;
+
+    private boolean isSelected = false;
     private String name;
 
     public TourListService(TourListRepository tourRepository) {
@@ -19,6 +21,11 @@ public class TourListService {
 
 
     public void addTour(Tours tour) {
+        System.out.println("Tour added: " + tour.getName());
+        tourRepository.save(tour);
+    }
+
+    public void modifyTour(Tours tour) {
         System.out.println("Tour added: " + tour.getName());
         tourRepository.save(tour);
     }
@@ -36,6 +43,11 @@ public class TourListService {
         System.out.println("Tour not found by name: " + tourName);
         return false;
     }
+
+    public void setIsSelected(Boolean isSelected){this.isSelected = isSelected; }
+
+    public boolean isSelected() { return isSelected;}
+
 
     public void setCurrentlySelected(Tours currentlySelected) {
         this.currentlySelected = currentlySelected;

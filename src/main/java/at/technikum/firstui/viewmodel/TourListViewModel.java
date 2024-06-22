@@ -64,9 +64,11 @@ public class TourListViewModel implements ObjectSubscriber {
             String tourName = tourList.get(index);
 
             Tours tour = tourListService.getTourByName(tourName);
+            tourListService.setIsSelected(true);
             tourListService.setCurrentlySelected(tour);
 
             Long dbindex = getPKTour(); // Ensure this is not null
+
             if (dbindex != null) {
                 System.out.println("DB Index (ID): " + dbindex);
                 tourLogService.getTourLogsByTourName(tourName);
@@ -105,12 +107,6 @@ public class TourListViewModel implements ObjectSubscriber {
         }
     }
 
-    public void selectTour(int index) {
-        if (selectedAddTourProperty().isBound()) {
-            selectedAddTourProperty().unbind();
-        }
-        selectedAddTourProperty().set(index);
-    }
 
     @Override
     public void notify(Object message) {

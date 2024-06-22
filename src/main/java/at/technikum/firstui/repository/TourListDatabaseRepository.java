@@ -9,16 +9,19 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
 
 public class TourListDatabaseRepository implements TourListRepository {
+
+    private static final Logger logger = LogManager.getLogger(TourListDatabaseRepository.class);
     private final EntityManagerFactory entityManagerFactory;
 
     public TourListDatabaseRepository() {
-        entityManagerFactory =
-                Persistence.createEntityManagerFactory("hibernate");
+        entityManagerFactory = Persistence.createEntityManagerFactory("hibernate");
     }
 
     @Override
@@ -29,7 +32,11 @@ public class TourListDatabaseRepository implements TourListRepository {
         CriteriaQuery<Tours> all = criteriaQuery.select(root);
 
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            logger.info("Fetching all tours");
             return entityManager.createQuery(all).getResultList();
+        } catch (Exception e) {
+            logger.error("Error fetching all tours", e);
+            throw e;
         }
     }
 
@@ -40,6 +47,10 @@ public class TourListDatabaseRepository implements TourListRepository {
             transaction.begin();
             entityManager.persist(entity);
             transaction.commit();
+            logger.info("Saved tour: {}", entity.getName());
+        } catch (Exception e) {
+            logger.error("Error saving tour: {}", entity.getName(), e);
+            throw e;
         }
         return entity;
     }
@@ -52,7 +63,11 @@ public class TourListDatabaseRepository implements TourListRepository {
             Root<Tours> root = criteriaQuery.from(Tours.class);
             criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("name"), name));
             List<Tours> results = entityManager.createQuery(criteriaQuery).getResultList();
+            logger.info("Finding tour by name: {}", name);
             return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
+        } catch (Exception e) {
+            logger.error("Error finding tour by name: {}", name, e);
+            throw e;
         }
     }
 
@@ -64,12 +79,16 @@ public class TourListDatabaseRepository implements TourListRepository {
     @Override
     public Optional<Tours> findById(Long id) {
         if (id == null) {
-            System.out.println("Tour ID is null.");
+            logger.warn("Tour ID is null.");
             return Optional.empty();
         }
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             Tours tour = entityManager.find(Tours.class, id);
+            logger.info("Finding tour by ID: {}", id);
             return Optional.ofNullable(tour);
+        } catch (Exception e) {
+            logger.error("Error finding tour by ID: {}", id, e);
+            throw e;
         }
     }
 
@@ -87,6 +106,7 @@ public class TourListDatabaseRepository implements TourListRepository {
             List<TourLog> tourLogs = entityManager.createQuery(logQuery).getResultList();
             for (TourLog log : tourLogs) {
                 entityManager.remove(log);
+                logger.info("Deleted TourLog: {}", log);
             }
 
             // Löschen der Tour
@@ -96,9 +116,13 @@ public class TourListDatabaseRepository implements TourListRepository {
             List<Tours> tours = entityManager.createQuery(tourQuery).getResultList();
             if (!tours.isEmpty()) {
                 entityManager.remove(tours.get(0));
+                logger.info("Deleted tour: {}", tours.get(0));
             }
 
             transaction.commit();
+        } catch (Exception e) {
+            logger.error("Error deleting tour by name: {}", name, e);
+            throw e;
         }
     }
 }

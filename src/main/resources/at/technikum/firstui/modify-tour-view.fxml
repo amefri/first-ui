@@ -6,19 +6,28 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.collections.FXCollections?>
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.technikum.firstui.view.ModifyTourView">
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="at.technikum.firstui.view.ModifyTourView">
 
 
     <TextField fx:id="nameField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="Name" />
     <TextField fx:id="descriptionField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="Description" />
     <TextField fx:id="fromField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="From" />
     <TextField fx:id="toField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="To" />
-    <TextField fx:id="transportTypeField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="Transport Type" />
+    <ComboBox fx:id="transportTypeField" HBox.hgrow="ALWAYS" promptText="Transport Type">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="driving-car"/>
+                <String fx:value="cycling-regular"/>
+                <String fx:value="foot-walking"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
     <TextField fx:id="distanceField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="Distance" />
     <TextField fx:id="estimatedTimeField" onAction="#modifyTour" HBox.hgrow="ALWAYS" promptText="Estimated Time" />
     <TextField fx:id="imageField" promptText="Image Path" HBox.hgrow="ALWAYS" />
-    <Button fx:id="modifyTourButton" onAction="#modifyTour" text="Add" />
+    <Button fx:id="modifyTourButton" onAction="#modifyTour" text="Modify" />
 
 </VBox>

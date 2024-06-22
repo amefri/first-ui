@@ -52,11 +52,22 @@ public class ModifyTourViewModel {
 
     public void modifyTour() {
         if (!modifyTourButtonDisabled.get()) {
-            System.out.println("Adding tour Button works");
             Tours tour = new Tours(name.get(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get(), imagePath.get());
+/*
+            if(tourNameExists){
+                tourListService.modifyTour(tour);
+            }else{
+                System.out.println("selected Tourname doesnt exists");
+            }
 
-            tourListService.addTour(tour);
-            publisher.publish(Event.TOUR_ADDED, tour);
+
+
+ */
+
+            publisher.publish(Event.MODIFY_TOUR, tour);
+
+
+
 
 
             // Clear fields after publishing

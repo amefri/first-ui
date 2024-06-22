@@ -9,8 +9,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class SearchHistoryViewModel {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+public class SearchHistoryViewModel {
+    private final Logger logger = LogManager.getLogger(SearchHistoryViewModel.class);
     private final Publisher publisher;
     private final SearchTermHistoryService searchTermHistoryService;
 
@@ -47,6 +50,9 @@ public class SearchHistoryViewModel {
         if (selectedSearchIndex.get() == -1) {
             return;
         }
+        String term = getSearchHistory().get(selectedSearchIndex.get());
+
+        logger.info("\"%s\" selected in history".formatted(term));
 
         // TODO send history select event
         publisher.publish(Event.SEARCH_TERM_SELECTED, getSearchHistory().get(selectedSearchIndex.get()));
