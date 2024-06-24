@@ -46,6 +46,12 @@ public class Tours {
     @JsonProperty("imagePath")
     private String imagePath;
 
+    @Column(name = "tour_image")
+    @Lob
+    private byte[] tourImage;
+
+
+
     @OneToMany(
             targetEntity = TourLog.class,
             mappedBy = "tour",
@@ -68,6 +74,13 @@ public class Tours {
         this.distance = distance;
         this.estimatedTime = estimatedTime;
         this.imagePath = imagePath;
+    }
+    public byte[] getTourImage() {
+        return tourImage;
+    }
+
+    public void setTourImage(byte[] tourImage) {
+        this.tourImage = tourImage;
     }
 
     // Getter and Setter methods

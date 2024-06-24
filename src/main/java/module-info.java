@@ -8,6 +8,7 @@ module at.technikum.firstui {
     requires org.hibernate.orm.core;
     requires com.fasterxml.jackson.databind;
     requires javafx.web;
+    requires java.desktop;
 
     opens at.technikum.firstui.entity to org.hibernate.orm.core;
 

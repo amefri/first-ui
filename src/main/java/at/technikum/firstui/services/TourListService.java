@@ -50,7 +50,10 @@ public class TourListService {
         tourRepository.saveTourURL(currentlySelected, url);
     }
 
-
+    public void saveTourImage(Tours tour, byte[] imageBytes) {
+        tour.setTourImage(imageBytes);
+        tourRepository.save(tour);
+    }
 public void setDistance(Tours currentlySelected, double distance){
         tourRepository.saveTourDistance(currentlySelected, distance);
     }
