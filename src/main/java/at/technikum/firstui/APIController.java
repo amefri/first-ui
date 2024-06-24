@@ -1,6 +1,9 @@
 package at.technikum.firstui;
 
+import at.technikum.firstui.entity.Tours;
+import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.services.APIService;
+import at.technikum.firstui.services.TourListService;
 import com.fasterxml.jackson.databind.JsonNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,11 +24,22 @@ public class APIController {
     @FXML
     private WebView webView;
 
-    private APIService apiService = new APIService();
+
+    private TourListService tourListService;
+    private Publisher publisher;
+    private APIService apiService;
+
+    public APIController(TourListService tourListService,Publisher publisher, APIService apiService) {
+        this.tourListService = tourListService;
+        this.apiService = new APIService(tourListService, publisher);
+        this.publisher = publisher;
+    }
 
     @FXML
     private void showBrowser(ActionEvent event) {
-        String places = placesInput.getText();
+        Tours tour = tourListService.getCurrentlySelected();
+        String places = tour.getFrom() + ";" + tour.getTo();
+
         String[] placesArray = places.split(";");
 
         List<double[]> coordinates = new ArrayList<>();
@@ -57,6 +71,7 @@ public class APIController {
         WebEngine webEngine = webView.getEngine();
         URL url = getClass().getResource("/at/technikum/firstui/leaflet.html");
         webEngine.load(url.toString());
+        //TODO: save url in database through service method
 
         webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == javafx.concurrent.Worker.State.SUCCEEDED) {

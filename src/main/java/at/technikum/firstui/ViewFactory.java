@@ -1,6 +1,5 @@
 package at.technikum.firstui;
 
-import at.technikum.firstui.event.ObjectSubscriber;
 import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.repository.*;
 import at.technikum.firstui.services.SearchTermHistoryService;
@@ -8,6 +7,7 @@ import at.technikum.firstui.services.TourListService;
 import at.technikum.firstui.services.TourLogService;
 import at.technikum.firstui.view.*;
 import at.technikum.firstui.viewmodel.*;
+import at.technikum.firstui.services.*;
 
 public class ViewFactory {
 
@@ -35,6 +35,8 @@ public class ViewFactory {
     private final AddRouteLogViewModel addRouteLogViewModel;
     private final ModifyTourLogViewModel modifyTourLogViewModel;
     private final ModifyTourViewModel modifyTourViewModel;
+    private final APIService apiService;
+    private final APIController apiController;
 
 
 
@@ -58,6 +60,7 @@ public class ViewFactory {
         searchTermHistoryService = new SearchTermHistoryService(searchTermRepository);
         tourListService = new TourListService(tourListRepository);
         tourLogService = new TourLogService(tourLogRepository, tourListRepository);
+        apiService = new APIService(tourListService, publisher);
 
         //ViewModel
         searchViewModel = new SearchViewModel(publisher, searchTermHistoryService);
@@ -67,6 +70,7 @@ public class ViewFactory {
         toolBarViewModel = new ToolBarViewModel(publisher);
         tourListViewModel = new TourListViewModel(publisher,tourListService,tourLogService);
         addStageViewModel = new AddStageViewModel(publisher,tourListService);
+        apiController = new APIController(tourListService,publisher,apiService);
 
 
         toolBarTourLogViewModel = new ToolBarTourLogViewModel(publisher);
@@ -122,6 +126,12 @@ public class ViewFactory {
         }
         if(ModifyTourView.class.equals(viewClass)) {
             return new ModifyTourView(modifyTourViewModel);
+        }
+        if(APIController.class.equals(viewClass)) {
+            return new APIController(tourListService,publisher,apiService);
+        }
+        if(APIService.class.equals(viewClass)) {
+            return new APIService(tourListService, publisher);
         }
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);

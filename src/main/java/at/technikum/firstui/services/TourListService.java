@@ -4,6 +4,7 @@ import at.technikum.firstui.entity.TourLog;
 import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.repository.TourListRepository;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +58,20 @@ public class TourListService {
         return currentlySelected;
     }
 
+    public void setImageURL(Tours currentlySelected, URL url){
+        tourRepository.saveTourURL(currentlySelected, url);
+    }
+
+    public void saveTourImage(Tours tour, byte[] imageBytes) {
+        tour.setTourImage(imageBytes);
+        tourRepository.save(tour);
+    }
+public void setDistance(Tours currentlySelected, double distance){
+        tourRepository.saveTourDistance(currentlySelected, distance);
+    }
+    public void setDuration(Tours currentlySelected, double duration){
+        tourRepository.saveTourDuration(currentlySelected, duration);
+    }
     public Tours getTourByName(String name) {
         return tourRepository.findByName(name).orElse(null);
     }
