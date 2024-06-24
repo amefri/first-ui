@@ -29,6 +29,7 @@ public class ModifyTourLogViewModel implements ObjectSubscriber {
 
 
     public ModifyTourLogViewModel(Publisher publisher, TourLogService tourLogService, TourListService tourListService) {
+
         this.publisher = publisher;
         this.tourLogService = tourLogService;
         this.tourListService = tourListService;
