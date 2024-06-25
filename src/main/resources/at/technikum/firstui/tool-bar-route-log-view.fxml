@@ -16,7 +16,8 @@
         <ToolBar>
             <items>
                 <Button fx:id="buttonAdd" text= "%add-button-text" />
-                <Button fx:id="buttonModify" text="Modify" />
+                <Button fx:id="buttonModify" text="%modify-button-text" />
+                <Button fx:id="buttonPDF" text="%report-button-text" />
             </items>
         </ToolBar>
 

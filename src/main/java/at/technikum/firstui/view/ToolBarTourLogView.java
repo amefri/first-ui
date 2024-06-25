@@ -10,6 +10,7 @@ public class ToolBarTourLogView {
     @FXML private Button buttonAdd;
 
     @FXML private Button buttonModify;
+    @FXML private Button buttonPDF;
 
     private final ToolBarTourLogViewModel viewModel;
 
@@ -21,5 +22,6 @@ public class ToolBarTourLogView {
     public void initialize() {
         buttonAdd.setOnAction(e -> viewModel.onAdd());
         buttonModify.setOnAction(e -> viewModel.onModify());
+        buttonPDF.setOnAction(e -> viewModel.onGenerateTourLogsPdf());
     }
 }

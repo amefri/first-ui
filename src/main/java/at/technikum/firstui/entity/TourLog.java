@@ -18,11 +18,11 @@ public class TourLog {
     @Column(name = "date")
     private String date;
 
-    @Column(name = "duration")
-    private String duration;
+    @Column(name = "rating")
+    private String rating;
 
-    @Column(name = "distance")
-    private String distance;
+    @Column(name = "info")
+    private String info;
 
     @ManyToOne
     @JoinColumn(name = "tour_id", nullable = true)
@@ -31,11 +31,11 @@ public class TourLog {
     public TourLog() {
     }
 
-    public TourLog(String name, String date, String duration, String distance) {
+    public TourLog(String name, String date, String rating, String info) {
         this.name = name;
         this.date = date;
-        this.duration = duration;
-        this.distance = distance;
+        this.rating = rating;
+        this.info = info;
     }
 
     // Getter and Setter methods
@@ -53,20 +53,20 @@ public class TourLog {
         this.date = date;
     }
 
-    public String getDistance() {
-        return distance;
+    public String getRating() {
+        return rating;
     }
 
-    public void setDistance(String distance) {
-        this.distance = distance;
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
-    public String getDuration() {
-        return duration;
+    public String getInfo() {
+        return info;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     public void setId(Long id) {
@@ -97,11 +97,11 @@ public class TourLog {
         return new SimpleStringProperty(date);
     }
 
-    public StringProperty durationProperty() {
-        return new SimpleStringProperty(duration);
+    public StringProperty ratingProperty() {
+        return new SimpleStringProperty(rating);
     }
 
-    public StringProperty distanceProperty() {
-        return new SimpleStringProperty(distance);
+    public StringProperty infoProperty() {
+        return new SimpleStringProperty(info);
     }
 }

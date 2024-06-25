@@ -28,9 +28,17 @@
         var bbox = directions.bbox;
         map.fitBounds([[bbox[1], bbox[0]], [bbox[3], bbox[2]]]);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '2024 © FH Technikum Wien'
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
+
         L.geoJSON(directions).addTo(map);
+
+        setTimeout(function() {
+            if (window.javaApp && typeof window.javaApp.saveMap === 'function') {
+                window.javaApp.saveMap();
+            }
+        }, 1000); // Wait for 1 second to ensure the map is fully rendered
     }
 </script>
 </body>

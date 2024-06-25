@@ -14,7 +14,7 @@
           fx:controller="at.technikum.firstui.APIController">
     <children>
 
-        <Button defaultButton="true" onAction="#showBrowser" GridPane.columnIndex="0" GridPane.rowIndex="1">Show directions map</Button>
+        <Button defaultButton="true" onAction="#showBrowser" GridPane.columnIndex="0" GridPane.rowIndex="1" text="%route-button-text"></Button>
         <WebView fx:id="webView" GridPane.columnIndex="0" GridPane.rowIndex="2" prefHeight="600.0" prefWidth="800.0"/>
     </children>
     <columnConstraints>

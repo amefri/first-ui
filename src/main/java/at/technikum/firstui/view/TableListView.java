@@ -37,8 +37,8 @@ public class TableListView implements Initializable {
         // Bind columns to model properties
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
-        distanceColumn.setCellValueFactory(cellData -> cellData.getValue().distanceProperty());
-        durationColumn.setCellValueFactory(cellData -> cellData.getValue().durationProperty());
+        distanceColumn.setCellValueFactory(cellData -> cellData.getValue().ratingProperty());
+        durationColumn.setCellValueFactory(cellData -> cellData.getValue().infoProperty());
 
 
 

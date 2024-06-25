@@ -11,6 +11,10 @@ module at.technikum.firstui {
     requires java.desktop;
 
     requires org.apache.logging.log4j;
+    requires javafx.swing;
+    requires io;
+    requires kernel;
+    requires layout;
 
     opens at.technikum.firstui.entity to org.hibernate.orm.core;
 
