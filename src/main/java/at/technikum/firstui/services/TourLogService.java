@@ -4,19 +4,25 @@ import at.technikum.firstui.entity.TourLog;
 import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.repository.TourListRepository;
 import at.technikum.firstui.repository.TourLogRepository;
+import at.technikum.firstui.viewmodel.AddRouteLogViewModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
 
 public class TourLogService {
 
+    private static final Logger logger = LogManager.getLogger(AddRouteLogViewModel.class);
+
     private final TourLogRepository tourLogRepository;
+    private final TourListRepository tourListRepository;
+
 
     private boolean isSelected = false;
     private TourLog currentlySelected;
 
 
-    private final TourListRepository tourListRepository;
 
 
     public TourLogService(TourLogRepository tourLogRepository, TourListRepository tourListRepository) {
@@ -27,7 +33,7 @@ public class TourLogService {
     //---------FUNCTIONS-------------
 
     public void addTourLog(TourLog tourLog) {
-        System.out.println("TourLog added: " + tourLog.getName());
+        logger.info("TourLog added: " + tourLog.getName());
         tourLogRepository.save(tourLog);
     }
 
@@ -35,21 +41,21 @@ public class TourLogService {
         TourLog tourLog = tourLogRepository.findById(tourLogId);
         if (tourLog != null) {
             tourLogRepository.deleteTourLog(tourLog);
-            System.out.println("TourLog deleted: " + tourLog.getName());
+            logger.info("TourLog deleted: " + tourLog.getName());
             return true;
         }
-        System.out.println("TourLog not found with ID: " + tourLogId);
+        logger.warn("TourLog not found with ID: " + tourLogId);
         return false;
     }
 
+    public void modifyTourLog(TourLog newTourLog) {
+        logger.info("Tourlog modified: " + newTourLog.getName());
+        tourLogRepository.modify(newTourLog);
+    }
 
     public void setIsSelected(Boolean isSelected){this.isSelected = isSelected; }
 
     public boolean isSelected() {return isSelected;}
-
-
-
-
 
     public List<TourLog> getTourLogsByTourName(String tourName) {
         return tourLogRepository.findByTourName(tourName);
@@ -61,12 +67,6 @@ public class TourLogService {
 
     public List<TourLog> getTourLogsByTourId(Long tourId) {
         return tourLogRepository.findByTourId(tourId);
-    }
-
-
-    public void modifyTourLog(TourLog newTourLog) {
-        System.out.println("Tourlog modified: " + newTourLog.getName());
-        tourLogRepository.modify(newTourLog);
     }
 
     public void setCurrentlySelected(TourLog currentlySelected) {

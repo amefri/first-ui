@@ -9,10 +9,13 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class TableListViewModel implements ObjectSubscriber {
+    private static final Logger logger = LogManager.getLogger(AddRouteLogViewModel.class);
 
     private final ObservableList<TourLog> tourLogs = FXCollections.observableArrayList();
     private final IntegerProperty selectedAddTourIndex = new SimpleIntegerProperty();
@@ -35,13 +38,13 @@ public class TableListViewModel implements ObjectSubscriber {
         });
     }
 
-    private void loadTourLogs() {
+    public void loadTourLogs() {
         List<TourLog> logs = tourLogService.getAllTourLogs();
         tourLogs.clear();
         tourLogs.addAll(logs);
     }
 
-    private void addToTourLogs(Object message) {
+    public void addToTourLogs(Object message) {
         if (message instanceof TourLog) {
             TourLog tourLog = (TourLog) message;
             tourLogs.add(tourLog);
@@ -54,34 +57,34 @@ public class TableListViewModel implements ObjectSubscriber {
             TourLog tourLog = tourLogs.get(index);
             if (tourLogService.deleteTourById(tourLog.getId())) {
                 tourLogs.remove(index);
-                System.out.println("TourLog deleted: " + tourLog.getName());
+                logger.info("TourLog deleted: " + tourLog.getName());
             } else {
-                System.out.println("Failed to delete TourLog: " + tourLog.getName());
+                logger.warn("Failed to delete TourLog: " + tourLog.getName());
             }
         } else {
-            System.out.println("Invalid index or empty list.");
+            logger.warn("Invalid index or empty list.");
         }
     }
 
 
-    private void selectTourLogIndex(int index) {
+    public void selectTourLogIndex(int index) {
         if (index == -1) {
-            System.out.println("No tour selected.");
+            logger.warn("No tour selected");
         } else if (index >= 0 && index < tourLogs.size()) {
             TourLog tourLog = tourLogs.get(index);
             tourLogService.setCurrentlySelected(tourLog);
             tourLogService.setIsSelected(true);
-            System.out.println("Selected tour log: " + tourLog.getName() + " with ID: " + tourLog.getId());
+            logger.info("Selected tour log: " + tourLog.getName() + " with ID: " + tourLog.getId());
         } else {
-            System.out.println("Invalid index.");
+            logger.warn("Invalid index.");
         }
     }
 
 
-    private void updateTourLogs(Object message) {
+    public void updateTourLogs(Object message) {
         if (message instanceof Long) {
             Long selectedTourId = (Long) message;
-            System.out.println("Selected Index: " + selectedTourId);
+            logger.info("Selected Index: " + selectedTourId);
             List<TourLog> logs = tourLogService.getTourLogsByTourId(selectedTourId);
             tourLogs.clear();
             tourLogs.addAll(logs);
