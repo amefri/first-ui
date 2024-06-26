@@ -25,24 +25,34 @@ public class TourLog {
     private String info;
 
     @ManyToOne
-    @JoinColumn(name = "tour_id", nullable = true)
+    @JoinColumn(name = "tour_id", nullable = false)
     private Tours tour;
 
-    public TourLog() {
-    }
+    public TourLog() {}
 
     public TourLog(String name, String date, String rating, String info) {
         this.name = name;
         this.date = date;
         this.rating = rating;
         this.info = info;
+
     }
 
     // Getter and Setter methods
-    // (include getters and setters for all properties including tour)
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDate() {
@@ -69,24 +79,21 @@ public class TourLog {
         this.info = info;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Tours getTour() {
         return tour;
     }
 
     public void setTour(Tours tour) {
         this.tour = tour;
+    }
+
+    // Transient properties for distance and duration
+    public String getDistance() {
+        return tour != null ? tour.getDistance() : null;
+    }
+
+    public String getDuration() {
+        return tour != null ? tour.getEstimatedTime() : null;
     }
 
     public StringProperty nameProperty() {
@@ -103,5 +110,13 @@ public class TourLog {
 
     public StringProperty infoProperty() {
         return new SimpleStringProperty(info);
+    }
+
+    public StringProperty distanceProperty() {
+        return new SimpleStringProperty(getDistance());
+    }
+
+    public StringProperty durationProperty() {
+        return new SimpleStringProperty(getDuration());
     }
 }
