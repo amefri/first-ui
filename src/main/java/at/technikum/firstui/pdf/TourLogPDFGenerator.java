@@ -1,6 +1,7 @@
 package at.technikum.firstui.pdf;
 
 import at.technikum.firstui.entity.TourLog;
+import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.services.TourListService;
 import at.technikum.firstui.services.TourLogService;
 import com.itextpdf.io.image.ImageData;
@@ -18,13 +19,20 @@ import java.util.List;
 public class TourLogPDFGenerator {
 
     private TourLogService tourLogService;
+    private TourListService tourListService;
 
-    public TourLogPDFGenerator(TourLogService tourLogService) {
+    public TourLogPDFGenerator(TourLogService tourLogService, TourListService tourListService) {
         this.tourLogService = tourLogService;
+        this.tourListService=tourListService;
     }
 
     public void createTourLogPdf(String destination) throws IOException {
-        List<TourLog> tourLogs = tourLogService.getAllTourLogs();
+
+        Tours tour = tourListService.getCurrentlySelected();
+        Long id = tour.getId();
+        List<TourLog> tourLogs = tourLogService.getTourLogsByTourId(id);
+
+
         if (tourLogs == null || tourLogs.isEmpty()) {
             System.out.println("No tour logs found.");
             return;

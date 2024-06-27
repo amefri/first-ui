@@ -75,7 +75,7 @@ public class ViewFactory {
 
 
 
-        toolBarTourLogViewModel = new ToolBarTourLogViewModel(publisher, tourLogService);
+        toolBarTourLogViewModel = new ToolBarTourLogViewModel(publisher, tourLogService,tourListService);
         tableListViewModel = new TableListViewModel(publisher, tourLogService);
         addRouteLogViewModel = new AddRouteLogViewModel(publisher, tourLogService, tourListService);
         modifyTourLogViewModel = new ModifyTourLogViewModel(publisher,tourLogService, tourListService);

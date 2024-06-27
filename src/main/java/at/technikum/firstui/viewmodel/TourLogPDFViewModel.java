@@ -13,11 +13,13 @@ public class TourLogPDFViewModel {
     private static final Logger logger = LogManager.getLogger(TourLogPDFViewModel.class);
 
     private final TourLogService tourLogService;
+    private final TourListService tourListService;
     private final TourLogPDFGenerator pdfGenerator;
 
-    public TourLogPDFViewModel(TourLogService tourLogService) {
+    public TourLogPDFViewModel(TourLogService tourLogService,TourListService tourListService) {
         this.tourLogService = tourLogService;
-        this.pdfGenerator = new TourLogPDFGenerator(tourLogService);
+        this.tourListService=tourListService;
+        this.pdfGenerator = new TourLogPDFGenerator(tourLogService,tourListService);
     }
 
     public void generatePdf() {

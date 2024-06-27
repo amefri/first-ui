@@ -11,10 +11,12 @@ public class ToolBarTourLogViewModel
 
     private final NewStageService newStageService;
     private final TourLogPDFViewModel tourLogPdfViewModel;
+    private final TourListService tourListService;
 
-    public ToolBarTourLogViewModel(Publisher publisher, TourLogService tourLogService) {
+    public ToolBarTourLogViewModel(Publisher publisher, TourLogService tourLogService, TourListService tourListService) {
         this.newStageService = new NewStageService();
-        this.tourLogPdfViewModel = new TourLogPDFViewModel(tourLogService);
+        this.tourListService=tourListService;
+        this.tourLogPdfViewModel = new TourLogPDFViewModel(tourLogService, tourListService);
     }
 
     public void onAdd() {
