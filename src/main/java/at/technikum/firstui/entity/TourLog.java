@@ -18,55 +18,29 @@ public class TourLog {
     @Column(name = "date")
     private String date;
 
-    @Column(name = "duration")
-    private String duration;
+    @Column(name = "rating")
+    private String rating;
 
-    @Column(name = "distance")
-    private String distance;
+    @Column(name = "info")
+    private String info;
 
     @ManyToOne
-    @JoinColumn(name = "tour_id", nullable = true)
+    @JoinColumn(name = "tour_id", nullable = false)
     private Tours tour;
 
-    public TourLog() {
-    }
+    public TourLog() {}
 
-    public TourLog(String name, String date, String duration, String distance) {
+    public TourLog(String name, String date, String rating, String info) {
         this.name = name;
         this.date = date;
-        this.duration = duration;
-        this.distance = distance;
+        this.rating = rating;
+        this.info = info;
+
     }
 
     // Getter and Setter methods
-    // (include getters and setters for all properties including tour)
-
     public Long getId() {
         return id;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getDistance() {
-        return distance;
-    }
-
-    public void setDistance(String distance) {
-        this.distance = distance;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
     }
 
     public void setId(Long id) {
@@ -81,12 +55,45 @@ public class TourLog {
         this.name = name;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     public Tours getTour() {
         return tour;
     }
 
     public void setTour(Tours tour) {
         this.tour = tour;
+    }
+
+    // Transient properties for distance and duration
+    public String getDistance() {
+        return tour != null ? tour.getDistance() : null;
+    }
+
+    public String getDuration() {
+        return tour != null ? tour.getEstimatedTime() : null;
     }
 
     public StringProperty nameProperty() {
@@ -97,11 +104,19 @@ public class TourLog {
         return new SimpleStringProperty(date);
     }
 
-    public StringProperty durationProperty() {
-        return new SimpleStringProperty(duration);
+    public StringProperty ratingProperty() {
+        return new SimpleStringProperty(rating);
+    }
+
+    public StringProperty infoProperty() {
+        return new SimpleStringProperty(info);
     }
 
     public StringProperty distanceProperty() {
-        return new SimpleStringProperty(distance);
+        return new SimpleStringProperty(getDistance());
+    }
+
+    public StringProperty durationProperty() {
+        return new SimpleStringProperty(getDuration());
     }
 }

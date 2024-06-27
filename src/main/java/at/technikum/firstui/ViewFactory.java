@@ -40,6 +40,7 @@ public class ViewFactory {
 
 
 
+
     //-------------------REPOSITORIES----------------------
     private final SearchTermRepository searchTermRepository;
     private final TourListRepository tourListRepository;
@@ -67,13 +68,14 @@ public class ViewFactory {
         searchHistoryViewModel = new SearchHistoryViewModel(publisher, searchTermHistoryService);
         listViewModel = new ListViewModel(publisher);
 
-        toolBarViewModel = new ToolBarViewModel(publisher);
+        toolBarViewModel = new ToolBarViewModel(publisher, tourListService);
         tourListViewModel = new TourListViewModel(publisher,tourListService,tourLogService);
         addStageViewModel = new AddStageViewModel(publisher,tourListService);
         apiController = new APIController(tourListService,publisher,apiService);
 
 
-        toolBarTourLogViewModel = new ToolBarTourLogViewModel(publisher);
+
+        toolBarTourLogViewModel = new ToolBarTourLogViewModel(publisher, tourLogService,tourListService);
         tableListViewModel = new TableListViewModel(publisher, tourLogService);
         addRouteLogViewModel = new AddRouteLogViewModel(publisher, tourLogService, tourListService);
         modifyTourLogViewModel = new ModifyTourLogViewModel(publisher,tourLogService, tourListService);
@@ -133,6 +135,7 @@ public class ViewFactory {
         if(APIService.class.equals(viewClass)) {
             return new APIService(tourListService, publisher);
         }
+
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);
     }

@@ -158,8 +158,8 @@ public class TourLogDatabaseRepository implements TourLogRepository {
                 if (existingTourLog != null) {
                     existingTourLog.setName(tourLog.getName());
                     existingTourLog.setDate(tourLog.getDate());
-                    existingTourLog.setDuration(tourLog.getDuration());
-                    existingTourLog.setDistance(tourLog.getDistance());
+                    existingTourLog.setRating(tourLog.getRating());
+                    existingTourLog.setInfo(tourLog.getInfo());
                     entityManager.merge(existingTourLog);
                     logger.info("Modified TourLog: {}", existingTourLog);
                 } else {

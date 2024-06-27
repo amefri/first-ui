@@ -22,10 +22,10 @@ public class AddRouteLogView implements Initializable {
     private TextField dateField;
 
     @FXML
-    private TextField durationField;
+    private TextField ratingField;
 
     @FXML
-    private TextField distanceField;
+    private TextField infoField;
 
     @FXML
     private Button addTourLogButton;
@@ -40,8 +40,8 @@ public class AddRouteLogView implements Initializable {
         // Bind properties to text fields
         nameField.textProperty().bindBidirectional(viewModel.nameProperty());
         dateField.textProperty().bindBidirectional(viewModel.dateProperty());
-        durationField.textProperty().bindBidirectional(viewModel.durationProperty());
-        distanceField.textProperty().bindBidirectional(viewModel.distanceProperty());
+        ratingField.textProperty().bindBidirectional(viewModel.durationProperty());
+        infoField.textProperty().bindBidirectional(viewModel.distanceProperty());
 
         // Bind button disable property
         addTourLogButton.disableProperty().bind(viewModel.addTourLogButtonDisabledProperty());

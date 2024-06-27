@@ -4,10 +4,14 @@
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml">
+            xmlns:fx="http://javafx.com/fxml"
+
+            >
 
     <top>
         <VBox spacing="10">
+
+
             <!--<fx:include source="search-view.fxml"/>
             <fx:include source="search-history-view.fxml"/>-->
             <fx:include source="map-view.fxml"/>

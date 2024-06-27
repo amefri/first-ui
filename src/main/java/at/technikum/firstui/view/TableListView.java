@@ -22,6 +22,10 @@ public class TableListView implements Initializable {
     @FXML
     private TableColumn<TourLog, String> dateColumn;
     @FXML
+    private TableColumn<TourLog, String> ratingColumn;
+@FXML
+    private TableColumn<TourLog, String> infoColumn;
+    @FXML
     private TableColumn<TourLog, String> distanceColumn;
     @FXML
     private TableColumn<TourLog, String> durationColumn;
@@ -39,6 +43,8 @@ public class TableListView implements Initializable {
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
         distanceColumn.setCellValueFactory(cellData -> cellData.getValue().distanceProperty());
         durationColumn.setCellValueFactory(cellData -> cellData.getValue().durationProperty());
+        ratingColumn.setCellValueFactory(cellData -> cellData.getValue().ratingProperty());
+        infoColumn.setCellValueFactory(cellData -> cellData.getValue().infoProperty());
 
 
 
