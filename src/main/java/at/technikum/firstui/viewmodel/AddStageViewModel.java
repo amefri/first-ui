@@ -38,17 +38,14 @@ public class AddStageViewModel {
         from.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         to.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         transportType.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
-        distance.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
-        estimatedTime.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
-        imagePath.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+        ;
     }
 
     private void updateAddTourButtonDisabled() {
         // Check if any of the fields are empty
         addTourButtonDisabled.set(name.get().isEmpty() || description.get().isEmpty() ||
                 from.get().isEmpty() || to.get().isEmpty() ||
-                transportType.get().isEmpty() || distance.get().isEmpty() ||
-                estimatedTime.get().isEmpty());
+                transportType.get().isEmpty());
     }
 
     public void addTour() {
@@ -64,9 +61,7 @@ public class AddStageViewModel {
             from.set("");
             to.set("");
             transportType.set("");
-            distance.set("");
-            estimatedTime.set("");
-            imagePath.set("");
+
         }
     }
 
