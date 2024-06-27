@@ -19,9 +19,7 @@
             </FXCollections>
         </items>
     </ComboBox>
-    <TextField fx:id="distanceField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Distance" />
-    <TextField fx:id="estimatedTimeField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Estimated Time" />
-    <TextField fx:id="imageField" promptText="Image Path" HBox.hgrow="ALWAYS" />
+
     <Button fx:id="addTourButton" onAction="#addTour" text="Add" />
 
 </VBox>

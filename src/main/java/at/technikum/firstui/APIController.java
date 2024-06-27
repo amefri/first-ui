@@ -100,7 +100,7 @@ public class APIController implements Subscriber {
 
                 String directionsJson = directions.toString();
                 directionsJson = directionsJson.replaceAll("\\[(\\d+\\.\\d+), (\\d+\\.\\d+)\\]", "[$2, $1]");
-                webEngine.executeScript("displayRoute(" + directionsJson + ");");
+                webEngine.executeScript("displayRoute('" + directionsJson + "');");
                 PauseTransition pause = new PauseTransition(Duration.seconds(4));
                 pause.setOnFinished(event -> saveMap());
                 pause.play();

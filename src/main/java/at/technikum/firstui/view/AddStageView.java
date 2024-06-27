@@ -29,14 +29,7 @@ public class AddStageView implements Initializable {
     @FXML
     private ComboBox<String> transportTypeField;
 
-    @FXML
-    private TextField distanceField;
 
-    @FXML
-    private TextField estimatedTimeField;
-
-    @FXML
-    private TextField imageField;
 
     @FXML
     private Button addTourButton;
@@ -53,9 +46,7 @@ public class AddStageView implements Initializable {
         fromField.textProperty().bindBidirectional(viewModel.fromProperty());
         toField.textProperty().bindBidirectional(viewModel.toProperty());
         transportTypeField.valueProperty().bindBidirectional(viewModel.transportTypeProperty());
-        distanceField.textProperty().bindBidirectional(viewModel.distanceProperty());
-        estimatedTimeField.textProperty().bindBidirectional(viewModel.estimatedTimeProperty());
-        imageField.textProperty().bindBidirectional(viewModel.imagePathProperty());
+
 
         // Bind button disable property
         addTourButton.disableProperty().bind(viewModel.addTourButtonDisabledProperty());
