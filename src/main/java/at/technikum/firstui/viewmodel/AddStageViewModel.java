@@ -1,20 +1,24 @@
 package at.technikum.firstui.viewmodel;
 
+import at.technikum.firstui.entity.FavPlaces;
 import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.event.Event;
+import at.technikum.firstui.event.ObjectSubscriber;
 import at.technikum.firstui.event.Publisher;
+import at.technikum.firstui.repository.FavPlaceDatabaseRepository;
+
+import at.technikum.firstui.services.TourListService;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import at.technikum.firstui.services.TourListService;
 
-public class AddStageViewModel {
+public class AddStageViewModel implements ObjectSubscriber {
 
     private final TourListService tourListService;
-
+    private final FavPlaceDatabaseRepository favPlaceService;
     private final Publisher publisher;
 
     private final StringProperty name = new SimpleStringProperty("");
@@ -27,10 +31,18 @@ public class AddStageViewModel {
     private final StringProperty imagePath = new SimpleStringProperty("");
 
     private final BooleanProperty addTourButtonDisabled = new SimpleBooleanProperty(true);
+    private final ObservableList<FavPlaces> favoritePlaces = FXCollections.observableArrayList();
 
-    public AddStageViewModel(Publisher publisher, TourListService tourListService){
+    public AddStageViewModel(Publisher publisher, TourListService tourListService, FavPlaceDatabaseRepository favPlaceService) {
         this.publisher = publisher;
         this.tourListService = tourListService;
+        this.favPlaceService = favPlaceService;
+
+        // Load favorite places
+        loadFavoritePlaces();
+
+        // Subscribe to the ADD_FAV event
+        this.publisher.subscribe(Event.ADD_FAV, this);
 
         // Listen to changes in fields and update addButtonDisabled property
         name.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
@@ -38,7 +50,11 @@ public class AddStageViewModel {
         from.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         to.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         transportType.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
-        ;
+    }
+
+    private void loadFavoritePlaces() {
+        favoritePlaces.clear();
+        favoritePlaces.addAll(favPlaceService.getAll());
     }
 
     private void updateAddTourButtonDisabled() {
@@ -61,11 +77,13 @@ public class AddStageViewModel {
             from.set("");
             to.set("");
             transportType.set("");
-
         }
     }
 
-    // Getters for properties
+    public ObservableList<FavPlaces> getFavoritePlaces() {
+        return favoritePlaces;
+    }
+
     public StringProperty nameProperty() {
         return name;
     }
@@ -86,19 +104,18 @@ public class AddStageViewModel {
         return transportType;
     }
 
-    public StringProperty distanceProperty() {
-        return distance;
-    }
 
-    public StringProperty estimatedTimeProperty() {
-        return estimatedTime;
-    }
-
-    public StringProperty imagePathProperty() {
-        return imagePath;
-    }
 
     public BooleanProperty addTourButtonDisabledProperty() {
         return addTourButtonDisabled;
+    }
+
+    @Override
+    public void notify(Object message) {
+        if (message instanceof FavPlaces) {
+            FavPlaces favPlace = (FavPlaces) message;
+            favoritePlaces.add(favPlace);
+            System.out.println("Added favorite place: " + favPlace.getNameFav() + " to the list");
+        }
     }
 }

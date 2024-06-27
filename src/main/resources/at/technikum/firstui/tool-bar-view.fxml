@@ -18,6 +18,7 @@
                 <Button fx:id="buttonAdd" text= "%add-button-text" />
                 <Button fx:id="buttonModify" text="%modify-button-text" />
                 <Button fx:id="generatePdf" text="%report-button-text" />
+                <Button fx:id="buttonSaveFavorite" text="%add-fav-button" />
             </items>
         </ToolBar>
 

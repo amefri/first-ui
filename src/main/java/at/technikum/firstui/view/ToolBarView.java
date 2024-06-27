@@ -11,7 +11,7 @@ public class ToolBarView {
 
     @FXML private Button buttonModify;
     @FXML private Button generatePdf;
-
+    @FXML private Button buttonSaveFavorite;
     private final ToolBarViewModel viewModel;
 
     public ToolBarView(ToolBarViewModel toolBarViewModel) {
@@ -23,5 +23,6 @@ public class ToolBarView {
         buttonAdd.setOnAction(e -> viewModel.onAdd());
         buttonModify.setOnAction(e -> viewModel.onModify());
         generatePdf.setOnAction(e -> viewModel.onGeneratePdf());
+        buttonSaveFavorite.setOnAction(e -> viewModel.onSaveFavoritePlace());
     }
 }

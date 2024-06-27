@@ -29,7 +29,9 @@ public class ViewFactory {
     private final ToolBarViewModel toolBarViewModel;
     private final TourListViewModel tourListViewModel;
     private final AddStageViewModel addStageViewModel;
-
+    private final SaveFavoriteViewModel saveFavoriteViewModel;
+    private final SaveFavoriteView saveFavoriteView;
+    private final FavPlaceDatabaseRepository favPlaceDatabaseRepository;
     private final ToolBarTourLogViewModel toolBarTourLogViewModel;
     private final TableListViewModel tableListViewModel;
     private final AddRouteLogViewModel addRouteLogViewModel;
@@ -56,6 +58,7 @@ public class ViewFactory {
         searchTermRepository = new SearchTermDatabaseRepository();
         tourListRepository = new TourListDatabaseRepository();
         tourLogRepository = new TourLogDatabaseRepository();
+        favPlaceDatabaseRepository = new FavPlaceDatabaseRepository();
 
         //Service
         searchTermHistoryService = new SearchTermHistoryService(searchTermRepository);
@@ -67,10 +70,12 @@ public class ViewFactory {
         searchViewModel = new SearchViewModel(publisher, searchTermHistoryService);
         searchHistoryViewModel = new SearchHistoryViewModel(publisher, searchTermHistoryService);
         listViewModel = new ListViewModel(publisher);
+        saveFavoriteViewModel = new SaveFavoriteViewModel(publisher, favPlaceDatabaseRepository);
+        saveFavoriteView = new SaveFavoriteView(saveFavoriteViewModel);
 
         toolBarViewModel = new ToolBarViewModel(publisher, tourListService);
         tourListViewModel = new TourListViewModel(publisher,tourListService,tourLogService);
-        addStageViewModel = new AddStageViewModel(publisher,tourListService);
+        addStageViewModel = new AddStageViewModel(publisher,tourListService,favPlaceDatabaseRepository);
         apiController = new APIController(tourListService,publisher,apiService);
 
 
@@ -134,6 +139,12 @@ public class ViewFactory {
         }
         if(APIService.class.equals(viewClass)) {
             return new APIService(tourListService, publisher);
+        }
+        if(SaveFavoriteView.class.equals(viewClass)) {
+            return new SaveFavoriteView(saveFavoriteViewModel);
+        }
+        if(SaveFavoriteViewModel.class.equals(viewClass)) {
+            return new SaveFavoriteViewModel(publisher, favPlaceDatabaseRepository);
         }
 
 

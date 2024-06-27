@@ -6,10 +6,13 @@
 <?import java.lang.String?>
 <VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.firstui.view.AddStageView">
 
-    <TextField fx:id="nameField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Name" />
-    <TextField fx:id="descriptionField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Description" />
-    <TextField fx:id="fromField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="From" />
-    <TextField fx:id="toField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="To" />
+    <TextField fx:id="nameField" HBox.hgrow="ALWAYS" promptText="Name" />
+    <TextField fx:id="descriptionField" HBox.hgrow="ALWAYS" promptText="Description" />
+    <TextField fx:id="fromField" HBox.hgrow="ALWAYS" promptText="From" />
+    <TextField fx:id="toField" HBox.hgrow="ALWAYS" promptText="To" />
+
+    <ComboBox fx:id="favPlacesComboBox" HBox.hgrow="ALWAYS" promptText="Select Favorite Place" />
+
     <ComboBox fx:id="transportTypeField" HBox.hgrow="ALWAYS" promptText="Transport Type">
         <items>
             <FXCollections fx:factory="observableArrayList">

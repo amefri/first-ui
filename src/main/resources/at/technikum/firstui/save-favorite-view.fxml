@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="at.technikum.firstui.view.SaveFavoriteView">
+    <TextField fx:id="nameField" promptText="Name des Lieblingsorts"/>
+    <TextField fx:id="descriptionField" promptText="Beschreibung"/>
+    <Button text="Speichern" onAction="#onSave"/>
+    <ListView fx:id="favoritePlacesListView" VBox.vgrow="ALWAYS"/>
+</VBox>

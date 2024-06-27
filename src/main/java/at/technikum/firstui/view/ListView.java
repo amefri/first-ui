@@ -22,14 +22,7 @@ public class ListView implements Initializable {
 
 
 
-    /*public void initialize(URL url, ResourceBundle resourceBundle) {
-        listView.setItems(viewModel.getItems());
 
-        // Listen for selection changes and update the ViewModel
-        listView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> { //TODO der Listener muss hier raus
-            viewModel.setSelectedItem(newVal);
-        });
-    }*/
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

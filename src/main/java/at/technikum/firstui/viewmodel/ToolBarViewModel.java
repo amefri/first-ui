@@ -25,4 +25,8 @@ public class ToolBarViewModel {
     public void onGeneratePdf() {
         pdfViewModel.generatePdf();
     }
+
+    public void onSaveFavoritePlace() {
+        newStageService.loadFXML("save-favorite-view.fxml");
+    }
 }
