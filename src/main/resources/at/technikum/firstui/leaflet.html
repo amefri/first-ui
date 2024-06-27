@@ -3,43 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaflet Map with Directions</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <title>Leaflet Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map { height: 100vh; width: 100%; }
+        .leaflet-container { height: 100%; width: 100%; }
+    </style>
 </head>
-<body style="margin: 0; padding: 0;">
-<div id="map" style="height: 80vh"></div>
+<body>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script>
-    function resetMapContainer() {
-        if (document.getElementById('map')._leaflet_id) {
-            var mapContainer = document.getElementById('map');
-            mapContainer._leaflet_id = null;
-            mapContainer.innerHTML = "";
+    var map = L.map('map').setView([48.2083, 16.3731], 6);
+    var routeLayer;
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    window.addEventListener('resize', function() {
+        map.invalidateSize();
+    });
+
+    function displayRoute(route) {
+        console.log("Displaying Route: ", route);
+        var geojson = JSON.parse(route);
+        if (routeLayer) {
+            map.removeLayer(routeLayer);
+        }
+        routeLayer = L.geoJSON(geojson).addTo(map);
+    }
+
+    window.displayRoute = displayRoute;
+
+    function tryDisplayRoute() {
+        if (window.displayRoute && window.route) {
+            window.displayRoute(window.route);
+        } else {
+            setTimeout(tryDisplayRoute, 100);
         }
     }
 
-    function displayRoute(directions) {
-        resetMapContainer();
+    window.tryDisplayRoute = tryDisplayRoute;
 
-        var startLat = directions.features[0].geometry.coordinates[0][1];
-        var startLon = directions.features[0].geometry.coordinates[0][0];
+    document.addEventListener("DOMContentLoaded", function() {
+        tryDisplayRoute();
+    });
 
-        var map = L.map('map').setView([startLat, startLon], 13);
-        var bbox = directions.bbox;
-        map.fitBounds([[bbox[1], bbox[0]], [bbox[3], bbox[2]]]);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        L.geoJSON(directions).addTo(map);
-
-        setTimeout(function() {
-            if (window.javaApp && typeof window.javaApp.saveMap === 'function') {
-                window.javaApp.saveMap();
-            }
-        }, 1000); // Wait for 1 second to ensure the map is fully rendered
+    function clearRouteOnMap() {
+        if (routeLayer) {
+            map.removeLayer(routeLayer);
+            routeLayer = null;
+        }
     }
+
+    window.clearRouteOnMap = clearRouteOnMap;
 </script>
 </body>
 </html>
