@@ -67,15 +67,18 @@ public class ViewFactory {
         apiService = new APIService(tourListService, publisher);
 
         //ViewModel
-        searchTermHistoryService = new SearchTermHistoryService(searchTermRepository);
-        searchHistoryViewModel = new SearchHistoryViewModel(publisher, searchTermHistoryService);
+
+
         listViewModel = new ListViewModel(publisher);
         saveFavoriteViewModel = new SaveFavoriteViewModel(publisher, favPlaceDatabaseRepository);
         saveFavoriteView = new SaveFavoriteView(saveFavoriteViewModel);
 
         toolBarViewModel = new ToolBarViewModel(publisher, tourListService);
         tourListViewModel = new TourListViewModel(publisher,tourListService,tourLogService);
+        searchTermHistoryService = new SearchTermHistoryService(searchTermRepository);
+        searchHistoryViewModel = new SearchHistoryViewModel(publisher, searchTermHistoryService);
         searchViewModel = new SearchViewModel(publisher, searchTermHistoryService, tourListViewModel);
+
         addStageViewModel = new AddStageViewModel(publisher,tourListService,favPlaceDatabaseRepository);
         apiController = new APIController(tourListService,publisher,apiService);
 

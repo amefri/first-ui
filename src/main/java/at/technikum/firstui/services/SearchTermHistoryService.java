@@ -4,6 +4,7 @@ import at.technikum.firstui.entity.SearchTerm;
 import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.repository.SearchTermRepository;
 import at.technikum.firstui.viewmodel.SearchHistoryViewModel;
+import at.technikum.firstui.viewmodel.SearchViewModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,7 @@ public class SearchTermHistoryService {
 
     public SearchTermHistoryService(SearchTermRepository searchTermRepository) {
         this.searchTermRepository = searchTermRepository;
+
     }
 
     public void add(String term) {
