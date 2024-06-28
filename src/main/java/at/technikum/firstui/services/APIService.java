@@ -17,10 +17,14 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class APIService implements ObjectSubscriber{
 
-    private static final String API_KEY = "5b3ce3597851110001cf6248040d24d7f4794453983f28f9565e16d4";
+    static ResourceBundle resourceBundle = ResourceBundle.getBundle("app");
+    static String API_KEY = resourceBundle.getString("api_key");
+
+    //private static final String API_KEY = "5b3ce3597851110001cf6248040d24d7f4794453983f28f9565e16d4";
     private static TourListService tourListService;
 
     private final Publisher publisher;

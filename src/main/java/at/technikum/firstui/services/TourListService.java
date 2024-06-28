@@ -3,12 +3,17 @@ package at.technikum.firstui.services;
 import at.technikum.firstui.entity.TourLog;
 import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.repository.TourListRepository;
+import at.technikum.firstui.viewmodel.AddRouteLogViewModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
 public class TourListService {
+    private static final Logger logger = LogManager.getLogger(AddRouteLogViewModel.class);
+
     private final TourListRepository tourRepository;
 
     private Tours currentlySelected;
@@ -22,12 +27,10 @@ public class TourListService {
 
 
     public void addTour(Tours tour) {
-        System.out.println("Tour added: " + tour.getName());
         tourRepository.save(tour);
     }
 
     public void modifyTour(Tours tour) {
-        System.out.println("Tour modified: " + tour.getName());
         tourRepository.modify(tour);
     }
 
@@ -38,10 +41,9 @@ public class TourListService {
     public boolean deleteTourByName(String tourName) {
         if (tourRepository.findByName(tourName).isPresent()) {
             tourRepository.deleteByName(tourName);
-            System.out.println("Tour removed by name: " + tourName);
             return true;
         }
-        System.out.println("Tour not found by name: " + tourName);
+        logger.warn("Tour not found by name: " + tourName);
         return false;
     }
 

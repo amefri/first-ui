@@ -10,8 +10,12 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TourListViewModel implements ObjectSubscriber {
+
+    private static final Logger logger = LogManager.getLogger(AddRouteLogViewModel.class);
 
     private final ObservableList<String> tourList = FXCollections.observableArrayList();
     private final IntegerProperty selectedAddTourIndex = new SimpleIntegerProperty();
@@ -20,6 +24,7 @@ public class TourListViewModel implements ObjectSubscriber {
     private final Publisher publisher;
 
     public TourListViewModel(Publisher publisher, TourListService tourListService, TourLogService tourLogService) {
+
 
         this.publisher = publisher;
         this.tourListService = tourListService;
@@ -48,7 +53,7 @@ public class TourListViewModel implements ObjectSubscriber {
             String tourName = tourList.get(index);
             Tours tour = tourListService.getTourByName(tourName);
             if (tour != null) {
-                System.out.println("Primary key: " + tour.getId());
+                logger.info("Primary key: " + tour.getId());
                 return tour.getId();
             }
         }
@@ -57,9 +62,10 @@ public class TourListViewModel implements ObjectSubscriber {
 
     private void selectTourNames(int index) {
         if (index == -1) {
-            System.out.println("No tour selected.");
+            logger.warn("No tour selected.");
         } else {
-            System.out.println("Selected Tour: " + tourList.get(index));
+
+            logger.info("Selected Tour: " + tourList.get(index));
             String tourName = tourList.get(index);
             Tours tour = tourListService.getTourByName(tourName);
             tourListService.setIsSelected(true);
@@ -68,18 +74,17 @@ public class TourListViewModel implements ObjectSubscriber {
             Long dbindex = getPKTour(); // Ensure this is not null
 
             if (dbindex != null) {
-                System.out.println("DB Index (ID): " + dbindex);
                 tourLogService.getTourLogsByTourName(tourName);
                 publisher.publish(Event.SELECTED_TOUR_CHANGED, dbindex);
             } else {
-                System.out.println("DB Index is null for tour: " + tourName);
+                logger.warn("DB Index is null for tour: " + tourName);
             }
         }
     }
 
     public void addToTourList(String tourName) {
         tourList.add(tourName);
-        System.out.println("Added tour: " + tourName + " to the list");
+        logger.info("Added tour: " + tourName + " to the list");
     }
 
     public ObservableList<String> getTourNames() {
@@ -96,12 +101,12 @@ public class TourListViewModel implements ObjectSubscriber {
             String tourName = tourList.get(index);
             if (tourListService.deleteTourByName(tourName)) {
                 tourList.remove(index);
-                System.out.println("Tour deleted: " + tourName);
+                logger.info("Tour deleted: " + tourName);
             } else {
-                System.out.println("Failed to delete tour: " + tourName);
+                logger.warn("Failed to delete tour: " + tourName);
             }
         } else {
-            System.out.println("Invalid index or empty list.");
+            logger.warn("Invalid index or empty list.");
         }
     }
 
