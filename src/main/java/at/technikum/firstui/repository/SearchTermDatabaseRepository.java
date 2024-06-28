@@ -48,6 +48,44 @@ public class SearchTermDatabaseRepository implements SearchTermRepository {
 
     @Override
     public Optional<SearchTerm> findByTerm(String term) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<SearchTerm> criteriaQuery = criteriaBuilder.createQuery(SearchTerm.class);
+            Root<SearchTerm> root = criteriaQuery.from(SearchTerm.class);
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("term"), term));
+
+            List<SearchTerm> resultList = entityManager.createQuery(criteriaQuery).getResultList();
+            if (resultList.isEmpty()) {
+                return Optional.empty();
+            } else {
+                return Optional.of(resultList.get(0));
+            }
+        }
+    }
+
+
+    @Override
+    public Optional<Object> findByName(String term) {
         return Optional.empty();
+    }
+
+    @Override
+    public void deleteTerm(String term) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<SearchTerm> criteriaQuery = criteriaBuilder.createQuery(SearchTerm.class);
+            Root<SearchTerm> root = criteriaQuery.from(SearchTerm.class);
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("term"), term));
+
+            List<SearchTerm> resultList = entityManager.createQuery(criteriaQuery).getResultList();
+            if (!resultList.isEmpty()) {
+                entityManager.remove(resultList.get(0));
+            }
+
+            transaction.commit();
+        }
     }
 }

@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseButton;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,10 +35,16 @@ public class SearchHistoryView implements Initializable {
                 .bind(searchHistoryList.getSelectionModel().selectedIndexProperty());
 
         searchHistoryList.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {  // Check for double-click
+            if (event.getClickCount() == 1) {  // Check for double-click
                 viewModel.getCurrentlySelectedSearchTerm();
             }
 
+        });
+
+        searchHistoryList.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                viewModel.deleteSelectedTerm();
+            }
         });
 
 

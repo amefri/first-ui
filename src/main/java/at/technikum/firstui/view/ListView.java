@@ -29,7 +29,6 @@ public class ListView implements Initializable {
         listView.setItems(listViewModel.getItems());
 
 
-
         // Bind the selectedIndex property to the selected index of the ListView
         listViewModel.selectIndexProperty().bind(listView.getSelectionModel().selectedIndexProperty());
     }

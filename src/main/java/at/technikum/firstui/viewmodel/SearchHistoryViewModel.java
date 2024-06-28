@@ -63,8 +63,23 @@ public class SearchHistoryViewModel {
     }
 
     public Tours getCurrentlySelectedSearchTerm() {
-        System.out.println("currently selected search term: " + searchTermHistoryService.getCurrentlySelectedSearchTerm());
+        logger.info("currently selected search term: " + searchTermHistoryService.getCurrentlySelectedSearchTerm());
         return searchTermHistoryService.getCurrentlySelectedSearchTerm();
 
+    }
+
+    public void deleteSelectedTerm() {
+        int index = selectedSearchIndex.get();
+        if (index >= 0 && index < searchHistory.size()) {
+            String term = searchHistory.get(index);
+            if (searchTermHistoryService.deleteTerm(term)) {
+                searchHistory.remove(index);
+                logger.info("Tour deleted: " + term);
+            } else {
+                logger.warn("Failed to delete tour: " + term);
+            }
+        } else {
+            logger.warn("Invalid index or empty list.");
+        }
     }
 }

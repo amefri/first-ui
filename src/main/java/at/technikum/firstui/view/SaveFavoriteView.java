@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,6 +33,20 @@ public class SaveFavoriteView implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setListViewItems();
         configureListViewCells();
+
+        favoritePlacesListView.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+            viewModel.selectedIndexProperty().set(newValue.intValue());
+        });
+
+        favoritePlacesListView.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+                viewModel.getCurrentlySelected();
+            }
+
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                viewModel.delete();
+            }
+        });
     }
 
     private void setListViewItems() {
@@ -58,7 +73,6 @@ public class SaveFavoriteView implements Initializable {
                 nameField.getText(),
                 descriptionField.getText()
         );
-
 
         nameField.clear();
         descriptionField.clear();

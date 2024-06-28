@@ -36,7 +36,6 @@ public class TableListView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("TableListView initialized");
 
         // Bind columns to model properties
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
@@ -59,7 +58,6 @@ public class TableListView implements Initializable {
         // Handle double-click event
         tableView.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                System.out.println("Double-click detected");
                 viewModel.deleteSelectedTour();
             }
         });
