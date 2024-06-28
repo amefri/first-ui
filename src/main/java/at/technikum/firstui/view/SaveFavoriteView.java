@@ -59,7 +59,7 @@ public class SaveFavoriteView implements Initializable {
                 descriptionField.getText()
         );
 
-        // Optional: Clear input fields after saving
+
         nameField.clear();
         descriptionField.clear();
     }
