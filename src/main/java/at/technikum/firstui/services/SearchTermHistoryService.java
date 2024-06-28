@@ -1,6 +1,7 @@
 package at.technikum.firstui.services;
 
 import at.technikum.firstui.entity.SearchTerm;
+import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.repository.SearchTermRepository;
 import at.technikum.firstui.viewmodel.SearchHistoryViewModel;
 
@@ -10,7 +11,7 @@ import java.util.Optional;
 public class SearchTermHistoryService {
 
     private final SearchTermRepository searchTermRepository;
-    private String currentlySelectedSearchTerm;
+    private Tours currentlySelectedSearchTerm;
 
     public SearchTermHistoryService(SearchTermRepository searchTermRepository) {
         this.searchTermRepository = searchTermRepository;
@@ -32,11 +33,11 @@ public class SearchTermHistoryService {
                 .toList();
     }
 
-    public String getCurrentlySelectedSearchTerm() {
+    public Tours getCurrentlySelectedSearchTerm() {
        return currentlySelectedSearchTerm ;
     }
 
-    public void setCurrentlySelectedSearchTerm(String term) {
-        this.currentlySelectedSearchTerm = term;
+    public void setCurrentlySelectedSearchTerm(Tours currentlySelectedSearchTerm) {
+        this.currentlySelectedSearchTerm = currentlySelectedSearchTerm;
     }
 }

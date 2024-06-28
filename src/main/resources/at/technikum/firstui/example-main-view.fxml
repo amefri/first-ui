@@ -4,25 +4,17 @@
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-
-            >
+            xmlns:fx="http://javafx.com/fxml">
 
     <top>
         <VBox spacing="10">
-
-
-
             <fx:include source="map-view.fxml"/>
-
             <Label text="TOURLIST Toolbar" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
             <fx:include source="tool-bar-view.fxml"/>
             <Label text="TOURLOG Toolbar" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
             <fx:include source="tool-bar-route-log-view.fxml"/>
         </VBox>
     </top>
-
-
 
     <center>
         <HBox spacing="10" alignment="CENTER_LEFT">
@@ -31,7 +23,9 @@
             </padding>
             <VBox>
                 <fx:include source="search-view.fxml"/>
-                <fx:include source="search-history-view.fxml"/>
+                <VBox prefWidth="200" prefHeight="100">
+                    <fx:include source="search-history-view.fxml"/>
+                </VBox>
                 <Label text="Tour List" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 5;"/>
                 <fx:include source="list-view.fxml"/>
             </VBox>

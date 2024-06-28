@@ -1,5 +1,6 @@
 package at.technikum.firstui.viewmodel;
 
+import at.technikum.firstui.entity.Tours;
 import at.technikum.firstui.event.Event;
 import at.technikum.firstui.event.ObjectSubscriber;
 import at.technikum.firstui.event.Publisher;
@@ -40,7 +41,7 @@ public class SearchHistoryViewModel {
         if (selectedSearchIndex.get() == -1) {
             return;
         }
-        String term = getSearchHistory().get(selectedSearchIndex.get());
+        Tours term = searchTermHistoryService.getCurrentlySelectedSearchTerm();
 
         logger.info("\"%s\" selected in history".formatted(term));
 
@@ -61,7 +62,7 @@ public class SearchHistoryViewModel {
         return selectedSearchIndex;
     }
 
-    public String getCurrentlySelectedSearchTerm() {
+    public Tours getCurrentlySelectedSearchTerm() {
         System.out.println("currently selected search term: " + searchTermHistoryService.getCurrentlySelectedSearchTerm());
         return searchTermHistoryService.getCurrentlySelectedSearchTerm();
 
