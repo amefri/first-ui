@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class TourListService {
     private static final Logger logger = LogManager.getLogger(AddRouteLogViewModel.class);
@@ -36,6 +37,11 @@ public class TourListService {
 
     public List<Tours> getTours() {
         return tourRepository.findAll();
+    }
+    public List<Tours> findToursBySearchTerm(String searchTerm) {
+        return tourRepository.findAll().stream()
+                .filter(tour -> tour.getName().toLowerCase().contains(searchTerm.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
     public boolean deleteTourByName(String tourName) {

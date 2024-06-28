@@ -12,18 +12,19 @@ public class SearchViewModel {
 
     private final Publisher publisher;
     private final SearchTermHistoryService searchTermHistoryService;
+    private final TourListViewModel tourListViewModel;
 
-    private final StringProperty searchText
-            = new SimpleStringProperty("");
-    private final BooleanProperty searchDisabled
-            = new SimpleBooleanProperty(true);
+    private final StringProperty searchText = new SimpleStringProperty("");
+    private final BooleanProperty searchDisabled = new SimpleBooleanProperty(true);
 
     public SearchViewModel(
             Publisher publisher,
-            SearchTermHistoryService searchTermHistoryService
+            SearchTermHistoryService searchTermHistoryService,
+            TourListViewModel tourListViewModel
     ) {
         this.publisher = publisher;
         this.searchTermHistoryService = searchTermHistoryService;
+        this.tourListViewModel = tourListViewModel;
 
         // if search text is empty, disable search
         this.searchText.addListener(
@@ -41,6 +42,9 @@ public class SearchViewModel {
 
         searchTermHistoryService.add(searchText.get());
         publisher.publish(Event.SEARCH_TERM_SEARCHED, searchText.get());
+
+        // Filter tours based on the search term
+        tourListViewModel.filterTours(searchText.get());
 
         searchText.set("");
     }

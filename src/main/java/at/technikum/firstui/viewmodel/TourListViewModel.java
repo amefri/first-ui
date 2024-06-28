@@ -24,8 +24,6 @@ public class TourListViewModel implements ObjectSubscriber {
     private final Publisher publisher;
 
     public TourListViewModel(Publisher publisher, TourListService tourListService, TourLogService tourLogService) {
-
-
         this.publisher = publisher;
         this.tourListService = tourListService;
         this.tourLogService = tourLogService;
@@ -47,6 +45,13 @@ public class TourListViewModel implements ObjectSubscriber {
         }
     }
 
+    public void filterTours(String searchTerm) {
+        tourList.clear();
+        for (Tours tour : tourListService.findToursBySearchTerm(searchTerm)) {
+            tourList.add(tour.getName());
+        }
+    }
+
     public Long getPKTour() {
         int index = selectedAddTourIndex.get();
         if (index >= 0 && index < tourList.size()) {
@@ -64,7 +69,6 @@ public class TourListViewModel implements ObjectSubscriber {
         if (index == -1) {
             logger.warn("No tour selected.");
         } else {
-
             logger.info("Selected Tour: " + tourList.get(index));
             String tourName = tourList.get(index);
             Tours tour = tourListService.getTourByName(tourName);
@@ -109,7 +113,6 @@ public class TourListViewModel implements ObjectSubscriber {
             logger.warn("Invalid index or empty list.");
         }
     }
-
 
     @Override
     public void notify(Object message) {
