@@ -32,5 +32,15 @@ public class SearchHistoryView implements Initializable {
         this.searchHistoryList.setItems(viewModel.getSearchHistory());
         this.viewModel.selectedSearchIndexProperty()
                 .bind(searchHistoryList.getSelectionModel().selectedIndexProperty());
-    }
-}
+
+        searchHistoryList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {  // Check for double-click
+                viewModel.getCurrentlySelectedSearchTerm();
+            }
+
+        });
+
+
+
+
+}}

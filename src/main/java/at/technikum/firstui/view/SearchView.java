@@ -18,6 +18,8 @@ public class SearchView implements Initializable {
 
     @FXML
     private Button searchButton;
+    @FXML
+    private Button resetButton;
 
     public SearchView(SearchViewModel viewModel) {
         this.viewModel = viewModel;
@@ -34,5 +36,10 @@ public class SearchView implements Initializable {
     @FXML
     public void onSearch() {
         this.viewModel.search();
+    }
+
+@FXML
+    public void onReset() {
+        this.viewModel.resetSearch();
     }
 }

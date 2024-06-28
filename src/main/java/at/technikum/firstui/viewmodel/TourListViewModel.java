@@ -45,6 +45,11 @@ public class TourListViewModel implements ObjectSubscriber {
         }
     }
 
+
+    public void showAllTours() {
+        loadToursFromDatabase();
+    }
+
     public void filterTours(String searchTerm) {
         tourList.clear();
         for (Tours tour : tourListService.findToursBySearchTerm(searchTerm)) {

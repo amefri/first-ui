@@ -61,13 +61,13 @@ public class ViewFactory {
         favPlaceDatabaseRepository = new FavPlaceDatabaseRepository();
 
         //Service
-        searchTermHistoryService = new SearchTermHistoryService(searchTermRepository);
+
         tourListService = new TourListService(tourListRepository);
         tourLogService = new TourLogService(tourLogRepository, tourListRepository);
         apiService = new APIService(tourListService, publisher);
 
         //ViewModel
-
+        searchTermHistoryService = new SearchTermHistoryService(searchTermRepository);
         searchHistoryViewModel = new SearchHistoryViewModel(publisher, searchTermHistoryService);
         listViewModel = new ListViewModel(publisher);
         saveFavoriteViewModel = new SaveFavoriteViewModel(publisher, favPlaceDatabaseRepository);

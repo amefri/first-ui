@@ -2,6 +2,7 @@ package at.technikum.firstui.services;
 
 import at.technikum.firstui.entity.SearchTerm;
 import at.technikum.firstui.repository.SearchTermRepository;
+import at.technikum.firstui.viewmodel.SearchHistoryViewModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,7 @@ import java.util.Optional;
 public class SearchTermHistoryService {
 
     private final SearchTermRepository searchTermRepository;
+    private String currentlySelectedSearchTerm;
 
     public SearchTermHistoryService(SearchTermRepository searchTermRepository) {
         this.searchTermRepository = searchTermRepository;
@@ -29,6 +31,12 @@ public class SearchTermHistoryService {
                 .map(SearchTerm::getTerm)
                 .toList();
     }
-}
 
-//TODO: alles auf string umstellen; bei touren und tourlog auf string umstellen zb mit id und sich dann für eins entscheiden; fragen wie die andere das gemacht haben
+    public String getCurrentlySelectedSearchTerm() {
+       return currentlySelectedSearchTerm ;
+    }
+
+    public void setCurrentlySelectedSearchTerm(String term) {
+        this.currentlySelectedSearchTerm = term;
+    }
+}

@@ -12,6 +12,7 @@ public class SearchViewModel {
 
     private final Publisher publisher;
     private final SearchTermHistoryService searchTermHistoryService;
+
     private final TourListViewModel tourListViewModel;
 
     private final StringProperty searchText = new SimpleStringProperty("");
@@ -51,6 +52,11 @@ public class SearchViewModel {
 
     public StringProperty searchTextProperty() {
         return searchText;
+    }
+
+    public void resetSearch() {
+        searchText.set("");
+        tourListViewModel.showAllTours();
     }
 
     public String getSearchText() {
