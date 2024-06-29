@@ -48,8 +48,8 @@ public class AddRouteLogViewModelTest {
         // Set up view model properties
         viewModel.nameProperty().set("Log 1");
         viewModel.dateProperty().set("2024-06-30");
-        viewModel.durationProperty().set("2 hours");
-        viewModel.distanceProperty().set("100 km");
+        viewModel.ratingProperty().set("2 hours");
+        viewModel.infoProperty().set("100 km");
 
         // Simulate adding a tour log
         viewModel.addTourLog();
@@ -63,8 +63,8 @@ public class AddRouteLogViewModelTest {
         // Assert that properties are cleared after adding
         assertEquals("", viewModel.nameProperty().get());
         assertEquals("", viewModel.dateProperty().get());
-        assertEquals("", viewModel.durationProperty().get());
-        assertEquals("", viewModel.distanceProperty().get());
+        assertEquals("", viewModel.ratingProperty().get());
+        assertEquals("", viewModel.infoProperty().get());
     }
 
 
@@ -76,8 +76,8 @@ public class AddRouteLogViewModelTest {
         // Set up view model properties
         viewModel.nameProperty().set("Log 1");
         viewModel.dateProperty().set("2024-06-30");
-        viewModel.durationProperty().set("2 hours");
-        viewModel.distanceProperty().set("100 km");
+        viewModel.ratingProperty().set("2 hours");
+        viewModel.infoProperty().set("100 km");
 
         // Simulate adding a tour log
         viewModel.addTourLog();
@@ -89,8 +89,8 @@ public class AddRouteLogViewModelTest {
         // Assert that properties remain unchanged
         assertEquals("Log 1", viewModel.nameProperty().get());
         assertEquals("2024-06-30", viewModel.dateProperty().get());
-        assertEquals("2 hours", viewModel.durationProperty().get());
-        assertEquals("100 km", viewModel.distanceProperty().get());
+        assertEquals("2 hours", viewModel.ratingProperty().get());
+        assertEquals("100 km", viewModel.infoProperty().get());
     }
 
     @Test
@@ -103,8 +103,8 @@ public class AddRouteLogViewModelTest {
         // Set up view model properties with empty values
         viewModel.nameProperty().set("");
         viewModel.dateProperty().set("");
-        viewModel.durationProperty().set("");
-        viewModel.distanceProperty().set("");
+        viewModel.ratingProperty().set("");
+        viewModel.infoProperty().set("");
 
         // Simulate adding a tour log
         viewModel.addTourLog();
@@ -116,8 +116,8 @@ public class AddRouteLogViewModelTest {
         // Assert that properties remain unchanged
         assertEquals("", viewModel.nameProperty().get());
         assertEquals("", viewModel.dateProperty().get());
-        assertEquals("", viewModel.durationProperty().get());
-        assertEquals("", viewModel.distanceProperty().get());
+        assertEquals("", viewModel.ratingProperty().get());
+        assertEquals("", viewModel.infoProperty().get());
     }
 
 
