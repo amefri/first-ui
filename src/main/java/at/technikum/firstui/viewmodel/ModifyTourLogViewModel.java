@@ -60,6 +60,7 @@ public class ModifyTourLogViewModel implements ObjectSubscriber {
                 newTourLog.setId(id);
                 tourLogService.modifyTourLog(newTourLog);
                 logger.info("TourLog modified: " + newTourLog);
+                publisher.publish(Event.MODIFY_TOUR, newTourLog);
             }else{
                 logger.warn("No TourLog was selected");
 

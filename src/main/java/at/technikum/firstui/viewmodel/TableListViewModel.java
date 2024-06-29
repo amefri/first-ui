@@ -29,6 +29,8 @@ public class TableListViewModel implements ObjectSubscriber {
         // Subscribe this ViewModel to the TOUR_LOG_ADDED event
         this.publisher.subscribe(Event.SELECTED_TOUR_CHANGED, (ObjectSubscriber) this::updateTourLogs);
         this.publisher.subscribe(Event.TOUR_LOG_ADDED, (ObjectSubscriber) this::addToTourLogs);
+        this.publisher.subscribe(Event.MODIFY_TOUR, (ObjectSubscriber) this::updateModifiedTourLog);
+
 
         loadTourLogs();
 
@@ -48,6 +50,27 @@ public class TableListViewModel implements ObjectSubscriber {
         if (message instanceof TourLog) {
             TourLog tourLog = (TourLog) message;
             tourLogs.add(tourLog);
+        }
+    }
+
+
+    public void updateModifiedTourLog(Object message) {
+        if (message instanceof TourLog) {
+            TourLog modifiedTourLog = (TourLog) message;
+            for (int i = 0; i < tourLogs.size(); i++) {
+                if (tourLogs.get(i).getId().equals(modifiedTourLog.getId())) {
+                    // Keep duration and distance the same
+                    TourLog existingTourLog = tourLogs.get(i);
+                    existingTourLog.setName(modifiedTourLog.getName());
+                    existingTourLog.setDate(modifiedTourLog.getDate());
+                    existingTourLog.setRating(modifiedTourLog.getRating());
+                    existingTourLog.setInfo(modifiedTourLog.getInfo());
+
+                    // Update the list
+                    tourLogs.set(i, existingTourLog);
+                    break;
+                }
+            }
         }
     }
 
