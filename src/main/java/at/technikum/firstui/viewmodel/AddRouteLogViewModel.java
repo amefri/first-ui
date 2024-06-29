@@ -22,8 +22,8 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
 
     private final StringProperty name = new SimpleStringProperty("");
     private final StringProperty date = new SimpleStringProperty("");
-    private final StringProperty duration = new SimpleStringProperty("");
-    private final StringProperty distance = new SimpleStringProperty("");
+    private final StringProperty rating = new SimpleStringProperty("");
+    private final StringProperty info = new SimpleStringProperty("");
     private final BooleanProperty addTourLogButtonDisabled = new SimpleBooleanProperty(true);
 
 
@@ -37,21 +37,21 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
         // Listen to changes in fields and update addButtonDisabled property
         name.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
         date.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
-        duration.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
-        distance.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
+        rating.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
+        info.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
     }
 
     private void updateAddTourLogButtonDisabled() {
         // Check if any of the fields are empty
         addTourLogButtonDisabled.set(name.get().isEmpty() || date.get().isEmpty() ||
-                duration.get().isEmpty() || distance.get().isEmpty());
+                rating.get().isEmpty() || info.get().isEmpty());
     }
 
     public void addTourLog() {
         // Check if addButton is enabled
         if (!addTourLogButtonDisabled.get()) {
             if(tourListService.isSelected()){
-                TourLog tourLog = new TourLog(name.get(), date.get(),duration.get(), distance.get());
+                TourLog tourLog = new TourLog(name.get(), date.get(),rating.get(), info.get());
                 tourLog.setTour(tourListService.getCurrentlySelected());
                 tourLogService.addTourLog(tourLog);
                 publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
@@ -61,8 +61,8 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
                 // Clear fields after publishing
                 name.set("");
                 date.set("");
-                duration.set("");
-                distance.set("");
+                rating.set("");
+                info.set("");
 
             } else {
                 logger.warn("TourList is empty or you did not select a tour. Add a Tour first or Select a Tour first");
@@ -79,12 +79,12 @@ public class AddRouteLogViewModel implements ObjectSubscriber {
         return date;
     }
 
-    public StringProperty durationProperty() {
-        return duration;
+    public StringProperty ratingProperty() {
+        return rating;
     }
 
-    public StringProperty distanceProperty() {
-        return distance;
+    public StringProperty infoProperty() {
+        return info;
     }
 
     public BooleanProperty addTourLogButtonDisabledProperty() {

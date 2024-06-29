@@ -40,8 +40,8 @@ public class AddRouteLogView implements Initializable {
         // Bind properties to text fields
         nameField.textProperty().bindBidirectional(viewModel.nameProperty());
         dateField.textProperty().bindBidirectional(viewModel.dateProperty());
-        ratingField.textProperty().bindBidirectional(viewModel.durationProperty());
-        infoField.textProperty().bindBidirectional(viewModel.distanceProperty());
+        ratingField.textProperty().bindBidirectional(viewModel.ratingProperty());
+        infoField.textProperty().bindBidirectional(viewModel.infoProperty());
 
         // Bind button disable property
         addTourLogButton.disableProperty().bind(viewModel.addTourLogButtonDisabledProperty());
