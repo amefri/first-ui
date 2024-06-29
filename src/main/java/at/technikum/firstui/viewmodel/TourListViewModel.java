@@ -108,9 +108,11 @@ public class TourListViewModel implements ObjectSubscriber {
         int index = selectedAddTourIndex.get();
         if (index >= 0 && index < tourList.size()) {
             String tourName = tourList.get(index);
+            Tours tour = tourListService.getTourByName(tourName);
             if (tourListService.deleteTourByName(tourName)) {
                 tourList.remove(index);
                 logger.info("Tour deleted: " + tourName);
+                publisher.publish(Event.TOUR_DELETED, tour.getId());
             } else {
                 logger.warn("Failed to delete tour: " + tourName);
             }

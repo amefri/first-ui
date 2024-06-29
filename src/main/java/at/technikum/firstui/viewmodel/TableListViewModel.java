@@ -30,7 +30,7 @@ public class TableListViewModel implements ObjectSubscriber {
         this.publisher.subscribe(Event.SELECTED_TOUR_CHANGED, (ObjectSubscriber) this::updateTourLogs);
         this.publisher.subscribe(Event.TOUR_LOG_ADDED, (ObjectSubscriber) this::addToTourLogs);
         this.publisher.subscribe(Event.MODIFY_TOUR, (ObjectSubscriber) this::updateModifiedTourLog);
-
+        this.publisher.subscribe(Event.TOUR_DELETED, (ObjectSubscriber) this::removeTourLogs);
 
         loadTourLogs();
 
@@ -38,6 +38,15 @@ public class TableListViewModel implements ObjectSubscriber {
         this.selectedAddTourIndex.addListener((obs, oldVal, newVal) -> {
             selectTourLogIndex(newVal.intValue());
         });
+    }
+
+    public void removeTourLogs(Object message) {
+        if (message instanceof Long) {
+            Long tourId = (Long) message;
+            List<TourLog> logsToRemove = tourLogService.getTourLogsByTourId(tourId);
+            tourLogs.removeAll(logsToRemove);
+            logger.info("Removed logs for tour with ID: " + tourId);
+        }
     }
 
     public void loadTourLogs() {

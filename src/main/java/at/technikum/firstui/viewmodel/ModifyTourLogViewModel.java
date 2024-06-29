@@ -6,10 +6,7 @@ import at.technikum.firstui.event.ObjectSubscriber;
 import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.services.TourListService;
 import at.technikum.firstui.services.TourLogService;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,8 +20,9 @@ public class ModifyTourLogViewModel implements ObjectSubscriber {
 
     private final StringProperty name = new SimpleStringProperty("");
     private final StringProperty date = new SimpleStringProperty("");
-    private final StringProperty duration = new SimpleStringProperty("");
-    private final StringProperty distance = new SimpleStringProperty("");
+    private final StringProperty rating = new SimpleStringProperty("");
+    private final StringProperty info = new SimpleStringProperty("");
+
     private final BooleanProperty modifyTourLogButtonDisabled = new SimpleBooleanProperty(true);
 
 
@@ -37,8 +35,8 @@ public class ModifyTourLogViewModel implements ObjectSubscriber {
         // Listen to changes in fields and update addButtonDisabled property
         name.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
         date.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
-        duration.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
-        distance.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
+        rating.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
+        info.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
     }
 
 
@@ -47,7 +45,7 @@ public class ModifyTourLogViewModel implements ObjectSubscriber {
     private void updateAddTourLogButtonDisabled() {
         // Check if any of the fields are empty
         modifyTourLogButtonDisabled.set(name.get().isEmpty() || date.get().isEmpty() ||
-                duration.get().isEmpty() || distance.get().isEmpty());
+                rating.get().isEmpty() || info.get().isEmpty());
     }
 
 
@@ -56,7 +54,7 @@ public class ModifyTourLogViewModel implements ObjectSubscriber {
             if(tourLogService.isSelected()){
                 TourLog currentlySelected = tourLogService.getCurrentlySelected();
                 Long id = currentlySelected.getId();
-                TourLog newTourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
+                TourLog newTourLog = new TourLog(name.get(), date.get(), rating.get(), info.get());
                 newTourLog.setId(id);
                 tourLogService.modifyTourLog(newTourLog);
                 logger.info("TourLog modified: " + newTourLog);
@@ -77,13 +75,15 @@ public class ModifyTourLogViewModel implements ObjectSubscriber {
         return date;
     }
 
-    public StringProperty durationProperty() {
-        return duration;
+
+    public StringProperty infoProperty() {
+        return info;
     }
 
-    public StringProperty distanceProperty() {
-        return distance;
+    public StringProperty ratingProperty() {
+        return rating;
     }
+
 
     public BooleanProperty modifyTourLogButtonDisabledProperty() {
         return modifyTourLogButtonDisabled;
@@ -95,4 +95,6 @@ public class ModifyTourLogViewModel implements ObjectSubscriber {
     public void notify(Object message) {
         
     }
+
+
 }

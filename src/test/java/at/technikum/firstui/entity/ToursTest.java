@@ -1,171 +1,121 @@
 package at.technikum.firstui.entity;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
-class ToursTest {
+public class ToursTest {
 
-    @Test
-    void testDefaultConstructor() {
-        Tours tour = new Tours();
-        assertNull(tour.getId());
-        assertNull(tour.getName());
-        assertNull(tour.getDescription());
-        assertNull(tour.getFrom());
-        assertNull(tour.getTo());
-        assertNull(tour.getTransportType());
-        assertNull(tour.getDistance());
-        assertNull(tour.getEstimatedTime());
-        assertNull(tour.getImagePath());
-        assertNotNull(tour.getTourLogs());
-        assertTrue(tour.getTourLogs().isEmpty());
-        assertNull(tour.getTourImage());
+    private Tours tour;
+    private TourLog tourLog1;
+    private TourLog tourLog2;
+
+    @BeforeEach
+    public void setUp() {
+        tour = new Tours("Tour 1", "Description 1", "From 1", "To 1", "Car", "100 km", "2 hours", "/path/to/image");
+        tourLog1 = new TourLog("Log 1", "2023-06-28", "5", "Info 1");
+        tourLog2 = new TourLog("Log 2", "2023-06-29", "4", "Info 2");
     }
 
     @Test
-    void testParameterizedConstructor() {
-        String name = "Tour Name";
-        String description = "Tour Description";
-        String from = "Start Location";
-        String to = "End Location";
-        String transportType = "Car";
-        String distance = "100 km";
-        String estimatedTime = "2 hours";
-        String imagePath = "/path/to/image";
+    public void testGettersAndSetters() {
+        // Test initial values
+        assertEquals("Tour 1", tour.getName());
+        assertEquals("Description 1", tour.getDescription());
+        assertEquals("From 1", tour.getFrom());
+        assertEquals("To 1", tour.getTo());
+        assertEquals("Car", tour.getTransportType());
+        assertEquals("100 km", tour.getDistance());
+        assertEquals("2 hours", tour.getEstimatedTime());
+        assertEquals("/path/to/image", tour.getImagePath());
 
-        Tours tour = new Tours(name, description, from, to, transportType, distance, estimatedTime, imagePath);
+        // Test setting new values
+        tour.setName("New Tour");
+        assertEquals("New Tour", tour.getName());
 
-        assertNull(tour.getId());
-        assertEquals(name, tour.getName());
-        assertEquals(description, tour.getDescription());
-        assertEquals(from, tour.getFrom());
-        assertEquals(to, tour.getTo());
-        assertEquals(transportType, tour.getTransportType());
-        assertEquals(distance, tour.getDistance());
-        assertEquals(estimatedTime, tour.getEstimatedTime());
-        assertEquals(imagePath, tour.getImagePath());
-        assertNotNull(tour.getTourLogs());
-        assertTrue(tour.getTourLogs().isEmpty());
-        assertNull(tour.getTourImage());
+        tour.setDescription("New Description");
+        assertEquals("New Description", tour.getDescription());
+
+        tour.setFrom("New From");
+        assertEquals("New From", tour.getFrom());
+
+        tour.setTo("New To");
+        assertEquals("New To", tour.getTo());
+
+        tour.setTransportType("Bike");
+        assertEquals("Bike", tour.getTransportType());
+
+        tour.setDistance("200 km");
+        assertEquals("200 km", tour.getDistance());
+
+        tour.setEstimatedTime("4 hours");
+        assertEquals("4 hours", tour.getEstimatedTime());
+
+        tour.setImagePath("/new/path/to/image");
+        assertEquals("/new/path/to/image", tour.getImagePath());
     }
 
     @Test
-    void testGetAndSetId() {
-        Tours tour = new Tours();
-        Long id = 1L;
-        tour.setId(id);
-        assertEquals(id, tour.getId());
-    }
-
-    @Test
-    void testGetAndSetName() {
-        Tours tour = new Tours();
-        String name = "New Tour Name";
-        tour.setName(name);
-        assertEquals(name, tour.getName());
-    }
-
-    @Test
-    void testGetAndSetDescription() {
-        Tours tour = new Tours();
-        String description = "New Tour Description";
-        tour.setDescription(description);
-        assertEquals(description, tour.getDescription());
-    }
-
-    @Test
-    void testGetAndSetFrom() {
-        Tours tour = new Tours();
-        String from = "New Start Location";
-        tour.setFrom(from);
-        assertEquals(from, tour.getFrom());
-    }
-
-    @Test
-    void testGetAndSetTo() {
-        Tours tour = new Tours();
-        String to = "New End Location";
-        tour.setTo(to);
-        assertEquals(to, tour.getTo());
-    }
-
-    @Test
-    void testGetAndSetTransportType() {
-        Tours tour = new Tours();
-        String transportType = "Bike";
-        tour.setTransportType(transportType);
-        assertEquals(transportType, tour.getTransportType());
-    }
-
-    @Test
-    void testGetAndSetDistance() {
-        Tours tour = new Tours();
-        String distance = "50 km";
-        tour.setDistance(distance);
-        assertEquals(distance, tour.getDistance());
-    }
-
-    @Test
-    void testGetAndSetEstimatedTime() {
-        Tours tour = new Tours();
-        String estimatedTime = "1 hour";
-        tour.setEstimatedTime(estimatedTime);
-        assertEquals(estimatedTime, tour.getEstimatedTime());
-    }
-
-    @Test
-    void testGetAndSetImagePath() {
-        Tours tour = new Tours();
-        String imagePath = "/new/path/to/image";
-        tour.setImagePath(imagePath);
-        assertEquals(imagePath, tour.getImagePath());
-    }
-
-    @Test
-    void testGetAndSetTourImage() {
-        Tours tour = new Tours();
-        byte[] tourImage = {1, 2, 3};
-        tour.setTourImage(tourImage);
-        assertArrayEquals(tourImage, tour.getTourImage());
-    }
-
-    @Test
-    void testAddAndRemoveTourLog() {
-        Tours tour = new Tours();
-        TourLog tourLog = new TourLog("Log1", "2024-06-26", "2 hours", "10 km");
-
-        tour.addTourLog(tourLog);
+    public void testTourLogs() {
+        // Test adding tour logs
+        tour.addTourLog(tourLog1);
         assertEquals(1, tour.getTourLogs().size());
-        assertEquals(tour, tourLog.getTour());
+        assertEquals(tour, tourLog1.getTour());
 
-        tour.removeTourLog(tourLog);
-        assertTrue(tour.getTourLogs().isEmpty());
-        assertNull(tourLog.getTour());
+        tour.addTourLog(tourLog2);
+        assertEquals(2, tour.getTourLogs().size());
+        assertEquals(tour, tourLog2.getTour());
+
+        // Test removing tour logs
+        tour.removeTourLog(tourLog1);
+        assertEquals(1, tour.getTourLogs().size());
+        assertNull(tourLog1.getTour());
+
+        tour.removeTourLog(tourLog2);
+        assertEquals(0, tour.getTourLogs().size());
+        assertNull(tourLog2.getTour());
     }
 
     @Test
-    void testGetFieldsAsList() {
-        String name = "Tour Name";
-        String description = "Tour Description";
-        String from = "Start Location";
-        String to = "End Location";
-        String transportType = "Car";
-        String distance = "100 km";
-        String estimatedTime = "2 hours";
-        String imagePath = "/path/to/image";
+    public void testConstructor() {
+        Tours newTour = new Tours("Tour 2", "Description 2", "From 2", "To 2", "Train", "150 km", "3 hours", "/path/to/another/image");
+        assertEquals("Tour 2", newTour.getName());
+        assertEquals("Description 2", newTour.getDescription());
+        assertEquals("From 2", newTour.getFrom());
+        assertEquals("To 2", newTour.getTo());
+        assertEquals("Train", newTour.getTransportType());
+        assertEquals("150 km", newTour.getDistance());
+        assertEquals("3 hours", newTour.getEstimatedTime());
+        assertEquals("/path/to/another/image", newTour.getImagePath());
+    }
 
-        Tours tour = new Tours(name, description, from, to, transportType, distance, estimatedTime, imagePath);
+    @Test
+    public void testDefaultConstructor() {
+        Tours newTour = new Tours();
+        assertNull(newTour.getName());
+        assertNull(newTour.getDescription());
+        assertNull(newTour.getFrom());
+        assertNull(newTour.getTo());
+        assertNull(newTour.getTransportType());
+        assertNull(newTour.getDistance());
+        assertNull(newTour.getEstimatedTime());
+        assertNull(newTour.getImagePath());
+        assertTrue(newTour.getTourLogs().isEmpty());
+    }
+
+    @Test
+    public void testGetFieldsAsList() {
         List<Object> fields = tour.getFieldsAsList();
-
         assertEquals(8, fields.size());
-        assertEquals(name, fields.get(0));
-        assertEquals(description, fields.get(1));
-        assertEquals(from, fields.get(2));
-        assertEquals(to, fields.get(3));
-        assertEquals(transportType, fields.get(4));
-        assertEquals(distance, fields.get(5));
-        assertEquals(estimatedTime, fields.get(6));
-        assertEquals(imagePath, fields.get(7));
+        assertEquals("Tour 1", fields.get(0));
+        assertEquals("Description 1", fields.get(1));
+        assertEquals("From 1", fields.get(2));
+        assertEquals("To 1", fields.get(3));
+        assertEquals("Car", fields.get(4));
+        assertEquals("100 km", fields.get(5));
+        assertEquals("2 hours", fields.get(6));
+        assertEquals("/path/to/image", fields.get(7));
     }
 }

@@ -73,8 +73,6 @@ public class ModifyTourViewModel {
                     Long id = toursSelected.getId();
                     newTour.setId(id);
                     tourListService.modifyTour(newTour);
-                    logger.info("Tour modified: " + newTour.getName());
-
                 }else{
                     logger.warn("No Tour was selcted");
 

@@ -1,11 +1,18 @@
 package at.technikum.firstui.event;
 
+import at.technikum.firstui.viewmodel.AddRouteLogViewModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Publisher {
+
+    private static final Logger logger = LogManager.getLogger(AddRouteLogViewModel.class);
+
 
     private final Map<Event, List<Subscriber>> subscriberMap;
     private final Map<Event, List<ObjectSubscriber>> objectSubscriberMap;
@@ -26,7 +33,7 @@ public class Publisher {
         subscribers.add(subscriber);
 
         subscriberMap.put(event, subscribers);
-        System.out.println("Subscriber added for event: " + event + subscriber);
+        logger.info("Subscriber added for event: " + event + subscriber);
     }
     public void subscribe(Event event, ObjectSubscriber objectSubscriber) {
         List<ObjectSubscriber> objectSubscribers = objectSubscriberMap.get(event);
@@ -38,7 +45,7 @@ public class Publisher {
         objectSubscribers.add(objectSubscriber);
 
         objectSubscriberMap.put(event, objectSubscribers);
-        System.out.println("ObjectSubscriber added for event: " + event + objectSubscriber);
+        logger.info("ObjectSubscriber added for event: " + event + objectSubscriber);
     }
 
     // publish(event, message)
@@ -67,4 +74,6 @@ public class Publisher {
             subscriber.notify(message);
         }
     }
+
+
 }

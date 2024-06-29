@@ -6,6 +6,7 @@ import at.technikum.firstui.event.Publisher;
 import at.technikum.firstui.event.Subscriber;
 import at.technikum.firstui.services.APIService;
 import at.technikum.firstui.services.TourListService;
+import at.technikum.firstui.viewmodel.AddRouteLogViewModel;
 import com.fasterxml.jackson.databind.JsonNode;
 import javafx.animation.PauseTransition;
 import javafx.embed.swing.SwingFXUtils;
@@ -16,6 +17,8 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Duration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class APIController implements Subscriber {
+    private static final Logger logger = LogManager.getLogger(AddRouteLogViewModel.class);
 
     @FXML
     private TextField placesInput;
@@ -56,7 +60,7 @@ public class APIController implements Subscriber {
     private void showRouteForCurrentTour() {
         Tours tour = tourListService.getCurrentlySelected();
         if (tour == null) {
-            System.out.println("No tour selected.");
+            logger.warn("No tour selected.");
             return;
         }
 
@@ -71,7 +75,7 @@ public class APIController implements Subscriber {
                 if (!coords.isEmpty()) {
                     coordinates.add(coords.get(0));
                 } else {
-                    System.out.println("Could not find coordinates for " + place);
+                    logger.warn("Could not find coordinates for " + place);
                     return;
                 }
             } catch (IOException e) {
@@ -111,7 +115,7 @@ public class APIController implements Subscriber {
     public void saveMap() {
         Tours tour = tourListService.getCurrentlySelected();
         if (tour == null) {
-            System.out.println("No tour selected.");
+            logger.warn("No tour selected.");
             return;
         }
 
@@ -120,7 +124,7 @@ public class APIController implements Subscriber {
         File file = new File("src/main/java/at/technikum/firstui/images/" + tourName + "_map_snapshot.png");
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file);
-            System.out.println("Map saved to " + file.getAbsolutePath());
+            logger.info("Map saved to " + file.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }

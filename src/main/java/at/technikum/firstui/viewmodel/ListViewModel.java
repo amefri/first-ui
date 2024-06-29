@@ -6,8 +6,11 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ListViewModel {
+    private static final Logger logger = LogManager.getLogger(AddRouteLogViewModel.class);
 
     private final Publisher publisher;
 
@@ -22,7 +25,7 @@ public class ListViewModel {
         // if item is selected, fill in search text
         this.selectedIndex.addListener(
 
-                observable -> {System.out.println("Listener triggered");
+                observable -> {logger.info("Listener triggered");
                     selectItems();}
 
         );
@@ -33,15 +36,14 @@ public class ListViewModel {
 
     public void selectItems() {
     int index = selectedIndex.get();
-    System.out.println("Index: " + index);
+    logger.info("Index: " + index);
     if (index == -1) {
         // No item is selected in the ListView, so return without doing anything
         return;
     }
 
     String selectedItem = items.get(index);
-        System.out.println("Selected Item: " + selectedItem);
-
+        logger.info("Selected Item: " + selectedItem);
 
 }
 

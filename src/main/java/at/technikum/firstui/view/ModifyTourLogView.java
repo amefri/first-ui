@@ -37,8 +37,8 @@ public class ModifyTourLogView implements Initializable {
 
         nameField.textProperty().bindBidirectional(viewModel.nameProperty());
         dateField.textProperty().bindBidirectional(viewModel.dateProperty());
-        durationField.textProperty().bindBidirectional(viewModel.durationProperty());
-        distanceField.textProperty().bindBidirectional(viewModel.distanceProperty());
+        durationField.textProperty().bindBidirectional(viewModel.ratingProperty());
+        distanceField.textProperty().bindBidirectional(viewModel.infoProperty());
 
         modifyTourLogButton.disableProperty().bind(viewModel.modifyTourLogButtonDisabledProperty());
     }

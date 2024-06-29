@@ -7,7 +7,7 @@ public enum Event {
     TOUR_LOG_ADDED,
     SELECTED_TOUR_CHANGED,
     MODIFY_TOUR, MODIFY_TOUR_LOG,
-    ADD_FAV
+    TOUR_DELETED, ADD_FAV
 
 
 

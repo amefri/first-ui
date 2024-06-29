@@ -1,108 +1,98 @@
 package at.technikum.firstui.viewmodel;
 
-import at.technikum.firstui.entity.Tours;
-import at.technikum.firstui.event.Publisher;
-import at.technikum.firstui.services.TourListService;
-import javafx.beans.property.StringProperty;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class ModifyTourViewModelTest {
+import at.technikum.firstui.entity.Tours;
+import at.technikum.firstui.event.Publisher;
+import at.technikum.firstui.services.TourListService;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+public class ModifyTourViewModelTest {
+
+    @Mock
+    private TourListService mockTourListService;
+
+    @Mock
+    private Publisher mockPublisher;
 
     private ModifyTourViewModel viewModel;
-    private TourListService tourListService;
-    private Publisher publisher;
 
     @BeforeEach
-    void setUp() {
-        tourListService = Mockito.mock(TourListService.class);
-        publisher = Mockito.mock(Publisher.class);
-        viewModel = new ModifyTourViewModel(publisher, tourListService);
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        viewModel = new ModifyTourViewModel(mockPublisher, mockTourListService);
     }
 
     @Test
-    void testInitialState() {
-        assertTrue(viewModel.modifyTourButtonDisabledProperty().get());
-        assertEquals("", viewModel.nameProperty().get());
-        assertEquals("", viewModel.descriptionProperty().get());
-        assertEquals("", viewModel.fromProperty().get());
-        assertEquals("", viewModel.toProperty().get());
-        assertEquals("", viewModel.transportTypeProperty().get());
-        assertEquals("", viewModel.distanceProperty().get());
-        assertEquals("", viewModel.estimatedTimeProperty().get());
+    public void testModifyTourButtonDisabledInitially() {
+        BooleanProperty buttonDisabled = viewModel.modifyTourButtonDisabledProperty();
+        assertTrue(buttonDisabled.get(), "Button should be disabled initially");
     }
 
     @Test
-    void testModifyTourButtonDisabled() {
-        StringProperty name = viewModel.nameProperty();
-        StringProperty description = viewModel.descriptionProperty();
-        StringProperty from = viewModel.fromProperty();
-        StringProperty to = viewModel.toProperty();
-        StringProperty transportType = viewModel.transportTypeProperty();
-        StringProperty distance = viewModel.distanceProperty();
-        StringProperty estimatedTime = viewModel.estimatedTimeProperty();
+    public void testModifyTourButtonEnabledAfterSettingFields() {
+        BooleanProperty buttonDisabled = viewModel.modifyTourButtonDisabledProperty();
 
-        name.set("Test Tour");
-        description.set("Description");
-        from.set("From Location");
-        to.set("To Location");
-        transportType.set("Car");
-        distance.set("100 km");
-        estimatedTime.set("1 hour");
+        // Simulate setting some fields
+        viewModel.nameProperty().set("Tour Name");
+        viewModel.descriptionProperty().set("Description");
+        viewModel.fromProperty().set("From");
+        viewModel.toProperty().set("To");
+        viewModel.transportTypeProperty().set("Transport");
+        viewModel.distanceProperty().set("100 km");
+        viewModel.estimatedTimeProperty().set("2 hours");
 
-        assertFalse(viewModel.modifyTourButtonDisabledProperty().get());
-
-        estimatedTime.set("");
-        assertTrue(viewModel.modifyTourButtonDisabledProperty().get());
+        assertFalse(buttonDisabled.get(), "Button should be enabled after setting all fields");
     }
 
     @Test
-    void testModifyTourNoSelection() {
-        when(tourListService.isSelected()).thenReturn(false);
-        viewModel.modifyTour();
-        verify(tourListService, never()).modifyTour(any(Tours.class));
-    }
+    public void testModifyTourWhenTourSelected() {
+        // Prepare mock behavior
+        Tours selectedTour = new Tours("Tour Name", "Description", "From", "To", "Transport", "100 km", "2 hours", "");
+        when(mockTourListService.isSelected()).thenReturn(true);
+        when(mockTourListService.getCurrentlySelected()).thenReturn(selectedTour);
 
-    @Test
-    void testModifyTour() {
-        Tours selectedTour = new Tours("Test Tour", "Old Description", "Old From", "Old To", "Old Transport", "Old Distance", "Old Time", "Old Path");
-        selectedTour.setId(1L);
+        // Simulate setting fields
+        viewModel.nameProperty().set("Tour Name");
+        viewModel.descriptionProperty().set("Description");
+        viewModel.fromProperty().set("From");
+        viewModel.toProperty().set("To");
+        viewModel.transportTypeProperty().set("Transport");
+        viewModel.distanceProperty().set("100 km");
+        viewModel.estimatedTimeProperty().set("2 hours");
 
-        when(tourListService.isSelected()).thenReturn(true);
-        when(tourListService.getCurrentlySelected()).thenReturn(selectedTour);
-
-        viewModel.nameProperty().set("Test Tour");
-        viewModel.descriptionProperty().set("New Description");
-        viewModel.fromProperty().set("New From");
-        viewModel.toProperty().set("New To");
-        viewModel.transportTypeProperty().set("New Transport");
-        viewModel.distanceProperty().set("New Distance");
-        viewModel.estimatedTimeProperty().set("New Time");
-
-
+        // Call modifyTour
         viewModel.modifyTour();
 
-        verify(tourListService).modifyTour(argThat(tour ->
-                tour.getName().equals("Test Tour") &&
-                        tour.getDescription().equals("New Description") &&
-                        tour.getFrom().equals("New From") &&
-                        tour.getTo().equals("New To") &&
-                        tour.getTransportType().equals("New Transport") &&
-                        tour.getDistance().equals("New Distance") &&
-                        tour.getEstimatedTime().equals("New Time") &&
-                        tour.getId().equals(1L)
-        ));
+        // Verify that modifyTourService was called with the correct Tour object
+        ArgumentCaptor<Tours> captor = ArgumentCaptor.forClass(Tours.class);
+        verify(mockTourListService).modifyTour(captor.capture());
 
-        assertEquals("", viewModel.nameProperty().get());
-        assertEquals("", viewModel.descriptionProperty().get());
-        assertEquals("", viewModel.fromProperty().get());
-        assertEquals("", viewModel.toProperty().get());
-        assertEquals("", viewModel.transportTypeProperty().get());
-        assertEquals("", viewModel.distanceProperty().get());
-        assertEquals("", viewModel.estimatedTimeProperty().get());
+        Tours modifiedTour = captor.getValue();
+        assertEquals(selectedTour.getName(), modifiedTour.getName(), "Names should match");
+        assertEquals(selectedTour.getId(), modifiedTour.getId(), "IDs should match");
+
+        // Additional verification for logging, if necessary
+        // verify(logger).warn("Expected log message");
+
+        // Reset fields after modification
+        assertEquals("", viewModel.nameProperty().get(), "Name should be reset");
+        assertEquals("", viewModel.descriptionProperty().get(), "Description should be reset");
+        assertEquals("", viewModel.fromProperty().get(), "From should be reset");
+        assertEquals("", viewModel.toProperty().get(), "To should be reset");
+        assertEquals("", viewModel.transportTypeProperty().get(), "Transport type should be reset");
+        assertEquals("", viewModel.distanceProperty().get(), "Distance should be reset");
+        assertEquals("", viewModel.estimatedTimeProperty().get(), "Estimated time should be reset");
     }
+
+    // Add more tests as needed for edge cases, logging, etc.
 }

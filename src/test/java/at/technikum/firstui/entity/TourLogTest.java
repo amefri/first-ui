@@ -1,121 +1,89 @@
 package at.technikum.firstui.entity;
 
-import javafx.beans.property.StringProperty;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-class TourLogTest {
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import javafx.beans.property.StringProperty;
 
-    @Test
-    void testDefaultConstructor() {
-        TourLog tourLog = new TourLog();
-        assertNull(tourLog.getId());
-        assertNull(tourLog.getName());
-        assertNull(tourLog.getDate());
-        assertNull(tourLog.getDuration());
-        assertNull(tourLog.getDistance());
-        assertNull(tourLog.getTour());
+public class TourLogTest {
+
+    private TourLog tourLog;
+    private Tours mockTour;
+
+    @BeforeEach
+    public void setUp() {
+        mockTour = mock(Tours.class);
+        when(mockTour.getDistance()).thenReturn("10 km");
+        when(mockTour.getEstimatedTime()).thenReturn("2 hours");
+
+        tourLog = new TourLog("Test Name", "2023-06-28", "5", "Test Info");
+        tourLog.setTour(mockTour);
     }
 
     @Test
-    void testParameterizedConstructor() {
-        String name = "Tour1";
-        String date = "2024-06-26";
-        String duration = "2 hours";
-        String distance = "5 km";
+    public void testGettersAndSetters() {
+        assertEquals("Test Name", tourLog.getName());
+        assertEquals("2023-06-28", tourLog.getDate());
+        assertEquals("5", tourLog.getRating());
+        assertEquals("Test Info", tourLog.getInfo());
 
-        TourLog tourLog = new TourLog(name, date, duration, distance);
+        tourLog.setName("New Name");
+        assertEquals("New Name", tourLog.getName());
 
-        assertNull(tourLog.getId());
-        assertEquals(name, tourLog.getName());
-        assertEquals(date, tourLog.getDate());
-        assertEquals(duration, tourLog.getDuration());
-        assertEquals(distance, tourLog.getDistance());
-        assertNull(tourLog.getTour());
+        tourLog.setDate("2023-06-29");
+        assertEquals("2023-06-29", tourLog.getDate());
+
+        tourLog.setRating("4");
+        assertEquals("4", tourLog.getRating());
+
+        tourLog.setInfo("New Info");
+        assertEquals("New Info", tourLog.getInfo());
     }
 
     @Test
-    void testGetAndSetId() {
-        TourLog tourLog = new TourLog();
-        Long id = 1L;
-        tourLog.setId(id);
-        assertEquals(id, tourLog.getId());
+    public void testTourAssociation() {
+        assertEquals(mockTour, tourLog.getTour());
+
+        Tours newTour = new Tours();
+        tourLog.setTour(newTour);
+        assertEquals(newTour, tourLog.getTour());
     }
 
     @Test
-    void testGetAndSetName() {
-        TourLog tourLog = new TourLog();
-        String name = "New Tour";
-        tourLog.setName(name);
-        assertEquals(name, tourLog.getName());
+    public void testTransientProperties() {
+        assertEquals("10 km", tourLog.getDistance());
+        assertEquals("2 hours", tourLog.getDuration());
     }
 
     @Test
-    void testGetAndSetDate() {
-        TourLog tourLog = new TourLog();
-        String date = "2024-06-26";
-        tourLog.setDate(date);
-        assertEquals(date, tourLog.getDate());
-    }
-
-    @Test
-    void testGetAndSetDuration() {
-        TourLog tourLog = new TourLog();
-        String duration = "2 hours";
-        tourLog.setDuration(duration);
-        assertEquals(duration, tourLog.getDuration());
-    }
-
-    @Test
-    void testGetAndSetDistance() {
-        TourLog tourLog = new TourLog();
-        String distance = "10 km";
-        tourLog.setDistance(distance);
-        assertEquals(distance, tourLog.getDistance());
-    }
-
-    @Test
-    void testGetAndSetTour() {
-        TourLog tourLog = new TourLog();
-        Tours tour = new Tours(); // Assuming Tours is another entity with a default constructor
-        tourLog.setTour(tour);
-        assertEquals(tour, tourLog.getTour());
-    }
-
-    @Test
-    void testNameProperty() {
-        TourLog tourLog = new TourLog();
-        String name = "Property Tour";
-        tourLog.setName(name);
+    public void testStringProperties() {
         StringProperty nameProperty = tourLog.nameProperty();
-        assertEquals(name, nameProperty.get());
-    }
+        assertEquals("Test Name", nameProperty.get());
 
-    @Test
-    void testDateProperty() {
-        TourLog tourLog = new TourLog();
-        String date = "2024-06-26";
-        tourLog.setDate(date);
         StringProperty dateProperty = tourLog.dateProperty();
-        assertEquals(date, dateProperty.get());
-    }
+        assertEquals("2023-06-28", dateProperty.get());
 
-    @Test
-    void testDurationProperty() {
-        TourLog tourLog = new TourLog();
-        String duration = "3 hours";
-        tourLog.setDuration(duration);
-        StringProperty durationProperty = tourLog.durationProperty();
-        assertEquals(duration, durationProperty.get());
-    }
+        StringProperty ratingProperty = tourLog.ratingProperty();
+        assertEquals("5", ratingProperty.get());
 
-    @Test
-    void testDistanceProperty() {
-        TourLog tourLog = new TourLog();
-        String distance = "15 km";
-        tourLog.setDistance(distance);
+        StringProperty infoProperty = tourLog.infoProperty();
+        assertEquals("Test Info", infoProperty.get());
+
         StringProperty distanceProperty = tourLog.distanceProperty();
-        assertEquals(distance, distanceProperty.get());
+        assertEquals("10 km", distanceProperty.get());
+
+        StringProperty durationProperty = tourLog.durationProperty();
+        assertEquals("2 hours", durationProperty.get());
+    }
+
+    @Test
+    public void testConstructor() {
+        TourLog newTourLog = new TourLog("New Tour", "2023-06-30", "3", "Info about tour");
+        assertEquals("New Tour", newTourLog.getName());
+        assertEquals("2023-06-30", newTourLog.getDate());
+        assertEquals("3", newTourLog.getRating());
+        assertEquals("Info about tour", newTourLog.getInfo());
     }
 }
